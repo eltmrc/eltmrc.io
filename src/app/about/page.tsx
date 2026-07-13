@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { FadeIn } from "@/components/fade-in";
 import { site } from "@/lib/site";
@@ -11,17 +12,34 @@ export default function AboutPage() {
   return (
     <div className="pb-10 pt-6 sm:pt-10">
       <FadeIn>
-        <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-fg-subtle">
-          About
-        </p>
-        <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.25rem]">
-          Eliot Maurice
-        </h1>
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-8">
+          <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-2xl shadow-[var(--shadow-soft)] ring-1 ring-border sm:h-44 sm:w-44">
+            <Image
+              src="/images/portrait.jpg"
+              alt="Eliot Maurice"
+              fill
+              sizes="176px"
+              priority
+              className="object-cover"
+            />
+          </div>
+          <div>
+            <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-fg-subtle">
+              About
+            </p>
+            <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.25rem]">
+              Eliot Maurice
+            </h1>
+            <p className="mt-2 text-[15px] text-fg-muted">
+              Founder · builder · {site.handle}
+            </p>
+          </div>
+        </div>
       </FadeIn>
 
       <FadeIn
         delay={0.08}
-        className="mt-8 space-y-5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]"
+        className="mt-10 space-y-5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]"
       >
         <p>
           I&apos;m a founder and builder. I care about software that feels
@@ -56,7 +74,44 @@ export default function AboutPage() {
         </p>
       </FadeIn>
 
-      <FadeIn delay={0.14} className="mt-12">
+      <FadeIn delay={0.12} className="mt-12">
+        <div className="card-soft overflow-hidden rounded-2xl">
+          <div className="relative aspect-[21/9] w-full bg-surface">
+            <Image
+              src="/images/cial-workspace.jpg"
+              alt="Cial workspace"
+              fill
+              sizes="(max-width: 672px) 100vw, 672px"
+              className="object-cover object-top"
+            />
+          </div>
+          <div className="flex items-center gap-3 p-5 sm:p-6">
+            <Image
+              src="/images/cial-icon.png"
+              alt=""
+              width={36}
+              height={36}
+              className="h-9 w-9 rounded-lg ring-1 ring-border"
+            />
+            <div className="min-w-0">
+              <p className="text-[13px] font-medium text-fg">Building Cial</p>
+              <p className="text-[13px] text-fg-muted">
+                Self-hosted AI workspace ·{" "}
+                <a
+                  href={site.links.cial}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link"
+                >
+                  cial.ai
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </FadeIn>
+
+      <FadeIn delay={0.16} className="mt-10">
         <div className="card-soft rounded-2xl p-5 sm:p-6">
           <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
             Elsewhere
