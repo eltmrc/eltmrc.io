@@ -24,17 +24,58 @@
 
   --shadow-soft: 0 1px 0 rgba(80, 40, 100, 0.03),
     0 14px 40px -18px rgba(120, 60, 140, 0.12);
+  --shadow-soft-hover: 0 1px 0 rgba(80, 40, 100, 0.03),
+    0 16px 44px -18px rgba(168, 85, 200, 0.18);
   --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  --grain-blend: multiply;
+  --grain-opacity: 0.22;
+
+  /* Base mixed into cards/chips; page washes */
+  --card-base: #ffffff;
+  --wash-1: rgba(232, 121, 184, 0.12);
+  --wash-2: rgba(168, 85, 200, 0.1);
 
   --font-geist-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-geist-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
 }
 
-/* Stay light even if the OS is dark — white brand */
+/* Light stays the default (white brand); dark is an explicit choice. */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: light;
   }
+}
+
+/* ─── Dark theme · same quiet identity, deep plum surfaces ─── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #131019;
+  --bg-end: #171220;
+  --fg: #f1edf8;
+  --fg-body: #c9c2d8;
+  --fg-muted: #958da8;
+  --fg-subtle: #6e6680;
+  --border: rgba(210, 180, 240, 0.12);
+  --surface: rgba(180, 130, 220, 0.07);
+  --surface-elevated: rgba(180, 130, 220, 0.12);
+  --surface-code: #1e1929;
+
+  --accent: #c584e0;
+  --accent-soft: rgba(197, 132, 224, 0.16);
+  --accent-pink: #ef92c6;
+  --selection: rgba(197, 132, 224, 0.32);
+
+  --shadow-soft: 0 1px 0 rgba(0, 0, 0, 0.25),
+    0 14px 40px -18px rgba(0, 0, 0, 0.5);
+  --shadow-soft-hover: 0 1px 0 rgba(0, 0, 0, 0.25),
+    0 16px 44px -18px rgba(197, 132, 224, 0.22);
+  --grain-blend: screen;
+  --grain-opacity: 0.1;
+
+  --card-base: #1b1526;
+  --wash-1: rgba(232, 121, 184, 0.07);
+  --wash-2: rgba(168, 85, 200, 0.08);
 }
 
 @theme inline {
@@ -79,10 +120,10 @@ body {
   min-height: 100%;
   min-height: 100dvh;
   margin: 0;
-  /* Soft pink wash top-left, lilac wash top-right, white base */
+  /* Soft pink wash top-left, lilac wash top-right, themed base */
   background:
-    radial-gradient(1000px 520px at 0% -5%, rgba(232, 121, 184, 0.12), transparent 55%),
-    radial-gradient(900px 480px at 100% 0%, rgba(168, 85, 200, 0.1), transparent 50%),
+    radial-gradient(1000px 520px at 0% -5%, var(--wash-1), transparent 55%),
+    radial-gradient(900px 480px at 100% 0%, var(--wash-2), transparent 50%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-end) 100%);
   background-attachment: fixed;
   color: var(--fg);
@@ -104,9 +145,9 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.22;
+  opacity: var(--grain-opacity);
   background-image: var(--grain);
-  mix-blend-mode: multiply;
+  mix-blend-mode: var(--grain-blend);
 }
 
 ::selection {
@@ -168,15 +209,14 @@ body::before {
 
 .card-soft {
   border: 1px solid var(--border);
-  background: color-mix(in srgb, #ffffff 88%, var(--accent-soft));
+  background: color-mix(in srgb, var(--card-base) 88%, var(--accent-soft));
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
 }
 
 .card-soft:hover {
   border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
-  box-shadow: 0 1px 0 rgba(80, 40, 100, 0.03),
-    0 16px 44px -18px rgba(168, 85, 200, 0.18);
+  box-shadow: var(--shadow-soft-hover);
 }
 
 /* ─── Category icons (sober motion) ─── */
@@ -283,7 +323,7 @@ body::before {
   gap: 0.4rem;
   border-radius: 9999px;
   border: 1px solid var(--border);
-  background: color-mix(in srgb, #fff 70%, var(--accent-soft));
+  background: color-mix(in srgb, var(--card-base) 70%, var(--accent-soft));
   padding: 0.25rem 0.65rem 0.25rem 0.45rem;
   font-size: 12px;
   font-weight: 500;
@@ -302,7 +342,7 @@ body::before {
   gap: 0.65rem;
   border-radius: 1rem;
   border: 1px solid var(--border);
-  background: color-mix(in srgb, #ffffff 90%, var(--accent-soft));
+  background: color-mix(in srgb, var(--card-base) 90%, var(--accent-soft));
   padding: 1rem 1.05rem;
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
