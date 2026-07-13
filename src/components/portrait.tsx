@@ -17,7 +17,6 @@ export function Portrait({ size = 96, className, priority }: PortraitProps) {
       )}
       style={{ width: size, height: size }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={asset("/images/portrait.jpg")}
         alt="Eliot Maurice"

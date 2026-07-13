@@ -1,8 +1,10 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
+import { Seo } from "@/components/seo";
 
-export default function NotFound() {
+export function NotFoundPage() {
   return (
     <div className="flex flex-col items-start py-20">
+      <Seo title="Not found" description="Page not found." path="/404" />
       <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
         404
       </p>
@@ -13,10 +15,10 @@ export default function NotFound() {
         That path doesn&apos;t exist. Head home or browse writing.
       </p>
       <div className="mt-8 flex gap-4 text-[14px]">
-        <Link href="/" className="link">
+        <Link to="/" className="link">
           Home
         </Link>
-        <Link href="/writing/" className="link">
+        <Link to="/writing/" className="link">
           Writing
         </Link>
       </div>

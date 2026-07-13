@@ -1,10 +1,8 @@
 /**
- * Prefix public asset paths with Next basePath when on project GitHub Pages.
- * next/image sometimes emits /images/... without basePath under static export.
+ * Prefix public asset paths with Vite base when on project GitHub Pages.
+ * import.meta.env.BASE_URL is e.g. "/eltmrc.io/" or "/".
  */
-const BASE =
-  process.env.NEXT_PUBLIC_BASE_PATH ??
-  (process.env.CUSTOM_DOMAIN === "1" ? "" : "/eltmrc.io");
+const BASE = (import.meta.env.BASE_URL ?? "/").replace(/\/$/, "");
 
 export function asset(path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;

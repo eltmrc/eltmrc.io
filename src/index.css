@@ -25,6 +25,9 @@
   --shadow-soft: 0 1px 0 rgba(80, 40, 100, 0.03),
     0 14px 40px -18px rgba(120, 60, 140, 0.12);
   --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+
+  --font-geist-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-geist-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
 }
 
 /* Stay light even if the OS is dark — white brand */
@@ -54,6 +57,7 @@
 
 /* ─── Base ─── */
 html {
+  height: 100%;
   scroll-behavior: smooth;
 }
 
@@ -72,7 +76,9 @@ html {
 }
 
 body {
+  min-height: 100%;
   min-height: 100dvh;
+  margin: 0;
   /* Soft pink wash top-left, lilac wash top-right, white base */
   background:
     radial-gradient(1000px 520px at 0% -5%, rgba(232, 121, 184, 0.12), transparent 55%),
@@ -80,9 +86,16 @@ body {
     linear-gradient(180deg, var(--bg) 0%, var(--bg-end) 100%);
   background-attachment: fixed;
   color: var(--fg);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 body::before {
@@ -164,4 +177,138 @@ body::before {
   border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
   box-shadow: 0 1px 0 rgba(80, 40, 100, 0.03),
     0 16px 44px -18px rgba(168, 85, 200, 0.18);
+}
+
+/* ─── Category icons (sober motion) ─── */
+.cat-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.cat-icon--lg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.cat-icon--xl {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+@keyframes cat-breathe {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@keyframes cat-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+
+@keyframes cat-rise {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+}
+
+@keyframes cat-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(1px); }
+}
+
+@keyframes cat-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cat-cog {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cat-bubble {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-2px); opacity: 1; }
+}
+
+.cat-icon--pulse .cat-node,
+.cat-icon--pulse .cat-draw {
+  animation: cat-breathe 3.2s ease-in-out infinite;
+}
+
+.cat-icon--float {
+  animation: cat-float 3.6s ease-in-out infinite;
+}
+
+.cat-icon--rise .cat-block {
+  animation: cat-rise 2.8s ease-in-out infinite;
+}
+
+.cat-icon--nudge {
+  animation: cat-nudge 3s ease-in-out infinite;
+}
+
+.cat-icon--spin-slow .cat-orbit {
+  transform-origin: 12px 12px;
+  animation: cat-spin 14s linear infinite;
+}
+
+.cat-icon--cog .cat-cog {
+  transform-origin: 12px 12px;
+  animation: cat-cog 10s linear infinite;
+}
+
+.cat-icon--bubble .cat-node {
+  animation: cat-bubble 2.4s ease-in-out infinite;
+}
+
+.cat-node--delay,
+.cat-block--delay,
+.cat-orbit--delay {
+  animation-delay: 0.45s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat-icon,
+  .cat-icon * {
+    animation: none !important;
+  }
+}
+
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, #fff 70%, var(--accent-soft));
+  padding: 0.25rem 0.65rem 0.25rem 0.45rem;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--fg-body);
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.category-chip:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  color: var(--accent);
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, #ffffff 90%, var(--accent-soft));
+  padding: 1rem 1.05rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.category-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  box-shadow: var(--shadow-soft);
+  transform: translateY(-1px);
 }

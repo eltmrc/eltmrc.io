@@ -1,7 +1,8 @@
+import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 type FadeInProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   /** Stagger delay in seconds */
   delay?: number;

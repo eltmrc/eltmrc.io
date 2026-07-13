@@ -1,5 +1,6 @@
-import type { MDXComponents } from "mdx/types";
+import type { Components } from "react-markdown";
 import type { ComponentPropsWithoutRef } from "react";
+import { asset } from "@/lib/asset";
 
 function A(props: ComponentPropsWithoutRef<"a">) {
   const external = props.href?.startsWith("http");
@@ -14,7 +15,25 @@ function A(props: ComponentPropsWithoutRef<"a">) {
   );
 }
 
-export const mdxComponents: MDXComponents = {
+function Img(props: ComponentPropsWithoutRef<"img">) {
+  const raw = props.src;
+  const src =
+    typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")
+      ? asset(raw)
+      : raw;
+
+  return (
+    <img
+      {...props}
+      src={src}
+      className="mt-6 w-full rounded-xl border border-border"
+      alt={props.alt ?? ""}
+      loading="lazy"
+    />
+  );
+}
+
+export const markdownComponents: Components = {
   a: A,
   h2: (props) => (
     <h2
@@ -72,12 +91,5 @@ export const mdxComponents: MDXComponents = {
   ),
   hr: () => <hr className="my-10 border-border" />,
   strong: (props) => <strong className="font-semibold text-fg" {...props} />,
-  img: (props) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className="mt-6 rounded-xl border border-border"
-      alt={props.alt ?? ""}
-      {...props}
-    />
-  ),
+  img: Img,
 };

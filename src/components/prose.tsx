@@ -1,19 +1,13 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { mdxComponents } from "@/components/mdx-components";
+import { markdownComponents } from "@/components/mdx-components";
 
 export function Prose({ source }: { source: string }) {
   return (
     <article className="prose-shell">
-      <MDXRemote
-        source={source}
-        components={mdxComponents}
-        options={{
-          mdxOptions: {
-            remarkPlugins: [remarkGfm],
-          },
-        }}
-      />
+      <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+        {source}
+      </ReactMarkdown>
     </article>
   );
 }

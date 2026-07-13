@@ -2,29 +2,29 @@
 
 Personal site for **Eliot Maurice** — writing, notes, and the work behind [Cial](https://cial.ai).
 
-- **Stack:** Next.js 16 (static export), React 19, Tailwind CSS 4, Motion  
-- **Content:** MDX files in `content/writing/` (no database)  
+- **Stack:** Vite 7, React 19, Tailwind CSS 4, pnpm, Motion  
+- **Content:** MD/MDX files in `content/writing/` (no database)  
 - **Host:** GitHub Pages → [eltmrc.io](https://eltmrc.io)
 
 ## Develop
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ## Build & deploy
 
 ```bash
-npm run build          # static output → out/
-npm run deploy         # build + force-push out/ to gh-pages
+pnpm build          # static output → dist/
+pnpm run pages:deploy  # build + force-push dist/ to gh-pages
 ```
 
-Pages is served from the **`gh-pages`** branch. Custom domain: `public/CNAME` → `eltmrc.io`.
+Pages is served from the **`gh-pages`** branch (or GitHub Actions artifact). Custom domain: `public/CNAME` → `eltmrc.io`.
 
-DNS (when ready): point `eltmrc.io` at GitHub Pages per [GitHub docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+DNS (when ready): point `eltmrc.io` at GitHub Pages per [GitHub docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site), then build with `CUSTOM_DOMAIN=1`.
 
-Actions template (optional): `docs/github-pages-workflow.yml` — requires a token with the `workflow` scope to commit under `.github/workflows/`.
+Actions workflow: `.github/workflows/deploy.yml`.
 
 ## Add a post
 
@@ -34,6 +34,7 @@ Create `content/writing/your-slug.mdx`:
 ---
 title: "Your title"
 description: "One-line summary"
+category: notes
 date: "2026-07-13"
 tags: ["notes"]
 ---
@@ -52,6 +53,8 @@ AI agents: use the **write-post** skill:
 |-------|-------------|
 | `/` | Landing |
 | `/writing` | Post index |
-| `/writing/[slug]` | Post |
+| `/writing/:slug` | Post |
+| `/categories` | Category index |
+| `/categories/:slug` | Posts in a category |
 | `/about` | About |
-| `/rss.xml` | RSS feed |
+| `/rss.xml` | RSS feed (build-time) |

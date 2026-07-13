@@ -13,16 +13,16 @@ TOKEN="${GITHUB_TOKEN:-${GH_TOKEN:-}}"
 REMOTE="${DEPLOY_REMOTE:-origin}"
 REPO_URL="$(git remote get-url "$REMOTE" 2>/dev/null || true)"
 
-npm run build
+pnpm run build
 
-# Jekyll on GitHub Pages ignores `_next/` unless this file exists
-touch out/.nojekyll
+# Vite already writes dist/.nojekyll via spaFallback plugin; ensure it exists
+touch dist/.nojekyll
 
 TMP="$(mktemp -d)"
 cleanup() { rm -rf "$TMP"; }
 trap cleanup EXIT
 
-cp -a out/. "$TMP/"
+cp -a dist/. "$TMP/"
 cd "$TMP"
 git init -b gh-pages
 git add -A

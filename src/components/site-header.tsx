@@ -1,13 +1,11 @@
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
 
 const nav = [
   { href: "/writing/", label: "Writing" },
+  { href: "/categories/", label: "Categories" },
   { href: "/about/", label: "About" },
 ] as const;
 
@@ -18,13 +16,13 @@ function isActive(pathname: string, href: string) {
 }
 
 export function SiteHeader() {
-  const pathname = usePathname();
+  const { pathname } = useLocation();
 
   return (
     <header className="sticky top-0 z-40 border-b border-transparent backdrop-blur-xl supports-[backdrop-filter]:bg-bg/70">
       <div className="mx-auto flex w-full max-w-2xl items-center justify-between px-6 py-5 sm:px-8">
         <Link
-          href="/"
+          to="/"
           className="group text-[15px] font-medium tracking-tight text-fg transition-colors hover:text-accent"
         >
           <span className="inline-flex items-baseline gap-1.5">
@@ -44,7 +42,7 @@ export function SiteHeader() {
             return (
               <Link
                 key={item.href}
-                href={item.href}
+                to={item.href}
                 className={cn(
                   "relative rounded-md px-2.5 py-1.5 text-[14px] transition-colors",
                   active ? "text-fg" : "text-fg-muted hover:text-fg",

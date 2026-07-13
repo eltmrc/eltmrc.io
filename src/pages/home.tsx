@@ -1,16 +1,25 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
+import { CategoryCard } from "@/components/category-card";
 import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
 import { PostCard } from "@/components/post-card";
+import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
-import { getAllPosts } from "@/lib/posts";
+import { getAllCategories } from "@/lib/categories";
+import { getAllPosts, getCategoryCounts } from "@/lib/posts";
 import { site } from "@/lib/site";
 
-export default function HomePage() {
+export function HomePage() {
   const posts = getAllPosts().slice(0, 4);
+  const counts = getCategoryCounts();
+  const featuredCategories = getAllCategories()
+    .filter((c) => (counts[c.slug] ?? 0) > 0)
+    .slice(0, 6);
 
   return (
     <div className="pb-10 pt-6 sm:pt-10">
+      <Seo title={site.title} description={site.description} path="/" titleTemplate={false} />
+
       <FadeIn>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
           <Portrait size={88} priority className="sm:mt-1" />
@@ -46,7 +55,6 @@ export default function HomePage() {
           className="card-soft group block overflow-hidden rounded-2xl transition-colors"
         >
           <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={asset("/images/cial-workspace.jpg")}
               alt="Cial — AI workspace product preview"
@@ -56,7 +64,6 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
             <div className="flex min-w-0 items-start gap-3.5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={asset("/images/cial-icon.png")}
                 alt=""
@@ -90,7 +97,7 @@ export default function HomePage() {
             Writing
           </h2>
           <Link
-            href="/writing/"
+            to="/writing/"
             className="text-[13px] text-fg-muted transition-colors hover:text-fg"
           >
             All posts →
@@ -110,7 +117,33 @@ export default function HomePage() {
         )}
       </FadeIn>
 
-      <FadeIn delay={0.2} className="mt-16">
+      {featuredCategories.length > 0 ? (
+        <FadeIn delay={0.18} className="mt-16">
+          <div className="flex items-end justify-between gap-4">
+            <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+              Categories
+            </h2>
+            <Link
+              to="/categories/"
+              className="text-[13px] text-fg-muted transition-colors hover:text-fg"
+            >
+              All 20 →
+            </Link>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {featuredCategories.map((cat, i) => (
+              <CategoryCard
+                key={cat.slug}
+                category={cat}
+                count={counts[cat.slug] ?? 0}
+                index={i}
+              />
+            ))}
+          </div>
+        </FadeIn>
+      ) : null}
+
+      <FadeIn delay={0.22} className="mt-16">
         <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
           Connect
         </h2>

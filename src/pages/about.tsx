@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
 import { FadeIn } from "@/components/fade-in";
+import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "About",
-  description: `About ${site.name} — founder of Cial, builder and writer.`,
-};
-
-export default function AboutPage() {
+export function AboutPage() {
   return (
     <div className="pb-10 pt-6 sm:pt-10">
+      <Seo
+        title="About"
+        description={`About ${site.name} — founder of Cial, builder and writer.`}
+        path="/about/"
+      />
+
       <FadeIn>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-8">
           <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-2xl shadow-[var(--shadow-soft)] ring-1 ring-border sm:h-44 sm:w-44">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={asset("/images/portrait.jpg")}
               alt="Eliot Maurice"
@@ -75,7 +75,6 @@ export default function AboutPage() {
       <FadeIn delay={0.12} className="mt-12">
         <div className="card-soft overflow-hidden rounded-2xl">
           <div className="relative aspect-[21/9] w-full overflow-hidden bg-surface">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={asset("/images/cial-workspace.jpg")}
               alt="Cial workspace"
@@ -83,7 +82,6 @@ export default function AboutPage() {
             />
           </div>
           <div className="flex items-center gap-3 p-5 sm:p-6">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={asset("/images/cial-icon.png")}
               alt=""
