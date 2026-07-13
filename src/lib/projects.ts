@@ -3,9 +3,12 @@ export type Project = {
   role: string;
   period?: string;
   description: string;
+  /** External URL, or internal path (starts with "/") routed in-app. */
   href?: string;
   linkLabel?: string;
   status?: "active" | "archived";
+  /** Path under public/, rendered via asset(). */
+  icon?: string;
 };
 
 export const projects: Project[] = [
@@ -15,9 +18,10 @@ export const projects: Project[] = [
     period: "Now",
     description:
       "A self-hosted AI workspace you own: agents, tools, and a product surface that lives on your machine.",
-    href: "https://cial.ai",
-    linkLabel: "cial.ai",
+    href: "/writing/why-im-building-cial/",
+    linkLabel: "Read the story",
     status: "active",
+    icon: "/images/cial-icon.png",
   },
   {
     name: "ClinicPilot",
@@ -28,6 +32,7 @@ export const projects: Project[] = [
     href: "https://clinicpilot.io",
     linkLabel: "clinicpilot.io",
     status: "active",
+    icon: "/images/clinicpilot-icon.png",
   },
   {
     name: "visaexpress.io",

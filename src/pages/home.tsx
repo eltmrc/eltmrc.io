@@ -102,8 +102,17 @@ export function HomePage() {
               .filter(Boolean)
               .join(" · ");
             const body = (
-              <div className="flex items-baseline justify-between gap-4 py-4">
-                <div className="min-w-0">
+              <div className="flex items-start justify-between gap-4 py-4">
+                {project.icon ? (
+                  <img
+                    src={asset(project.icon)}
+                    alt=""
+                    width={32}
+                    height={32}
+                    className="mt-0.5 h-8 w-8 shrink-0 rounded-lg object-contain ring-1 ring-border"
+                  />
+                ) : null}
+                <div className="min-w-0 flex-1">
                   <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
                     <span className="text-[15px] font-medium text-fg transition-colors group-hover:text-accent">
                       {project.name}
@@ -130,9 +139,14 @@ export function HomePage() {
                 ) : null}
               </div>
             );
+            const isInternal = project.href?.startsWith("/");
             return (
               <li key={project.name}>
-                {project.href ? (
+                {project.href && isInternal ? (
+                  <Link to={project.href} className="group block">
+                    {body}
+                  </Link>
+                ) : project.href ? (
                   <a
                     href={project.href}
                     target="_blank"

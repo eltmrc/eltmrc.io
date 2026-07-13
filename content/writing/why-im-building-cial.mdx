@@ -1,27 +1,28 @@
 ---
 title: "Why I'm building Cial"
-description: "Not another chat wrapper — a real, self-hosted workspace for how people actually work with AI."
+description: "A workspace where the agent runs as root on your machine and edits its own source. On self-modification, meta-harnesses, and code written for models."
 category: founding
-date: "2026-07-10"
-tags: ["cial", "founding", "ai"]
+date: "2026-07-13"
+tags: ["cial", "founding", "agents", "self-hosting", "opencial"]
+image: "/images/cial-workspace.jpg"
 ---
 
-Most AI products still feel like a tab you visit, not a place you work.
+Most AI products are a chat window pointed at someone else's computer. You type, a model answers, and everything real — your files, your tools, your deploys — stays on the other side of the glass. Cial started from inverting that: give the agent a machine of its own, make that machine yours, and let the conversation end in shipped software instead of advice.
 
-I started Cial because I wanted something different: a **workspace** you own. Real login. Tools. Agents that can act on your machine. A product surface that survives model hype cycles.
+## A root agent, not a chat demo
 
-## The bet
+Every Cial is a full instance: a container you own, running a single process that serves the UI, holds the chat protocol, and spawns the agent with root over the whole workspace — including Cial's own source code. That last part is the point. When you ask for a feature, the agent doesn't describe it. It edits the code, typechecks, rebuilds, redeploys itself, and commits. The workspace you use on Friday is not the one you started with on Monday, and every step of that drift is a git commit you can read.
 
-The long game isn't "which model is smartest this month." It's **who controls the environment** where work happens — sessions, memory, tools, automations, identity.
+Self-modification sounds reckless until you place the trust boundary correctly. The instance is deliberately disposable: identity, login, and orchestration live in a separate plane the agent cannot touch. There is no auth gate inside the instance for a self-edit to weaken — the door it could delete simply isn't there. The instance signs every call to the outside with its own key; the source of truth is a fork it pushes to. You get an agent that can rewrite everything about itself except who is allowed in.
 
-Cial is that environment: self-hosted, extensible, built for people who want the power of agents without renting their entire workflow to a black box SaaS.
+## The meta-harness bet
 
-## What I'm optimizing for
+The long game isn't "which model is smartest this month." Models change monthly, and the harnesses around them — Claude Code, Codex, Grok, Kimi — change almost as fast. Betting a workspace on any one of them is how products age in dog years. So Cial treats both the model *and* the harness as pluggable parts: the same sessions, memory, tools, and customizations, whatever is running underneath. When a better agent ships, you swap it in and keep everything.
 
-- **Ownership** — your instance, your data boundary, your customizations
-- **Craft** — software that feels intentional, not bolted-on demos
-- **Agency** — tools that actually do things, not just talk about them
+What actually matters is who controls the environment where work happens. Cial's answer is: you do. Your instance, your data boundary, your keys — and a continuity that outlives your model choice.
 
-This site is where I'll write about that journey: technical choices, wrong turns, and the quieter product decisions that don't fit in a launch tweet.
+## Code written for the next reader — a model
 
-If you're building in the same space — or just curious — say hello.
+The repo carries a document called `LLM_FRIENDLY_CODE.md`, and it might be the most honest expression of what Cial is. Since the primary maintainer of the codebase is the agent itself, the code is written for how agents actually read: files small enough to fit in one read, names specific enough that one grep returns the right file, diffs the type checker can verify, feedback loops that close in seconds. This isn't clean-code aesthetics — it's architecture for a codebase whose author and audience are both models. A workspace that improves itself is only as good as its own legibility to itself.
+
+Cial starts blank and bootstraps into whatever you need — a dev environment, an ops console, a writing studio, all three. An open release, **OpenCial**, is on the way so the whole loop can run on your own hardware. If any of this resonates, it's live at [cial.ai](https://cial.ai) — and this site is where I'll keep writing about the journey: technical choices, wrong turns, and the quieter decisions that don't fit in a launch tweet.
