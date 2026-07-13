@@ -44,15 +44,15 @@ export const projects: Project[] = [
     status: "archived",
   },
   {
-    name: "Proclient",
+    name: "ProClient",
     role: "Project lead",
     period: "2017",
     description:
-      "Minecraft (Java) client — 300,000 downloads in its first four months.",
+      "Modded Minecraft client improving the player experience on Funcraft.net — 250,000+ downloads.",
     status: "archived",
   },
   {
-    name: "Hardfight",
+    name: "HardFight",
     role: "Java developer",
     period: "2016",
     description:
