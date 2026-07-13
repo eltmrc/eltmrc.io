@@ -7,6 +7,7 @@ import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
 import { getAllCategories } from "@/lib/categories";
 import { getAllPosts, getCategoryCounts } from "@/lib/posts";
+import { projects } from "@/lib/projects";
 import { site } from "@/lib/site";
 
 export function HomePage() {
@@ -89,6 +90,60 @@ export function HomePage() {
             </span>
           </div>
         </a>
+      </FadeIn>
+
+      <FadeIn delay={0.12} className="mt-14">
+        <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+          Projects
+        </h2>
+        <ul className="mt-1 divide-y divide-border">
+          {projects.map((project) => {
+            const meta = [project.role, project.period]
+              .filter(Boolean)
+              .join(" · ");
+            const body = (
+              <div className="flex items-baseline justify-between gap-4 py-4">
+                <div className="min-w-0">
+                  <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                    <span className="text-[15px] font-medium text-fg transition-colors group-hover:text-accent">
+                      {project.name}
+                    </span>
+                    <span className="text-[12px] text-fg-subtle">{meta}</span>
+                    {project.status === "archived" ? (
+                      <span className="rounded-full border border-border px-2 py-0.5 text-[11px] leading-none text-fg-subtle">
+                        Archived
+                      </span>
+                    ) : null}
+                  </p>
+                  <p className="mt-1 text-[14px] leading-relaxed text-fg-muted">
+                    {project.description}
+                  </p>
+                </div>
+                {project.href ? (
+                  <span className="shrink-0 text-[13px] text-fg-muted transition-colors group-hover:text-accent">
+                    {project.linkLabel ?? "Visit"} →
+                  </span>
+                ) : null}
+              </div>
+            );
+            return (
+              <li key={project.name}>
+                {project.href ? (
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block"
+                  >
+                    {body}
+                  </a>
+                ) : (
+                  body
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </FadeIn>
 
       <FadeIn delay={0.14} className="mt-14">

@@ -125,6 +125,17 @@ export function AboutPage() {
               </a>
             </li>
             <li className="flex items-center justify-between gap-4 border-b border-border py-3">
+              <span className="text-fg-muted">CTO</span>
+              <a
+                href="https://clinicpilot.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link"
+              >
+                ClinicPilot
+              </a>
+            </li>
+            <li className="flex items-center justify-between gap-4 border-b border-border py-3">
               <span className="text-fg-muted">Code</span>
               <a
                 href={site.links.github}
