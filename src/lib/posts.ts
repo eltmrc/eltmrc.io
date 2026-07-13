@@ -1,6 +1,6 @@
-import readingTime from "reading-time";
 import { getCategory, isCategorySlug } from "@/lib/categories";
 import { parseFrontmatter } from "@/lib/frontmatter";
+import { readingTime } from "@/lib/reading-time";
 
 export type PostFrontmatter = {
   title: string;
