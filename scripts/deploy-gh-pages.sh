@@ -13,7 +13,11 @@ TOKEN="${GITHUB_TOKEN:-${GH_TOKEN:-}}"
 REMOTE="${DEPLOY_REMOTE:-origin}"
 REPO_URL="$(git remote get-url "$REMOTE" 2>/dev/null || true)"
 
-pnpm run build
+# Low-RAM hosts (Cial instance ≈4GB, no swap): cap Node heap + skip tsc.
+# Full typecheck is `pnpm typecheck` / `pnpm build:check`, not required to ship static HTML.
+export NODE_OPTIONS="${NODE_OPTIONS:---max-old-space-size=640}"
+export UV_THREADPOOL_SIZE="${UV_THREADPOOL_SIZE:-2}"
+nice -n 10 pnpm run build
 
 # Vite already writes dist/.nojekyll via spaFallback plugin; ensure it exists
 touch dist/.nojekyll

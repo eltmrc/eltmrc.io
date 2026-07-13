@@ -115,9 +115,20 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: true,
-    // Keep builds light on small machines
+    // Keep builds light on small machines (≈4GB RAM hosts)
     sourcemap: false,
     reportCompressedSize: false,
     chunkSizeWarningLimit: 800,
+    minify: "esbuild",
+    cssMinify: true,
+    target: "es2022",
+    rollupOptions: {
+      // Fewer parallel file ops → lower peak RSS
+      maxParallelFileOps: 2,
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
 });
+
