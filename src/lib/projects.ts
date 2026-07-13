@@ -10,6 +10,16 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    name: "Cial",
+    role: "Founder",
+    period: "Now",
+    description:
+      "A self-hosted AI workspace you own: agents, tools, and a product surface that lives on your machine.",
+    href: "https://cial.ai",
+    linkLabel: "cial.ai",
+    status: "active",
+  },
+  {
     name: "ClinicPilot",
     role: "CTO",
     period: "Now",

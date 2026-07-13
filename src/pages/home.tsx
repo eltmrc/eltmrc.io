@@ -109,11 +109,15 @@ export function HomePage() {
                       {project.name}
                     </span>
                     <span className="text-[12px] text-fg-subtle">{meta}</span>
-                    {project.status === "archived" ? (
+                    {project.status === "active" ? (
+                      <span className="rounded-full border border-accent/30 bg-accent/5 px-2 py-0.5 text-[11px] leading-none text-accent">
+                        Active
+                      </span>
+                    ) : (
                       <span className="rounded-full border border-border px-2 py-0.5 text-[11px] leading-none text-fg-subtle">
                         Archived
                       </span>
-                    ) : null}
+                    )}
                   </p>
                   <p className="mt-1 text-[14px] leading-relaxed text-fg-muted">
                     {project.description}
