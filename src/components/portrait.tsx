@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { asset } from "@/lib/asset";
 import { cn } from "@/lib/cn";
 
 type PortraitProps = {
@@ -17,12 +17,13 @@ export function Portrait({ size = 96, className, priority }: PortraitProps) {
       )}
       style={{ width: size, height: size }}
     >
-      <Image
-        src="/images/portrait.jpg"
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={asset("/images/portrait.jpg")}
         alt="Eliot Maurice"
         width={size}
         height={size}
-        priority={priority}
+        {...(priority ? { fetchPriority: "high" as const } : {})}
         className="h-full w-full object-cover"
       />
     </div>

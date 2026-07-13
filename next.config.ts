@@ -10,6 +10,7 @@ import type { NextConfig } from "next";
  * and put public/CNAME back.
  */
 const useProjectPages = process.env.CUSTOM_DOMAIN !== "1";
+const basePath = useProjectPages ? "/eltmrc.io" : "";
 
 const nextConfig: NextConfig = {
   output: "export",
@@ -17,10 +18,14 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
+  env: {
+    // Used by src/lib/asset.ts for reliable static asset URLs
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   ...(useProjectPages
     ? {
-        basePath: "/eltmrc.io",
-        assetPrefix: "/eltmrc.io",
+        basePath,
+        assetPrefix: basePath,
       }
     : {}),
 };

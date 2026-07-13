@@ -1,6 +1,6 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import { FadeIn } from "@/components/fade-in";
+import { asset } from "@/lib/asset";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -14,13 +14,11 @@ export default function AboutPage() {
       <FadeIn>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-8">
           <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-2xl shadow-[var(--shadow-soft)] ring-1 ring-border sm:h-44 sm:w-44">
-            <Image
-              src="/images/portrait.jpg"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset("/images/portrait.jpg")}
               alt="Eliot Maurice"
-              fill
-              sizes="176px"
-              priority
-              className="object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
           <div>
@@ -76,18 +74,18 @@ export default function AboutPage() {
 
       <FadeIn delay={0.12} className="mt-12">
         <div className="card-soft overflow-hidden rounded-2xl">
-          <div className="relative aspect-[21/9] w-full bg-surface">
-            <Image
-              src="/images/cial-workspace.jpg"
+          <div className="relative aspect-[21/9] w-full overflow-hidden bg-surface">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset("/images/cial-workspace.jpg")}
               alt="Cial workspace"
-              fill
-              sizes="(max-width: 672px) 100vw, 672px"
-              className="object-cover object-top"
+              className="h-full w-full object-cover object-top"
             />
           </div>
           <div className="flex items-center gap-3 p-5 sm:p-6">
-            <Image
-              src="/images/cial-icon.png"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset("/images/cial-icon.png")}
               alt=""
               width={36}
               height={36}

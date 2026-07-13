@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
 import { PostCard } from "@/components/post-card";
+import { asset } from "@/lib/asset";
 import { getAllPosts } from "@/lib/posts";
 import { site } from "@/lib/site";
 
@@ -46,20 +46,19 @@ export default function HomePage() {
           className="card-soft group block overflow-hidden rounded-2xl transition-colors"
         >
           <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface">
-            <Image
-              src="/images/cial-workspace.jpg"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset("/images/cial-workspace.jpg")}
               alt="Cial — AI workspace product preview"
-              fill
-              sizes="(max-width: 672px) 100vw, 672px"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              priority
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent" />
           </div>
           <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
             <div className="flex min-w-0 items-start gap-3.5">
-              <Image
-                src="/images/cial-icon.png"
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={asset("/images/cial-icon.png")}
                 alt=""
                 width={40}
                 height={40}
