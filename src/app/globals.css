@@ -1,46 +1,36 @@
 @import "tailwindcss";
 
-/* ─── Design tokens — quiet founder craft ─── */
+/* ─── White theme · soft pink / purple accent ─── */
 :root {
   color-scheme: light;
 
-  --bg: #f7f6f3;
-  --bg-end: #f0eee9;
-  --fg: #141414;
-  --fg-body: #2a2a2a;
-  --fg-muted: #5c5c5c;
-  --fg-subtle: #8a8a8a;
-  --border: rgba(20, 20, 20, 0.08);
-  --surface: rgba(20, 20, 20, 0.03);
-  --surface-elevated: rgba(20, 20, 20, 0.055);
-  --surface-code: #eceae4;
-  --accent: #3d4fd9;
-  --accent-soft: rgba(61, 79, 217, 0.12);
-  --selection: rgba(61, 79, 217, 0.22);
-  --shadow-soft: 0 1px 0 rgba(20, 20, 20, 0.04),
-    0 12px 40px -16px rgba(20, 20, 20, 0.12);
-  --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  /* Clean white surfaces */
+  --bg: #ffffff;
+  --bg-end: #faf8fc;
+  --fg: #17141f;
+  --fg-body: #3a3548;
+  --fg-muted: #6b6478;
+  --fg-subtle: #9a93a8;
+  --border: rgba(80, 50, 100, 0.09);
+  --surface: rgba(140, 90, 170, 0.035);
+  --surface-elevated: rgba(140, 90, 170, 0.055);
+  --surface-code: #f4f0f8;
+
+  /* Slight pink → purple accent */
+  --accent: #a855c8;
+  --accent-soft: rgba(192, 112, 200, 0.14);
+  --accent-pink: #e879b8;
+  --selection: rgba(192, 112, 200, 0.22);
+
+  --shadow-soft: 0 1px 0 rgba(80, 40, 100, 0.03),
+    0 14px 40px -18px rgba(120, 60, 140, 0.12);
+  --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
+/* Stay light even if the OS is dark — white brand */
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: dark;
-
-    --bg: #0c0c0d;
-    --bg-end: #111113;
-    --fg: #f2f1ef;
-    --fg-body: #cfcbc4;
-    --fg-muted: #9a9690;
-    --fg-subtle: #6b6762;
-    --border: rgba(242, 241, 239, 0.08);
-    --surface: rgba(242, 241, 239, 0.04);
-    --surface-elevated: rgba(242, 241, 239, 0.07);
-    --surface-code: #161618;
-    --accent: #8b97ff;
-    --accent-soft: rgba(139, 151, 255, 0.14);
-    --selection: rgba(139, 151, 255, 0.28);
-    --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.03),
-      0 16px 48px -20px rgba(0, 0, 0, 0.55);
+    color-scheme: light;
   }
 }
 
@@ -82,9 +72,10 @@ html {
 
 body {
   min-height: 100dvh;
+  /* Soft pink wash top-left, lilac wash top-right, white base */
   background:
-    radial-gradient(1100px 520px at 8% -8%, var(--accent-soft), transparent 55%),
-    radial-gradient(900px 480px at 100% 0%, color-mix(in srgb, var(--accent-soft) 55%, transparent), transparent 50%),
+    radial-gradient(1000px 520px at 0% -5%, rgba(232, 121, 184, 0.12), transparent 55%),
+    radial-gradient(900px 480px at 100% 0%, rgba(168, 85, 200, 0.1), transparent 50%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-end) 100%);
   background-attachment: fixed;
   color: var(--fg);
@@ -99,16 +90,9 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.28;
+  opacity: 0.22;
   background-image: var(--grain);
   mix-blend-mode: multiply;
-}
-
-@media (prefers-color-scheme: dark) {
-  body::before {
-    opacity: 0.18;
-    mix-blend-mode: soft-light;
-  }
 }
 
 ::selection {
@@ -120,7 +104,7 @@ body::before {
 .link {
   color: var(--fg);
   text-decoration-line: underline;
-  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   transition: color 160ms ease, text-decoration-color 160ms ease;
@@ -137,7 +121,7 @@ body::before {
 }
 
 .link-quiet:hover {
-  color: var(--fg);
+  color: var(--accent);
 }
 
 /* ─── Motion helpers ─── */
@@ -156,7 +140,6 @@ body::before {
   animation: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Content visible even if animation is blocked */
 @supports not (animation: fade-up 1s) {
   .animate-fade-up {
     opacity: 1;
@@ -171,11 +154,13 @@ body::before {
 
 .card-soft {
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-elevated) 85%, transparent);
+  background: color-mix(in srgb, #ffffff 88%, var(--accent-soft));
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
 }
 
 .card-soft:hover {
-  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  box-shadow: 0 1px 0 rgba(80, 40, 100, 0.03),
+    0 16px 44px -18px rgba(168, 85, 200, 0.18);
 }
