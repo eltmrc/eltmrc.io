@@ -1,6 +1,44 @@
 import type { Components } from "react-markdown";
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { asset } from "@/lib/asset";
+
+function textOf(node: ReactNode): string {
+  if (typeof node === "string") return node;
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (node && typeof node === "object" && "props" in node) {
+    return textOf((node as { props: { children?: ReactNode } }).props.children);
+  }
+  return "";
+}
+
+/** `## 2014–2016 · Title` renders as a timeline marker instead of a plain heading. */
+const TIMELINE_HEADING = /^(\d{4}(?:\s*[–-]\s*(?:\d{4}|now))?)\s*·\s*(.+)$/;
+
+function H2(props: ComponentPropsWithoutRef<"h2">) {
+  const match = TIMELINE_HEADING.exec(textOf(props.children).trim());
+  if (match) {
+    return (
+      <h2 className="mt-12 scroll-mt-20 first:mt-0">
+        <span className="flex items-center gap-3">
+          <span className="h-2 w-2 shrink-0 rounded-full bg-accent shadow-[0_0_0_4px_var(--accent-soft)]" />
+          <span className="font-mono text-[12px] font-medium tracking-[0.18em] text-accent">
+            {match[1]}
+          </span>
+          <span className="h-px flex-1 bg-border" />
+        </span>
+        <span className="mt-2.5 block text-xl font-semibold tracking-tight text-fg">
+          {match[2]}
+        </span>
+      </h2>
+    );
+  }
+  return (
+    <h2
+      className="mt-10 scroll-mt-20 text-xl font-semibold tracking-tight text-fg first:mt-0"
+      {...props}
+    />
+  );
+}
 
 function A(props: ComponentPropsWithoutRef<"a">) {
   const external = props.href?.startsWith("http");
@@ -35,12 +73,7 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
 
 export const markdownComponents: Components = {
   a: A,
-  h2: (props) => (
-    <h2
-      className="mt-10 scroll-mt-20 text-xl font-semibold tracking-tight text-fg first:mt-0"
-      {...props}
-    />
-  ),
+  h2: H2,
   h3: (props) => (
     <h3
       className="mt-8 scroll-mt-20 text-lg font-semibold tracking-tight text-fg"
