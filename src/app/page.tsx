@@ -8,15 +8,15 @@ export default function HomePage() {
   const posts = getAllPosts().slice(0, 4);
 
   return (
-    <div className="pb-8 pt-4 sm:pt-8">
+    <div className="pb-10 pt-6 sm:pt-10">
       <FadeIn>
-        <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+        <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-fg-subtle">
           {site.tagline}
         </p>
-        <h1 className="mt-4 max-w-xl text-[2rem] font-semibold leading-[1.15] tracking-tight text-fg sm:text-[2.35rem]">
+        <h1 className="mt-4 max-w-xl text-[2.1rem] font-semibold leading-[1.12] tracking-tight text-fg sm:text-[2.5rem]">
           Eliot Maurice
         </h1>
-        <p className="mt-5 max-w-xl text-[16px] leading-[1.7] text-fg-body sm:text-[17px]">
+        <p className="mt-5 max-w-xl text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
           I build tools for how people work with AI. Creator of{" "}
           <a
             href={site.links.cial}
@@ -32,10 +32,10 @@ export default function HomePage() {
       </FadeIn>
 
       <FadeIn delay={0.08} className="mt-12">
-        <section className="card-soft rounded-2xl p-5 sm:p-6">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-fg-subtle">
+        <section className="card-soft rounded-2xl p-5 transition-colors sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0">
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
                 Building
               </p>
               <h2 className="mt-2 text-[18px] font-semibold tracking-tight text-fg">
@@ -50,7 +50,7 @@ export default function HomePage() {
               href={site.links.cial}
               target="_blank"
               rel="noopener noreferrer"
-              className="shrink-0 rounded-full border border-border bg-surface px-3.5 py-1.5 text-[13px] font-medium text-fg transition-colors hover:border-accent/40 hover:text-accent"
+              className="inline-flex shrink-0 items-center justify-center self-start rounded-full border border-border bg-surface px-3.5 py-1.5 text-[13px] font-medium text-fg transition-colors hover:border-accent/40 hover:text-accent"
             >
               Visit →
             </a>
@@ -60,7 +60,7 @@ export default function HomePage() {
 
       <FadeIn delay={0.14} className="mt-14">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="text-[13px] font-medium uppercase tracking-[0.12em] text-fg-subtle">
+          <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
             Writing
           </h2>
           <Link
@@ -72,7 +72,7 @@ export default function HomePage() {
         </div>
 
         {posts.length > 0 ? (
-          <ul className="mt-2 divide-y divide-border">
+          <ul className="mt-1 divide-y divide-border">
             {posts.map((post, i) => (
               <PostCard key={post.slug} post={post} index={i} />
             ))}
@@ -85,7 +85,7 @@ export default function HomePage() {
       </FadeIn>
 
       <FadeIn delay={0.2} className="mt-16">
-        <h2 className="text-[13px] font-medium uppercase tracking-[0.12em] text-fg-subtle">
+        <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
           Connect
         </h2>
         <p className="mt-3 text-[15px] leading-relaxed text-fg-body">

@@ -15,6 +15,9 @@ REPO_URL="$(git remote get-url "$REMOTE" 2>/dev/null || true)"
 
 npm run build
 
+# Jekyll on GitHub Pages ignores `_next/` unless this file exists
+touch out/.nojekyll
+
 TMP="$(mktemp -d)"
 cleanup() { rm -rf "$TMP"; }
 trap cleanup EXIT

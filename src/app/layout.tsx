@@ -22,11 +22,12 @@ export const metadata: Metadata = {
     template: `%s · ${site.name}`,
   },
   description: site.description,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  // Leading slash: Next prefixes basePath → /eltmrc.io/favicon.svg
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
-  authors: [{ name: site.name, url: site.url }],
-  creator: site.name,
   openGraph: {
     type: "website",
     locale: site.locale,

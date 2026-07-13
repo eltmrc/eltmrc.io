@@ -41,7 +41,7 @@ export default async function WritingPostPage({ params }: Props) {
   if (!post || post.draft) notFound();
 
   return (
-    <div className="pb-8 pt-4 sm:pt-8">
+    <div className="pb-10 pt-6 sm:pt-10">
       <FadeIn>
         <Link
           href="/writing/"
@@ -65,8 +65,21 @@ export default async function WritingPostPage({ params }: Props) {
         </div>
       </FadeIn>
 
-      <FadeIn delay={0.1} className="mt-10">
+      <FadeIn delay={0.08} className="mt-10">
         <Prose source={post.content} />
+      </FadeIn>
+
+      <FadeIn delay={0.12} className="mt-14 border-t border-border pt-8">
+        <p className="text-[14px] text-fg-muted">
+          Written by {site.name}.{" "}
+          <Link href="/writing/" className="link">
+            More writing
+          </Link>
+          {" · "}
+          <a href={site.links.x} className="link" target="_blank" rel="noopener noreferrer">
+            Follow on X
+          </a>
+        </p>
       </FadeIn>
     </div>
   );

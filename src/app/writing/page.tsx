@@ -12,9 +12,9 @@ export default function WritingIndexPage() {
   const posts = getAllPosts();
 
   return (
-    <div className="pb-8 pt-4 sm:pt-8">
+    <div className="pb-10 pt-6 sm:pt-10">
       <FadeIn>
-        <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+        <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-fg-subtle">
           Writing
         </p>
         <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.25rem]">

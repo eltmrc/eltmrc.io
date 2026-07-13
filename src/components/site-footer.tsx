@@ -4,7 +4,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mx-auto mt-auto w-full max-w-2xl px-6 pb-12 pt-20 sm:px-8">
+    <footer className="mx-auto mt-auto w-full max-w-2xl px-6 pb-12 pt-16 sm:px-8">
       <div className="flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[13px] text-fg-muted">
           © {year} {site.name}

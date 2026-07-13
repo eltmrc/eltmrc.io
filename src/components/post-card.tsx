@@ -12,11 +12,11 @@ export function PostCard({
   return (
     <li
       className="group animate-fade-up"
-      style={{ animationDelay: `${index * 60}ms` }}
+      style={{ animationDelay: `${0.05 + index * 0.06}s` }}
     >
       <Link
         href={`/writing/${post.slug}/`}
-        className="flex flex-col gap-1.5 rounded-xl py-4 transition-colors sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+        className="-mx-2 flex flex-col gap-1.5 rounded-xl px-2 py-4 transition-colors hover:bg-surface sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
       >
         <div className="min-w-0">
           <h3 className="text-[16px] font-medium tracking-tight text-fg transition-colors group-hover:text-accent">

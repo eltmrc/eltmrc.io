@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="pb-8 pt-4 sm:pt-8">
+    <div className="pb-10 pt-6 sm:pt-10">
       <FadeIn>
-        <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+        <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-fg-subtle">
           About
         </p>
         <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.25rem]">
@@ -19,7 +19,10 @@ export default function AboutPage() {
         </h1>
       </FadeIn>
 
-      <FadeIn delay={0.08} className="mt-8 space-y-5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
+      <FadeIn
+        delay={0.08}
+        className="mt-8 space-y-5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]"
+      >
         <p>
           I&apos;m a founder and builder. I care about software that feels
           intentional — fast, clear, and owned by the people who use it.
@@ -55,11 +58,11 @@ export default function AboutPage() {
 
       <FadeIn delay={0.14} className="mt-12">
         <div className="card-soft rounded-2xl p-5 sm:p-6">
-          <h2 className="text-[13px] font-medium uppercase tracking-[0.12em] text-fg-subtle">
+          <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
             Elsewhere
           </h2>
-          <ul className="mt-4 space-y-3 text-[15px]">
-            <li className="flex justify-between gap-4 border-b border-border pb-3">
+          <ul className="mt-4 space-y-0 text-[15px]">
+            <li className="flex items-center justify-between gap-4 border-b border-border py-3">
               <span className="text-fg-muted">Product</span>
               <a
                 href={site.links.cial}
@@ -70,7 +73,7 @@ export default function AboutPage() {
                 Cial
               </a>
             </li>
-            <li className="flex justify-between gap-4 border-b border-border pb-3">
+            <li className="flex items-center justify-between gap-4 border-b border-border py-3">
               <span className="text-fg-muted">Code</span>
               <a
                 href={site.links.github}
@@ -81,7 +84,7 @@ export default function AboutPage() {
                 github.com/{site.handle}
               </a>
             </li>
-            <li className="flex justify-between gap-4">
+            <li className="flex items-center justify-between gap-4 py-3">
               <span className="text-fg-muted">Social</span>
               <a
                 href={site.links.x}

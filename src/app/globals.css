@@ -12,7 +12,7 @@
   --fg-subtle: #8a8a8a;
   --border: rgba(20, 20, 20, 0.08);
   --surface: rgba(20, 20, 20, 0.03);
-  --surface-elevated: rgba(20, 20, 20, 0.05);
+  --surface-elevated: rgba(20, 20, 20, 0.055);
   --surface-code: #eceae4;
   --accent: #3d4fd9;
   --accent-soft: rgba(61, 79, 217, 0.12);
@@ -83,7 +83,8 @@ html {
 body {
   min-height: 100dvh;
   background:
-    radial-gradient(1200px 600px at 10% -10%, var(--accent-soft), transparent 55%),
+    radial-gradient(1100px 520px at 8% -8%, var(--accent-soft), transparent 55%),
+    radial-gradient(900px 480px at 100% 0%, color-mix(in srgb, var(--accent-soft) 55%, transparent), transparent 50%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-end) 100%);
   background-attachment: fixed;
   color: var(--fg);
@@ -98,14 +99,14 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.35;
+  opacity: 0.28;
   background-image: var(--grain);
   mix-blend-mode: multiply;
 }
 
 @media (prefers-color-scheme: dark) {
   body::before {
-    opacity: 0.2;
+    opacity: 0.18;
     mix-blend-mode: soft-light;
   }
 }
@@ -152,7 +153,15 @@ body::before {
 }
 
 .animate-fade-up {
-  animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Content visible even if animation is blocked */
+@supports not (animation: fade-up 1s) {
+  .animate-fade-up {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ─── Utilities ─── */
@@ -162,7 +171,11 @@ body::before {
 
 .card-soft {
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-elevated) 80%, transparent);
+  background: color-mix(in srgb, var(--surface-elevated) 85%, transparent);
   box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+}
+
+.card-soft:hover {
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
 }
