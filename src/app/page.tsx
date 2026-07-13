@@ -1,65 +1,119 @@
-import Image from "next/image";
+import Link from "next/link";
+import { FadeIn } from "@/components/fade-in";
+import { PostCard } from "@/components/post-card";
+import { getAllPosts } from "@/lib/posts";
+import { site } from "@/lib/site";
 
-export default function Home() {
+export default function HomePage() {
+  const posts = getAllPosts().slice(0, 4);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+    <div className="pb-8 pt-4 sm:pt-8">
+      <FadeIn>
+        <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+          {site.tagline}
+        </p>
+        <h1 className="mt-4 max-w-xl text-[2rem] font-semibold leading-[1.15] tracking-tight text-fg sm:text-[2.35rem]">
+          Eliot Maurice
+        </h1>
+        <p className="mt-5 max-w-xl text-[16px] leading-[1.7] text-fg-body sm:text-[17px]">
+          I build tools for how people work with AI. Creator of{" "}
+          <a
+            href={site.links.cial}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            Cial
+          </a>
+          — a self-hosted AI workspace — and this is where I write about
+          software, systems, and the long path of shipping something real.
+        </p>
+      </FadeIn>
+
+      <FadeIn delay={0.08} className="mt-12">
+        <section className="card-soft rounded-2xl p-5 sm:p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-fg-subtle">
+                Building
+              </p>
+              <h2 className="mt-2 text-[18px] font-semibold tracking-tight text-fg">
+                Cial
+              </h2>
+              <p className="mt-2 max-w-md text-[14px] leading-relaxed text-fg-muted">
+                A real AI workspace you own: agents, tools, and a product surface
+                that lives on your machine — not a chat demo.
+              </p>
+            </div>
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href={site.links.cial}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 rounded-full border border-border bg-surface px-3.5 py-1.5 text-[13px] font-medium text-fg transition-colors hover:border-accent/40 hover:text-accent"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              Visit →
+            </a>
+          </div>
+        </section>
+      </FadeIn>
+
+      <FadeIn delay={0.14} className="mt-14">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="text-[13px] font-medium uppercase tracking-[0.12em] text-fg-subtle">
+            Writing
+          </h2>
+          <Link
+            href="/writing/"
+            className="text-[13px] text-fg-muted transition-colors hover:text-fg"
+          >
+            All posts →
+          </Link>
+        </div>
+
+        {posts.length > 0 ? (
+          <ul className="mt-2 divide-y divide-border">
+            {posts.map((post, i) => (
+              <PostCard key={post.slug} post={post} index={i} />
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-4 text-[14px] text-fg-muted">
+            First posts coming soon.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+        )}
+      </FadeIn>
+
+      <FadeIn delay={0.2} className="mt-16">
+        <h2 className="text-[13px] font-medium uppercase tracking-[0.12em] text-fg-subtle">
+          Connect
+        </h2>
+        <p className="mt-3 text-[15px] leading-relaxed text-fg-body">
+          Reach me at{" "}
+          <a href={`mailto:${site.email}`} className="link">
+            {site.email}
+          </a>
+          , or on{" "}
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href={site.links.x}
             target="_blank"
             rel="noopener noreferrer"
+            className="link"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
+            X
+          </a>{" "}
+          and{" "}
           <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href={site.links.github}
             target="_blank"
             rel="noopener noreferrer"
+            className="link"
           >
-            Documentation
+            GitHub
           </a>
-        </div>
-      </main>
+          .
+        </p>
+      </FadeIn>
     </div>
   );
 }

@@ -1,0 +1,41 @@
+import type { Metadata } from "next";
+import { FadeIn } from "@/components/fade-in";
+import { PostCard } from "@/components/post-card";
+import { getAllPosts } from "@/lib/posts";
+
+export const metadata: Metadata = {
+  title: "Writing",
+  description: "Essays and notes on software, AI, and building Cial.",
+};
+
+export default function WritingIndexPage() {
+  const posts = getAllPosts();
+
+  return (
+    <div className="pb-8 pt-4 sm:pt-8">
+      <FadeIn>
+        <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+          Writing
+        </p>
+        <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.25rem]">
+          Notes & essays
+        </h1>
+        <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-fg-muted">
+          Product decisions, tools I try, and field notes from building.
+        </p>
+      </FadeIn>
+
+      <FadeIn delay={0.08} className="mt-10">
+        {posts.length > 0 ? (
+          <ul className="divide-y divide-border">
+            {posts.map((post, i) => (
+              <PostCard key={post.slug} post={post} index={i} />
+            ))}
+          </ul>
+        ) : (
+          <p className="text-[15px] text-fg-muted">No posts yet.</p>
+        )}
+      </FadeIn>
+    </div>
+  );
+}

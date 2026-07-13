@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
+/* ─── Design tokens — quiet founder craft ─── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  color-scheme: light;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --bg: #f7f6f3;
+  --bg-end: #f0eee9;
+  --fg: #141414;
+  --fg-body: #2a2a2a;
+  --fg-muted: #5c5c5c;
+  --fg-subtle: #8a8a8a;
+  --border: rgba(20, 20, 20, 0.08);
+  --surface: rgba(20, 20, 20, 0.03);
+  --surface-elevated: rgba(20, 20, 20, 0.05);
+  --surface-code: #eceae4;
+  --accent: #3d4fd9;
+  --accent-soft: rgba(61, 79, 217, 0.12);
+  --selection: rgba(61, 79, 217, 0.22);
+  --shadow-soft: 0 1px 0 rgba(20, 20, 20, 0.04),
+    0 12px 40px -16px rgba(20, 20, 20, 0.12);
+  --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: dark;
+
+    --bg: #0c0c0d;
+    --bg-end: #111113;
+    --fg: #f2f1ef;
+    --fg-body: #cfcbc4;
+    --fg-muted: #9a9690;
+    --fg-subtle: #6b6762;
+    --border: rgba(242, 241, 239, 0.08);
+    --surface: rgba(242, 241, 239, 0.04);
+    --surface-elevated: rgba(242, 241, 239, 0.07);
+    --surface-code: #161618;
+    --accent: #8b97ff;
+    --accent-soft: rgba(139, 151, 255, 0.14);
+    --selection: rgba(139, 151, 255, 0.28);
+    --shadow-soft: 0 1px 0 rgba(255, 255, 255, 0.03),
+      0 16px 48px -20px rgba(0, 0, 0, 0.55);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-end: var(--bg-end);
+  --color-fg: var(--fg);
+  --color-fg-body: var(--fg-body);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-code: var(--surface-code);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100dvh;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, var(--accent-soft), transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-end) 100%);
+  background-attachment: fixed;
+  color: var(--fg);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.35;
+  background-image: var(--grain);
+  mix-blend-mode: multiply;
+}
+
+@media (prefers-color-scheme: dark) {
+  body::before {
+    opacity: 0.2;
+    mix-blend-mode: soft-light;
+  }
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--fg);
+}
+
+/* ─── Links ─── */
+.link {
+  color: var(--fg);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.link:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+.link-quiet {
+  color: var(--fg-muted);
+  transition: color 160ms ease;
+}
+
+.link-quiet:hover {
+  color: var(--fg);
+}
+
+/* ─── Motion helpers ─── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Utilities ─── */
+.prose-shell {
+  max-width: 42rem;
+}
+
+.card-soft {
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-elevated) 80%, transparent);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(8px);
 }
