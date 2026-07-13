@@ -13,12 +13,18 @@ npm install
 npm run dev
 ```
 
-## Build
+## Build & deploy
 
 ```bash
-npm run build
-# static output in out/
+npm run build          # static output → out/
+npm run deploy         # build + force-push out/ to gh-pages
 ```
+
+Pages is served from the **`gh-pages`** branch. Custom domain: `public/CNAME` → `eltmrc.io`.
+
+DNS (when ready): point `eltmrc.io` at GitHub Pages per [GitHub docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+
+Actions template (optional): `docs/github-pages-workflow.yml` — requires a token with the `workflow` scope to commit under `.github/workflows/`.
 
 ## Add a post
 
@@ -35,11 +41,17 @@ tags: ["notes"]
 Your markdown here.
 ```
 
-AI agents: use the **write-post** skill under `.claude/skills/write-post` or `.grok/skills/write-post`.
+AI agents: use the **write-post** skill:
 
-## GitHub Pages
+- `.claude/skills/write-post/SKILL.md`
+- `.grok/skills/write-post/SKILL.md`
 
-1. Repo: `eltmrc/eltmrc.io`
-2. Settings → Pages → Source: **GitHub Actions**
-3. Push to `main` runs `.github/workflows/deploy.yml`
-4. DNS for `eltmrc.io`: point to GitHub Pages (A/ALIAS or CNAME as per GitHub docs). `public/CNAME` is already set.
+## Site map
+
+| Route | Description |
+|-------|-------------|
+| `/` | Landing |
+| `/writing` | Post index |
+| `/writing/[slug]` | Post |
+| `/about` | About |
+| `/rss.xml` | RSS feed |
