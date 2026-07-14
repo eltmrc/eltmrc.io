@@ -13,7 +13,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    name: "Cial & OpenCial",
+    name: "OpenCial",
     role: "Founder",
     period: "Now",
     description:
