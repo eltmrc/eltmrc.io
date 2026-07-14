@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="240" viewBox="0 0 720 240" fill="none" role="img" aria-label="From VS Code to Cursor">
+  <rect width="720" height="240" rx="16" fill="#faf8fc"/>
+
+  <!-- VS Code card -->
+  <rect x="56" y="40" width="220" height="160" rx="16" fill="#ffffff" stroke="rgba(80,50,100,0.12)" stroke-width="1.2"/>
+  <rect x="132" y="68" width="68" height="68" rx="16" fill="#e8f3ff"/>
+  <path transform="translate(144 80) scale(1.8)" fill="#007ACC" d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/>
+  <text x="166" y="168" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#17141f">VS Code</text>
+  <text x="166" y="188" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#6b6478">extensions · Copilot</text>
+
+  <!-- arrow -->
+  <path d="M300 120h100" stroke="#9a93a8" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M388 112l12 8-12 8" fill="none" stroke="#a855c8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="350" y="108" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" font-weight="600" fill="#a855c8">then</text>
+
+  <!-- Cursor card -->
+  <rect x="444" y="40" width="220" height="160" rx="16" fill="#ffffff" stroke="#a855c8" stroke-opacity="0.35" stroke-width="1.4"/>
+  <rect x="520" y="68" width="68" height="68" rx="16" fill="#111"/>
+  <!-- Cursor-like geometric mark -->
+  <path d="M538 86l36 22-16 3-7 16-13-41z" fill="#fff"/>
+  <text x="554" y="168" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="15" font-weight="600" fill="#17141f">Cursor</text>
+  <text x="554" y="188" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#6b6478">ChatGPT inside the IDE</text>
+</svg>

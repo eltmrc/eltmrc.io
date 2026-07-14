@@ -542,8 +542,10 @@ h3:target {
   margin-right: 0;
 }
 
-/* Light-baked diagram SVGs: invert + hue-rotate in dark so they stay legible. */
-[data-theme="dark"] .prose-figure img[src*="/diagrams/"] {
+/* Light-baked diagram / story SVGs: invert + hue-rotate in dark so they stay legible.
+   Skip dark terminal-style art under /story/cli- (already dark). */
+[data-theme="dark"] .prose-figure img[src*="/diagrams/"],
+[data-theme="dark"] .prose-figure img[src*="/story/"]:not([src*="/story/cli-"]) {
   filter: invert(0.92) hue-rotate(180deg) saturate(0.85);
   border-color: var(--border);
 }

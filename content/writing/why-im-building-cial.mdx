@@ -19,11 +19,19 @@ Cial didn't start as a product vision. It started as a commute problem.
 
 Like a lot of people, my first real taste was **GitHub Copilot** — not today's ChatGPT-shaped Copilot, the early one. Basically a fancy tab accelerator. Sometimes it completed a whole function and you went a bit faster. Already very developer-oriented, but still passive.
 
+![Early GitHub Copilot — ghost text in the editor, Tab to accept](/images/story/early-copilot.svg)
+
 Then ChatGPT shipped, and I was on it from day one. I was freelancing and starting **ClinicPilot** with Enzo, and I used ChatGPT to speed up code iterations. At first, like everyone: copy-paste, generate something from a distance, paste it back. Useful, but still outside the loop.
 
-Cursor was the obvious next step — ChatGPT inside the IDE. That's when I stopped being passive. I fell hard into the CLI rabbit hole, and I got on **Claude Code** very early. I also ran into the OpenClaw idea around then — not that Cial is a clone of it, but the core itch was the same: talk to an agent that actually runs on a machine.
+![ChatGPT day one — generate in the browser, paste back into the project](/images/story/chatgpt-copypaste.svg)
 
-![Copilot → ChatGPT → Cursor → Claude Code → Cial](/images/diagrams/ai-path.svg)
+Cursor was the obvious next step — ChatGPT inside the IDE. That's when I stopped being passive.
+
+![VS Code → Cursor — the IDE that made chat feel native](/images/story/vscode-to-cursor.svg)
+
+I fell hard into the CLI rabbit hole, and I got on **Claude Code** very early. I also ran into the OpenClaw idea around then — not that Cial is a clone of it, but the core itch was the same: talk to an agent that actually runs on a machine.
+
+![Agent CLIs — Claude Code and the rabbit hole](/images/story/cli-agents.svg)
 
 Still, none of that is why Cial exists.
 
@@ -47,8 +55,6 @@ Then the déclic.
 
 That's the moment I thought: ok, there might be something here.
 
-![Idea → build → ship → learn — the loop that never really stops](/images/diagrams/loop.svg)
-
 Iteration speed went crazy, because we could iterate on our internal tool *while* using it. In **less than a week**, Cial became the product that basically runs ClinicPilot end to end — development, client stuff, our SaaS operations. Primary tool. And if you strip everything away, it still starts from one idea: **self-edit**.
 
 ## Disposable code, continuous product
@@ -58,8 +64,6 @@ At some point Enzo and I looked at what we had. We hadn't "bootstrapped a SaaS w
 By nature, this product almost had to be **open source**.
 
 Because of self-edit, the tech stack of Cial does not matter that much. Today it's common web stuff — Vite, and before that Next, etc. Tomorrow a new language shows up, the day after a new stack. Fine. Throw it out. Rebuild.
-
-![Identity and login outside the instance — the door the agent can't delete](/images/diagrams/trust.svg)
 
 Cial is closer to a **direction** than a frozen codebase. The code is relatively disposable. The state at any single point in time is not the important part. **Continuity and evolution** are.
 
