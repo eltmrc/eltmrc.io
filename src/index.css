@@ -894,8 +894,151 @@ h3:target {
 /* Keep floats inside their section — don't spill under the next h2 / figures. */
 .prose-shell h2,
 .prose-shell h3,
-.prose-shell .prose-figure:not(.prose-figure--side) {
+.prose-shell .prose-figure:not(.prose-figure--side),
+.prose-shell .prose-evo {
   clear: both;
+}
+
+/* ─── Evolution strip (archive screenshots, same-row weeks) ─── */
+.prose-evo {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.prose-evo__row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  align-items: stretch;
+}
+
+.prose-evo__cell {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.prose-evo__zoom {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.4rem;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.prose-evo__when {
+  align-self: flex-start;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--card-base));
+  padding: 0.15rem 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1.3;
+}
+
+.prose-evo__frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 0.85rem;
+  border: 1px solid var(--border);
+  background: var(--surface-code);
+  aspect-ratio: 9 / 16;
+  max-height: 16.5rem;
+  box-shadow: var(--shadow-soft);
+  transition:
+    border-color var(--dur-base) var(--ease-std),
+    box-shadow var(--dur-base) var(--ease-out-quart),
+    transform var(--dur-fast) var(--ease-out-quart);
+}
+
+.prose-evo__zoom:hover .prose-evo__frame,
+.prose-evo__zoom:focus-visible .prose-evo__frame {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  box-shadow: var(--shadow-soft-hover);
+  transform: translateY(-2px) scale(1.015);
+}
+
+.prose-evo__zoom:active .prose-evo__frame {
+  transform: translateY(0) scale(var(--press-scale-soft));
+  transition-duration: 90ms;
+}
+
+.prose-evo__zoom:focus-visible {
+  outline: none;
+}
+
+.prose-evo__zoom:focus-visible .prose-evo__frame {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 2px;
+}
+
+.prose-evo__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Landscape desk shot: show more of the monitors. */
+.prose-evo__img[src*="station-f"] {
+  object-position: center 40%;
+}
+
+.prose-evo__title {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--fg-subtle);
+  padding: 0 0.1rem;
+}
+
+.prose-evo__arrow {
+  display: none;
+}
+
+.prose-evo__caption {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--fg-subtle);
+}
+
+@media (max-width: 639px) {
+  .prose-evo__row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .prose-evo__frame {
+    max-height: 11.5rem;
+    border-radius: 0.7rem;
+  }
+
+  .prose-evo__when {
+    font-size: 0.58rem;
+    padding: 0.12rem 0.4rem;
+  }
+
+  .prose-evo__title {
+    font-size: 0.65rem;
+  }
 }
 
 .prose-shell::after {
