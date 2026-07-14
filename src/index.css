@@ -879,6 +879,12 @@ h3:target {
   object-position: top center;
 }
 
+/* Keep floats inside their section — don't spill under the next h2. */
+.prose-shell h2,
+.prose-shell h3 {
+  clear: both;
+}
+
 .prose-shell::after {
   content: "";
   display: table;
