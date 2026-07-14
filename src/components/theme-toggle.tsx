@@ -25,8 +25,9 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-      className="pressable rounded-md p-2 text-fg-muted hover:bg-surface-elevated hover:text-fg"
+      className="group pressable relative rounded-md p-2 text-fg-muted hover:text-fg"
     >
+      <span className="absolute inset-x-2 bottom-[3px] h-px origin-left scale-x-0 bg-accent/60 transition-transform duration-[var(--dur-base)] ease-[var(--ease-out-quart)] group-hover:scale-x-100" />
       <span className="swap-icon">
         <svg
           viewBox="0 0 24 24"

@@ -57,17 +57,15 @@ export function SiteHeader() {
                 key={item.href}
                 to={item.href}
                 className={cn(
-                  "pressable relative rounded-md px-2.5 py-1.5 text-[14px]",
-                  active
-                    ? "text-fg"
-                    : "text-fg-muted hover:bg-surface-elevated/60 hover:text-fg",
+                  "group pressable relative rounded-md px-2.5 py-1.5 text-[14px]",
+                  active ? "text-fg" : "text-fg-muted hover:text-fg",
                 )}
               >
                 <AnimatePresence initial={false}>
                   {active && (
                     <motion.span
-                      layoutId="nav-pill"
-                      className="absolute inset-0 -z-10 rounded-md bg-surface-elevated"
+                      layoutId="nav-line"
+                      className="absolute inset-x-2.5 bottom-[5px] h-[1.5px] bg-accent"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -80,6 +78,9 @@ export function SiteHeader() {
                     />
                   )}
                 </AnimatePresence>
+                {!active && (
+                  <span className="absolute inset-x-2.5 bottom-[5px] h-px origin-left scale-x-0 bg-accent/60 transition-transform duration-[var(--dur-base)] ease-[var(--ease-out-quart)] group-hover:scale-x-100" />
+                )}
                 {item.label}
               </Link>
             );
