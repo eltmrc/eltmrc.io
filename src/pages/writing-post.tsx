@@ -3,10 +3,12 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { CategoryChip } from "@/components/category-chip";
 import { FadeIn } from "@/components/fade-in";
+import { PostMinimap } from "@/components/post-minimap";
 import { Prose } from "@/components/prose";
 import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
 import { cn } from "@/lib/cn";
+import { extractHeadings } from "@/lib/headings";
 import { formatDate, getPostBySlug } from "@/lib/posts";
 import { site } from "@/lib/site";
 
@@ -16,6 +18,7 @@ export function WritingPostPage() {
   const [tldrOpen, setTldrOpen] = useState(false);
   const [coverLoaded, setCoverLoaded] = useState(false);
   const coverRef = useRef<HTMLImageElement>(null);
+  const headings = post ? extractHeadings(post.content) : [];
 
   useEffect(() => {
     if (coverRef.current?.complete) setCoverLoaded(true);
@@ -34,6 +37,8 @@ export function WritingPostPage() {
         type="article"
         publishedTime={post.date}
       />
+
+      <PostMinimap headings={headings} />
 
       <FadeIn>
         <Link

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 import { asset } from "@/lib/asset";
 import { cn } from "@/lib/cn";
+import { slugifyHeading } from "@/lib/headings";
 
 function textOf(node: ReactNode): string {
   if (typeof node === "string") return node;
@@ -17,13 +18,24 @@ function textOf(node: ReactNode): string {
 /** `## 2014–2016 · Title` renders as a timeline marker instead of a plain heading. */
 const TIMELINE_HEADING = /^(\d{4}(?:\s*[–-]\s*(?:\d{4}|now))?)\s*·\s*(.+)$/;
 
+function headingId(props: { id?: string; children?: ReactNode }): string {
+  if (props.id) return props.id;
+  return slugifyHeading(textOf(props.children).trim());
+}
+
 function H2(props: ComponentPropsWithoutRef<"h2">) {
   const ref = useRef<HTMLHeadingElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
-  const match = TIMELINE_HEADING.exec(textOf(props.children).trim());
+  const title = textOf(props.children).trim();
+  const id = headingId(props);
+  const match = TIMELINE_HEADING.exec(title);
   if (match) {
     return (
-      <h2 ref={ref} className="mt-12 scroll-mt-20 first:mt-0">
+      <h2
+        ref={ref}
+        id={id}
+        className="mt-12 scroll-mt-20 first:mt-0"
+      >
         <span className="flex items-center gap-3">
           <span
             className={cn(
@@ -44,8 +56,9 @@ function H2(props: ComponentPropsWithoutRef<"h2">) {
   }
   return (
     <h2
-      className="mt-10 scroll-mt-20 text-xl font-semibold tracking-tight text-fg first:mt-0"
       {...props}
+      id={id}
+      className="mt-10 scroll-mt-20 text-xl font-semibold tracking-tight text-fg first:mt-0"
     />
   );
 }
@@ -106,12 +119,16 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
 export const markdownComponents: Components = {
   a: A,
   h2: H2,
-  h3: (props) => (
-    <h3
-      className="mt-8 scroll-mt-20 text-lg font-semibold tracking-tight text-fg"
-      {...props}
-    />
-  ),
+  h3: (props) => {
+    const id = headingId(props);
+    return (
+      <h3
+        {...props}
+        id={id}
+        className="mt-8 scroll-mt-20 text-lg font-semibold tracking-tight text-fg"
+      />
+    );
+  },
   p: (props) => (
     <p className="mt-5 text-[16px] leading-[1.75] text-fg-body first:mt-0" {...props} />
   ),
