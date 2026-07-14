@@ -1,36 +1,80 @@
 ---
 title: "Why I'm building Cial"
-description: "A workspace where the agent runs as root on your machine and edits its own source. On self-modification, meta-harnesses, and code written for models."
+description: "From early Copilot to a self-editing AI workspace. The real story of Cial — commute frustration, ClinicPilot, and why it had to be open source."
 category: founding
 date: "2026-07-13"
-tags: ["cial", "founding", "agents", "self-hosting", "opencial"]
+tags: ["cial", "founding", "agents", "self-hosting", "opencial", "clinicpilot"]
 image: "/images/cial-workspace.jpg"
 tldr:
-  - Cial gives the agent a machine you own, with root over everything — including its own source code.
-  - Ask for a feature and it edits the code, rebuilds, redeploys itself and commits. Every change is a git commit you can read.
-  - Login and identity live outside the instance, so a self-edit can never weaken who gets in.
-  - Model and harness are pluggable (Claude Code, Codex, Grok, Kimi) — your workspace outlives your model choice.
-  - The codebase is written for agents to read (LLM_FRIENDLY_CODE.md). OpenCial, the open release, is on the way.
+  - First real AI was early GitHub Copilot (tab accelerator), then ChatGPT while freelancing and starting ClinicPilot, then Cursor, then deep into Claude Code early.
+  - The real trigger: 1h30 commute each way, 3 hours a day I couldn't ship. No good way to drive Claude Code from my phone.
+  - First try was Telegram (meh). Then a web UI in front of Claude Code — and the déclic: it could rebuild and redeploy itself.
+  - In under a week Cial was running almost all of ClinicPilot. Under two months it became a real meta-harness.
+  - Stack is disposable. Continuity is the product. That's why OpenCial is open source — and why the long game is a thin layer that outlives every model.
 ---
 
-Most AI products are a chat window pointed at someone else's computer. You type, a model answers, and everything real — your files, your tools, your deploys — stays on the other side of the glass. Cial started from inverting that: give the agent a machine of its own, make that machine yours, and let the conversation end in shipped software instead of advice.
+Cial didn't start as a product vision. It started as a commute problem.
 
-## A root agent, not a chat demo
+## How I actually used AI
 
-Every Cial is a full instance: a container you own, running a single process that serves the UI, holds the chat protocol, and spawns the agent with root over the whole workspace — including Cial's own source code. That last part is the point. When you ask for a feature, the agent doesn't describe it. It edits the code, typechecks, rebuilds, redeploys itself, and commits. The workspace you use on Friday is not the one you started with on Monday, and every step of that drift is a git commit you can read.
+Like a lot of people, my first real taste was **GitHub Copilot** — not today's ChatGPT-shaped Copilot, the early one. Basically a fancy tab accelerator. Sometimes it completed a whole function and you went a bit faster. Already very developer-oriented, but still passive.
 
-Self-modification sounds reckless until you place the trust boundary correctly. The instance is deliberately disposable: identity, login, and orchestration live in a separate plane the agent cannot touch. There is no auth gate inside the instance for a self-edit to weaken — the door it could delete simply isn't there. The instance signs every call to the outside with its own key; the source of truth is a fork it pushes to. You get an agent that can rewrite everything about itself except who is allowed in.
+Then ChatGPT shipped, and I was on it from day one. I was freelancing and starting **ClinicPilot** with Enzo, and I used ChatGPT to speed up code iterations. At first, like everyone: copy-paste, generate something from a distance, paste it back. Useful, but still outside the loop.
 
-## The meta-harness bet
+Cursor was the obvious next step — ChatGPT inside the IDE. That's when I stopped being passive. I fell hard into the CLI rabbit hole, and I got on **Claude Code** very early. I also ran into the OpenClaw idea around then — not that Cial is a clone of it, but the core itch was the same: talk to an agent that actually runs on a machine.
 
-The long game isn't "which model is smartest this month." Models change monthly, and the harnesses around them — Claude Code, Codex, Grok, Kimi — change almost as fast. Betting a workspace on any one of them is how products age in dog years. So Cial treats both the model *and* the harness as pluggable parts: the same sessions, memory, tools, and customizations, whatever is running underneath. When a better agent ships, you swap it in and keep everything.
+Still, none of that is why Cial exists.
 
-What actually matters is who controls the environment where work happens. Cial's answer is: you do. Your instance, your data boundary, your keys — and a continuity that outlives your model choice.
+## Three hours a day doing nothing
 
-## Code written for the next reader — a model
+I work on ClinicPilot every day. I also had **an hour and a half of transport in the morning and the same in the evening**. Three hours where I couldn't really ship.
 
-The repo carries a document called `LLM_FRIENDLY_CODE.md`, and it might be the most honest expression of what Cial is. Since the primary maintainer of the codebase is the agent itself, the code is written for how agents actually read: files small enough to fit in one read, names specific enough that one grep returns the right file, diffs the type checker can verify, feedback loops that close in seconds. This isn't clean-code aesthetics — it's architecture for a codebase whose author and audience are both models. A workspace that improves itself is only as good as its own legibility to itself.
+I wanted to keep developing from my phone. At the time there was no Claude remote control — and even now that it exists, it's not exactly the tool I wanted. So I started building something.
 
-Cial starts blank and bootstraps into whatever you need — a dev environment, an ops console, a writing studio, all three. An open release, **OpenCial**, is on the way so the whole loop can run on your own hardware. If any of this resonates, it's live at [cial.ai](https://cial.ai) — and this site is where I'll keep writing about the journey: technical choices, wrong turns, and the quieter decisions that don't fit in a launch tweet.
+The first version came from the same place as OpenClaw-style setups: I need to talk to the agent from my phone. I wired it to **Telegram**. It worked. Honestly, it wasn't great. Telegram is fine for chat. It is not built for driving a coding agent on a machine.
+
+## The interface that rewrote itself
+
+So I asked Claude Code to build a proper interface — a small site, frontend + backend, where the backend runs Claude Code, so I could keep talking to it from my phone or any browser. The original idea was basically a **PWA**.
+
+Then the déclic.
+
+If you have a site the agent is serving… it can redeploy itself. It can modify its own interface live. Rebuild. Ship. Keep going.
+
+That's the moment I thought: ok, there might be something here.
+
+Iteration speed went crazy, because we could iterate on our internal tool *while* using it. In **less than a week**, Cial became the product that basically runs ClinicPilot end to end — development, client stuff, our SaaS operations. Primary tool. And if you strip everything away, it still starts from one idea: **self-edit**.
+
+## Disposable code, continuous product
+
+At some point Enzo and I looked at what we had. We hadn't "bootstrapped a SaaS with Cial" in the fundraising sense. We had pushed ClinicPilot forward *with* Cial as the engine. There was real value there — and not just for us.
+
+By nature, this product almost had to be **open source**.
+
+Because of self-edit, the tech stack of Cial does not matter that much. Today it's common web stuff — Vite, and before that Next, etc. Tomorrow a new language shows up, the day after a new stack. Fine. Throw it out. Rebuild.
+
+Cial is closer to a **direction** than a frozen codebase. The code is relatively disposable. The state at any single point in time is not the important part. Continuity and evolution are.
+
+That's what Cial has done since the start: evolve, evolve, evolve.
+
+In under two months we had a platform that is already a serious harness on its own — a **meta-harness**: many models, many harnesses, connect almost anything, do a lot of work well. For the rest, self-edit does the job.
+
+## Why OpenCial
+
+The point of open-sourcing this is simple: let developers try it, break it, tell us what they think, and contribute for *their* use cases. Then, later, make it accessible to non-technical people too — abstract the harness layer, the model juggling, all of it.
+
+Thread by thread, the long game looks like a kind of **liquid UI**: show almost anything, connect almost any backend, drive it in natural language, until model/harness management is invisible.
+
+And further out — still far, and the landscape moves every week — I think this points at a real **OS** direction. Right now it's a web product. It doesn't have to stay only that. I'm not claiming we're there. I'm saying that's the north star I trust.
+
+## What Cial is for, day to day
+
+Today the practical job is continuity.
+
+New models ship every week. New tools every day. People keep switching workspaces and losing the thread. Cial is a thin layer that stays: pull in what you need *now*, implement it, throw away what stopped being useful, keep the sessions, the memory, the shape of how you work.
+
+You don't have to rebuild your life around the model of the month. You stay on Cial, and Cial changes under you.
+
+If that resonates: [cial.ai](https://cial.ai) is the product side, **OpenCial** is the open source, and this site is where I'll keep writing the messy middle — wrong turns included.
 
 The source is on GitHub. The people building around it hang out on Discord. Both links are below.
