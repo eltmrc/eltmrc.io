@@ -100,17 +100,18 @@ export function HomePage() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
           <Portrait size={88} priority className="sm:mt-1" />
           <div className="min-w-0">
-            <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-fg-subtle">
-              {site.tagline}
-            </p>
-            <h1 className="mt-3 max-w-xl text-[2.1rem] font-semibold leading-[1.12] tracking-tight text-fg sm:text-[2.5rem]">
+            <h1 className="max-w-xl text-[2.1rem] font-semibold leading-[1.12] tracking-tight text-fg sm:text-[2.5rem]">
               Eliot Maurice
             </h1>
             <p className="mt-4 max-w-xl text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
-              I&apos;ve been building since my earliest ages — picking up every
-              tool that helps people ship what they need. Minecraft mods in
-              Java, military drones, finance SaaS, freelancing, and now founder
-              of{" "}
+              I&apos;ve been building since{" "}
+              <strong className="prose-mark">12</strong> — picking up every
+              tool that helps people ship what they need.{" "}
+              <strong className="prose-mark">Minecraft</strong> mods in Java,
+              military <strong className="prose-mark">drones</strong>,{" "}
+              <strong className="prose-mark">finance</strong> SaaS,{" "}
+              <strong className="prose-mark">health care</strong>, freelancing,
+              and now founder of{" "}
               <a
                 href={site.links.cial}
                 target="_blank"
@@ -119,8 +120,10 @@ export function HomePage() {
               >
                 Cial
               </a>{" "}
-              and OSS contributor. Same job the whole way: craft the best
-              surfboards for the technological waves.
+              and <strong className="prose-mark">OSS</strong> contributor. Same
+              job the whole way: craft the best{" "}
+              <strong className="prose-mark">surfboards</strong> for the
+              technological waves.
             </p>
           </div>
         </div>

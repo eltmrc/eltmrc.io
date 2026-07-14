@@ -38,7 +38,7 @@ function writeRss(): Plugin {
       const siteUrl = "https://eltmrc.github.io/eltmrc.io";
       const siteName = "Eliot Maurice";
       const siteDescription =
-        "Building since forever — Minecraft to drones to SaaS to Cial. Crafting the best surfboards for technological waves.";
+        "Coding since 12 — Minecraft, drones, finance SaaS, health care, freelancing, founder of Cial and OSS contributor.";
 
       if (!fs.existsSync(writingDir)) return;
 

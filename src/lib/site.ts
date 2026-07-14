@@ -3,7 +3,7 @@ export const site = {
   handle: "eltmrc",
   title: "Eliot Maurice",
   description:
-    "Building since forever — Minecraft to drones to SaaS to Cial. Crafting the best surfboards for technological waves.",
+    "Coding since 12 — Minecraft, drones, finance SaaS, health care, freelancing, founder of Cial and OSS contributor. Surfboards for technological waves.",
   url: "https://eltmrc.io",
   locale: "en",
   email: "hello@eltmrc.io",
@@ -20,5 +20,4 @@ export const site = {
     x: "@ByProcyx",
     github: "@eltmrc",
   },
-  tagline: "Surfboards for technological waves.",
 } as const;

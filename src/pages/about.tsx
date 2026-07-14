@@ -73,13 +73,16 @@ export function AboutPage() {
         className="mt-10 space-y-5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]"
       >
         <p>
-          I&apos;ve been building since my earliest ages. Not a clean résumé
-          path — just a long stack of tools and domains, always with the same
-          itch: help the world build what it needs.
+          I started coding at <strong className="prose-mark">12</strong>. Not
+          a clean résumé path — just a long stack of tools and domains, always
+          with the same itch: help the world build what it needs.
         </p>
         <p>
-          Java and Minecraft when I was a kid. Military drones later. Finance
-          SaaS. Freelancing. Now founder of{" "}
+          Java and <strong className="prose-mark">Minecraft</strong> when I was
+          a kid. Military <strong className="prose-mark">drones</strong> later.{" "}
+          <strong className="prose-mark">Finance</strong> SaaS.{" "}
+          <strong className="prose-mark">Health care</strong>. Freelancing. Now
+          founder of{" "}
           <a
             href={site.links.cial}
             target="_blank"
@@ -97,8 +100,10 @@ export function AboutPage() {
           >
             OpenCial
           </a>
-          , OSS contributor, still shipping. The wave changes; the job
-          doesn&apos;t — craft the best surfboards for the technological waves.
+          , <strong className="prose-mark">OSS</strong> contributor, still
+          shipping. The wave changes; the job doesn&apos;t — craft the best{" "}
+          <strong className="prose-mark">surfboards</strong> for the
+          technological waves.
         </p>
         <p>
           Experiences are still a bit unstructured on paper. That&apos;s fine.
