@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { DiscordHandle } from "@/components/discord-handle";
 import { FadeIn } from "@/components/fade-in";
 import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
@@ -228,7 +227,14 @@ export function AboutPage() {
             </li>
             <li className="group flex items-center justify-between gap-4 py-3">
               <span className="text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg">Discord</span>
-              <DiscordHandle className="link" />
+              <a
+                href={site.links.discord}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link"
+              >
+                Cial Discord
+              </a>
             </li>
           </ul>
         </div>

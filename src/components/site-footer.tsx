@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { CialMarkInteractive } from "@/components/cial-mark-interactive";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
@@ -34,24 +33,6 @@ function DiscordIcon({ size = 17 }: { size?: number }) {
   );
 }
 
-function CheckIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M5 13l4 4L19 7" />
-    </svg>
-  );
-}
-
 function MailIcon({ size = 16 }: { size?: number }) {
   return (
     <svg
@@ -68,46 +49,6 @@ function MailIcon({ size = 16 }: { size?: number }) {
       <rect x="3" y="5" width="18" height="14" rx="2" />
       <path d="m3 7 9 6 9-6" />
     </svg>
-  );
-}
-
-function DiscordCopyButton() {
-  const [copied, setCopied] = useState(false);
-  const timer = useRef<number | undefined>(undefined);
-
-  useEffect(() => {
-    return () => window.clearTimeout(timer.current);
-  }, []);
-
-  const copy = () => {
-    navigator.clipboard?.writeText(site.socials.discord).catch(() => {});
-    setCopied(true);
-    window.clearTimeout(timer.current);
-    timer.current = window.setTimeout(() => setCopied(false), 1600);
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={copy}
-      title={copied ? "Copied!" : `Copy Discord: ${site.socials.discord}`}
-      aria-label={
-        copied
-          ? "Discord username copied"
-          : `Copy Discord username ${site.socials.discord}`
-      }
-      data-copied={copied ? "true" : undefined}
-      className={iconClass()}
-    >
-      <span className="swap-icon" aria-hidden>
-        <span className={copied ? "swap-hidden" : undefined}>
-          <DiscordIcon />
-        </span>
-        <span className={copied ? "footer-icon-check" : "swap-hidden"}>
-          <CheckIcon />
-        </span>
-      </span>
-    </button>
   );
 }
 
@@ -165,7 +106,16 @@ export function SiteFooter() {
           >
             <XIcon />
           </a>
-          <DiscordCopyButton />
+          <a
+            href={site.links.discord}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Cial Discord"
+            title="Cial Discord"
+            className={iconClass()}
+          >
+            <DiscordIcon />
+          </a>
           <a
             href={site.links.cial}
             target="_blank"

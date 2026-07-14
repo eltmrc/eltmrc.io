@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { CategoryCard } from "@/components/category-card";
-import { DiscordHandle } from "@/components/discord-handle";
 import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
 import { PostCard } from "@/components/post-card";
@@ -17,7 +16,11 @@ import { site } from "@/lib/site";
 
 /* Keep short — must sit on one line after “then ” inside max-w-xl. */
 const THEN_CHAPTERS = [
-  { text: "built a full OpenGL 3D engine.", when: "2018", marks: ["OpenGL"] },
+  {
+    text: "built an indie game 3D engine.",
+    when: "2018",
+    marks: ["3D engine"],
+  },
   {
     text: "co-founded dental AI SaaS, 100+ clinics.",
     when: "2022–2026",
@@ -353,9 +356,17 @@ export function HomePage() {
             className="link"
           >
             GitHub
-          </a>{" "}
-          and Discord (<DiscordHandle className="link" />
-          ).
+          </a>
+          , and the{" "}
+          <a
+            href={site.links.discord}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            Cial Discord
+          </a>
+          .
         </p>
       </FadeIn>
     </div>
