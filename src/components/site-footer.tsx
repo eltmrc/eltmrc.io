@@ -135,22 +135,6 @@ export function SiteFooter() {
             <DiscordIcon />
           </a>
           <a
-            href={site.links.cial}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Cial"
-            title="Cial"
-            className={iconClass()}
-          >
-            <CialMarkInteractive
-              className="h-4 w-4"
-              alive
-              portalBurst
-              burstScale={0.9}
-              aria-label="Cial"
-            />
-          </a>
-          <a
             href={`mailto:${site.email}`}
             aria-label="Email"
             title={site.email}
