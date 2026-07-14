@@ -50,6 +50,7 @@ export const projects: Project[] = [
     description:
       "Modded Minecraft client improving the player experience on Funcraft.net — 250,000+ downloads.",
     status: "archived",
+    icon: "/images/proclient-icon.jpg",
   },
   {
     name: "HardFight",
@@ -58,5 +59,6 @@ export const projects: Project[] = [
     description:
       "Minecraft game-server development — a community of 150,000 registered players.",
     status: "archived",
+    icon: "/images/hardfight-icon.png",
   },
 ];

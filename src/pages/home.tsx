@@ -113,11 +113,11 @@ export function HomePage() {
             </span>
             <span className="text-[12px] text-fg-subtle">{meta}</span>
             {project.status === "active" ? (
-              <span className="rounded-full border border-accent/30 bg-accent/5 px-2 py-0.5 text-[11px] leading-none text-accent transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:border-accent/50">
+              <span className="rounded-full bg-accent/10 px-2 py-0.5 text-[11px] leading-none text-accent">
                 Active
               </span>
             ) : (
-              <span className="rounded-full border border-border px-2 py-0.5 text-[11px] leading-none text-fg-subtle">
+              <span className="rounded-full bg-surface-elevated px-2 py-0.5 text-[11px] leading-none text-fg-subtle">
                 Archived
               </span>
             )}
