@@ -26,8 +26,6 @@ type EvolutionStripProps = {
  */
 export function EvolutionStrip({ frames, caption, className }: EvolutionStripProps) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
-  const open = openIdx !== null ? frames[openIdx] : null;
-  const openSrc = open ? asset(open.src) : "";
 
   return (
     <figure className={cn("prose-evo mt-8", className)}>
@@ -67,13 +65,13 @@ export function EvolutionStrip({ frames, caption, className }: EvolutionStripPro
 
       <ImageLightbox
         open={openIdx !== null}
-        src={openSrc}
-        alt={open?.caption ?? open?.title ?? ""}
-        caption={
-          open
-            ? [open.when, open.title, open.caption].filter(Boolean).join(" · ")
-            : undefined
-        }
+        items={frames.map((f) => ({
+          src: asset(f.src),
+          alt: f.caption ?? f.title,
+          caption: [f.when, f.title, f.caption].filter(Boolean).join(" · "),
+        }))}
+        index={openIdx ?? 0}
+        onIndexChange={setOpenIdx}
         onClose={() => setOpenIdx(null)}
       />
     </figure>
