@@ -1,6 +1,9 @@
 import type { Components } from "react-markdown";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "motion/react";
 import { asset } from "@/lib/asset";
+import { cn } from "@/lib/cn";
 
 function textOf(node: ReactNode): string {
   if (typeof node === "string") return node;
@@ -15,16 +18,23 @@ function textOf(node: ReactNode): string {
 const TIMELINE_HEADING = /^(\d{4}(?:\s*[–-]\s*(?:\d{4}|now))?)\s*·\s*(.+)$/;
 
 function H2(props: ComponentPropsWithoutRef<"h2">) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
   const match = TIMELINE_HEADING.exec(textOf(props.children).trim());
   if (match) {
     return (
-      <h2 className="mt-12 scroll-mt-20 first:mt-0">
+      <h2 ref={ref} className="mt-12 scroll-mt-20 first:mt-0">
         <span className="flex items-center gap-3">
-          <span className="h-2 w-2 shrink-0 rounded-full bg-accent shadow-[0_0_0_4px_var(--accent-soft)]" />
+          <span
+            className={cn(
+              "h-2 w-2 shrink-0 rounded-full bg-accent shadow-[0_0_0_4px_var(--accent-soft)]",
+              inView && "ring-pulse-once",
+            )}
+          />
           <span className="font-mono text-[12px] font-medium tracking-[0.18em] text-accent">
             {match[1]}
           </span>
-          <span className="h-px flex-1 bg-border" />
+          <span className={cn("h-px flex-1 bg-border", inView && "draw-line")} />
         </span>
         <span className="mt-2.5 block text-xl font-semibold tracking-tight text-fg">
           {match[2]}
@@ -54,6 +64,13 @@ function A(props: ComponentPropsWithoutRef<"a">) {
 }
 
 function Img(props: ComponentPropsWithoutRef<"img">) {
+  const ref = useRef<HTMLImageElement>(null);
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    // Cached images fire no load event — settle immediately.
+    if (ref.current?.complete) setLoaded(true);
+  }, []);
+
   const raw = props.src;
   const src =
     typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")
@@ -63,10 +80,16 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
   return (
     <img
       {...props}
+      ref={ref}
       src={src}
-      className="mt-6 w-full rounded-xl border border-border"
+      className={cn(
+        "img-fade mt-6 w-full rounded-xl border border-border",
+        loaded && "is-loaded",
+      )}
       alt={props.alt ?? ""}
       loading="lazy"
+      onLoad={() => setLoaded(true)}
+      onError={() => setLoaded(true)}
     />
   );
 }
@@ -118,7 +141,7 @@ export const markdownComponents: Components = {
   },
   pre: (props) => (
     <pre
-      className="mt-6 overflow-x-auto rounded-xl border border-border bg-surface-code px-4 py-4 font-mono text-[13px] leading-relaxed text-fg"
+      className="mt-6 overflow-x-auto rounded-xl border border-border bg-surface-code px-4 py-4 font-mono text-[13px] leading-relaxed text-fg transition-[border-color] duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:border-[color-mix(in_srgb,var(--accent)_20%,var(--border))] focus-within:border-[color-mix(in_srgb,var(--accent)_20%,var(--border))]"
       {...props}
     />
   ),

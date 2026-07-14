@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
@@ -18,9 +19,20 @@ function isActive(pathname: string, href: string) {
 
 export function SiteHeader() {
   const { pathname } = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-transparent backdrop-blur-xl supports-[backdrop-filter]:bg-bg/70">
+    <header
+      data-scrolled={scrolled ? "true" : "false"}
+      className="site-header sticky top-0 z-40 backdrop-blur-xl supports-[backdrop-filter]:bg-bg/70"
+    >
       <div className="mx-auto flex w-full max-w-2xl items-center justify-between px-6 py-5 sm:px-8">
         <Link
           to="/"
@@ -45,21 +57,29 @@ export function SiteHeader() {
                 key={item.href}
                 to={item.href}
                 className={cn(
-                  "relative rounded-md px-2.5 py-1.5 text-[14px] transition-colors",
-                  active ? "text-fg" : "text-fg-muted hover:text-fg",
+                  "pressable relative rounded-md px-2.5 py-1.5 text-[14px]",
+                  active
+                    ? "text-fg"
+                    : "text-fg-muted hover:bg-surface-elevated/60 hover:text-fg",
                 )}
               >
-                {active && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-0 -z-10 rounded-md bg-surface-elevated"
-                    transition={{
-                      type: "spring",
-                      stiffness: 420,
-                      damping: 32,
-                    }}
-                  />
-                )}
+                <AnimatePresence initial={false}>
+                  {active && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 -z-10 rounded-md bg-surface-elevated"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 420,
+                        damping: 32,
+                        opacity: { duration: 0.14, ease: "easeOut" },
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
                 {item.label}
               </Link>
             );

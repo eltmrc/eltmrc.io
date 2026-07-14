@@ -20,9 +20,13 @@ export function CategoriesPage() {
         <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-fg-subtle">
           Index
         </p>
+      </FadeIn>
+      <FadeIn delay={0.05}>
         <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.25rem]">
           Categories
         </h1>
+      </FadeIn>
+      <FadeIn delay={0.1}>
         <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-fg-muted">
           Twenty topics I write about. Each has a quiet mark — click through to
           see matching posts.

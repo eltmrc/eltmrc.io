@@ -1,4 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { motion } from "motion/react";
 import { CategoryChip } from "@/components/category-chip";
 import { FadeIn } from "@/components/fade-in";
 import { Prose } from "@/components/prose";
@@ -27,9 +28,9 @@ export function WritingPostPage() {
       <FadeIn>
         <Link
           to="/writing/"
-          className="text-[13px] text-fg-muted transition-colors hover:text-fg"
+          className="text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
         >
-          ← Writing
+          <span className="arrow-icon arrow-icon--back">←</span> Writing
         </Link>
         {post.category ? (
           <div className="mt-5">
@@ -50,7 +51,15 @@ export function WritingPostPage() {
         <Prose source={post.content} />
       </FadeIn>
 
-      <FadeIn delay={0.12} className="mt-14 border-t border-border pt-8">
+      {/* Scroll-gated entrance; 0.4s = --dur-slow, [0.22,1,0.36,1] = --ease-out-quart
+          (motion/react cannot read CSS vars — sanctioned token mapping). */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-14 border-t border-border pt-8"
+      >
         <p className="text-[14px] text-fg-muted">
           Written by {site.name}.{" "}
           <Link to="/writing/" className="link">
@@ -74,7 +83,7 @@ export function WritingPostPage() {
             Follow on X
           </a>
         </p>
-      </FadeIn>
+      </motion.div>
     </div>
   );
 }

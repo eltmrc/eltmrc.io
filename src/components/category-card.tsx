@@ -17,11 +17,11 @@ export function CategoryCard({
   return (
     <Link
       to={`/categories/${category.slug}/`}
-      className={cn("category-card animate-fade-up", className)}
-      style={{ animationDelay: `${Math.min(index, 12) * 0.04}s` }}
+      className={cn("category-card animate-fade-up group", className)}
+      style={{ animationDelay: `${0.05 + Math.min(index, 7) * 0.05}s` }}
     >
       <div className="flex items-center gap-2.5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-soft text-accent ring-1 ring-border">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-soft text-accent ring-1 ring-border transition-[background-color,box-shadow] duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:bg-[color-mix(in_srgb,var(--accent)_22%,transparent)] group-hover:ring-[color-mix(in_srgb,var(--accent)_30%,var(--border))] group-focus-visible:bg-[color-mix(in_srgb,var(--accent)_22%,transparent)] group-focus-visible:ring-[color-mix(in_srgb,var(--accent)_30%,var(--border))]">
           <CategoryIcon id={category.icon} className="cat-icon--lg" title={category.name} />
         </span>
         <div className="min-w-0">

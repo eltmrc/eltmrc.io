@@ -23,14 +23,17 @@ export function CategoryPage() {
       <FadeIn>
         <Link
           to="/categories/"
-          className="text-[13px] text-fg-muted transition-colors hover:text-fg"
+          className="text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
         >
-          ← Categories
+          <span className="arrow-icon arrow-icon--back" aria-hidden="true">
+            ←
+          </span>{" "}
+          Categories
         </Link>
 
         <div className="mt-6 flex items-start gap-4">
           <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-accent ring-1 ring-border">
-            <CategoryIcon id={cat.icon} className="cat-icon--xl" title={cat.name} />
+            <CategoryIcon id={cat.icon} className="cat-icon--xl cat-draw-in" title={cat.name} />
           </span>
           <div>
             <h1 className="text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.15rem]">
@@ -43,7 +46,7 @@ export function CategoryPage() {
         </div>
       </FadeIn>
 
-      <FadeIn delay={0.08} className="mt-10">
+      <div className="mt-10">
         {posts.length > 0 ? (
           <ul className="divide-y divide-border">
             {posts.map((post, i) => (
@@ -51,12 +54,15 @@ export function CategoryPage() {
             ))}
           </ul>
         ) : (
-          <p className="rounded-2xl border border-dashed border-border bg-surface px-5 py-8 text-[14px] text-fg-muted">
+          <p
+            className="animate-fade-up rounded-2xl border border-dashed border-border bg-surface px-5 py-8 text-[14px] text-fg-muted"
+            style={{ animationDelay: "0.05s" }}
+          >
             No posts in this category yet. When I write one, it will show up
             here.
           </p>
         )}
-      </FadeIn>
+      </div>
     </div>
   );
 }

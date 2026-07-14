@@ -53,13 +53,13 @@ export function HomePage() {
           href={site.links.cial}
           target="_blank"
           rel="noopener noreferrer"
-          className="card-soft group block overflow-hidden rounded-2xl transition-colors"
+          className="card-soft group block overflow-hidden rounded-2xl"
         >
           <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface">
             <img
               src={asset("/images/cial-workspace.jpg")}
               alt="Cial — AI workspace product preview"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              className="h-full w-full object-cover transition-transform duration-[var(--dur-slow)] ease-[var(--ease-out-quart)] group-hover:scale-[1.02]"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/40 via-transparent to-transparent" />
           </div>
@@ -70,13 +70,13 @@ export function HomePage() {
                 alt=""
                 width={40}
                 height={40}
-                className="mt-0.5 h-10 w-10 rounded-xl ring-1 ring-border"
+                className="mt-0.5 h-10 w-10 rounded-xl ring-1 ring-border transition-shadow duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:ring-accent/30"
               />
               <div>
                 <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
                   Building
                 </p>
-                <h2 className="mt-1 text-[18px] font-semibold tracking-tight text-fg transition-colors group-hover:text-accent">
+                <h2 className="mt-1 text-[18px] font-semibold tracking-tight text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
                   Cial
                 </h2>
                 <p className="mt-1.5 max-w-md text-[14px] leading-relaxed text-fg-muted">
@@ -85,24 +85,26 @@ export function HomePage() {
                 </p>
               </div>
             </div>
-            <span className="inline-flex shrink-0 items-center justify-center self-start rounded-full border border-border bg-bg px-3.5 py-1.5 text-[13px] font-medium text-fg transition-colors group-hover:border-accent/40 group-hover:text-accent sm:self-center">
-              Visit →
+            <span className="inline-flex shrink-0 items-center justify-center self-start rounded-full border border-border bg-bg px-3.5 py-1.5 text-[13px] font-medium text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:border-accent/40 group-hover:text-accent sm:self-center">
+              Visit <span className="arrow-icon">→</span>
             </span>
           </div>
         </a>
       </FadeIn>
 
-      <FadeIn delay={0.12} className="mt-14">
-        <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
-          Projects
-        </h2>
+      <section className="mt-14">
+        <FadeIn delay={0.12}>
+          <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+            Projects
+          </h2>
+        </FadeIn>
         <ul className="mt-1 divide-y divide-border">
-          {projects.map((project) => {
+          {projects.map((project, i) => {
             const meta = [project.role, project.period]
               .filter(Boolean)
               .join(" · ");
             const body = (
-              <div className="flex items-start justify-between gap-4 py-4">
+              <div className="flex items-start justify-between gap-4 -mx-2 rounded-xl px-2 py-4 transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:bg-surface">
                 {project.icon ? (
                   <img
                     src={asset(project.icon)}
@@ -114,12 +116,12 @@ export function HomePage() {
                 ) : null}
                 <div className="min-w-0 flex-1">
                   <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                    <span className="text-[15px] font-medium text-fg transition-colors group-hover:text-accent">
+                    <span className="text-[15px] font-medium text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
                       {project.name}
                     </span>
                     <span className="text-[12px] text-fg-subtle">{meta}</span>
                     {project.status === "active" ? (
-                      <span className="rounded-full border border-accent/30 bg-accent/5 px-2 py-0.5 text-[11px] leading-none text-accent">
+                      <span className="rounded-full border border-accent/30 bg-accent/5 px-2 py-0.5 text-[11px] leading-none text-accent transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:border-accent/50">
                         Active
                       </span>
                     ) : (
@@ -133,15 +135,19 @@ export function HomePage() {
                   </p>
                 </div>
                 {project.href ? (
-                  <span className="shrink-0 text-[13px] text-fg-muted transition-colors group-hover:text-accent">
-                    {project.linkLabel ?? "Visit"} →
+                  <span className="shrink-0 text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
+                    {project.linkLabel ?? "Visit"} <span className="arrow-icon">→</span>
                   </span>
                 ) : null}
               </div>
             );
             const isInternal = project.href?.startsWith("/");
             return (
-              <li key={project.name}>
+              <li
+                key={project.name}
+                className="animate-fade-up"
+                style={{ animationDelay: `${0.12 + Math.min(i, 7) * 0.05}s` }}
+              >
                 {project.href && isInternal ? (
                   <Link to={project.href} className="group block">
                     {body}
@@ -162,20 +168,22 @@ export function HomePage() {
             );
           })}
         </ul>
-      </FadeIn>
+      </section>
 
-      <FadeIn delay={0.14} className="mt-14">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
-            Writing
-          </h2>
-          <Link
-            to="/writing/"
-            className="text-[13px] text-fg-muted transition-colors hover:text-fg"
-          >
-            All posts →
-          </Link>
-        </div>
+      <section className="mt-14">
+        <FadeIn delay={0.14}>
+          <div className="flex items-end justify-between gap-4">
+            <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
+              Writing
+            </h2>
+            <Link
+              to="/writing/"
+              className="text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
+            >
+              All posts <span className="arrow-icon">→</span>
+            </Link>
+          </div>
+        </FadeIn>
 
         {posts.length > 0 ? (
           <ul className="mt-1 divide-y divide-border">
@@ -188,7 +196,7 @@ export function HomePage() {
             First posts coming soon.
           </p>
         )}
-      </FadeIn>
+      </section>
 
       {featuredCategories.length > 0 ? (
         <FadeIn delay={0.18} className="mt-16">
@@ -198,9 +206,9 @@ export function HomePage() {
             </h2>
             <Link
               to="/categories/"
-              className="text-[13px] text-fg-muted transition-colors hover:text-fg"
+              className="text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
             >
-              All 20 →
+              All 20 <span className="arrow-icon">→</span>
             </Link>
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">

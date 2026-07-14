@@ -32,7 +32,7 @@ export function WritingIndexPage() {
         </p>
       </FadeIn>
 
-      <FadeIn delay={0.08} className="mt-10">
+      <div className="mt-10">
         {posts.length > 0 ? (
           <ul className="divide-y divide-border">
             {posts.map((post, i) => (
@@ -40,9 +40,14 @@ export function WritingIndexPage() {
             ))}
           </ul>
         ) : (
-          <p className="text-[15px] text-fg-muted">No posts yet.</p>
+          <p
+            className="animate-fade-up text-[15px] text-fg-muted"
+            style={{ animationDelay: "0.05s" }}
+          >
+            No posts yet.
+          </p>
         )}
-      </FadeIn>
+      </div>
     </div>
   );
 }

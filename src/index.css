@@ -37,6 +37,20 @@
 
   --font-geist-sans: "Geist Variable", "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-geist-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+
+  /* ─── Motion tokens (one system, both themes) ───
+     dur-fast  : hover tints, press feedback, arrow nudges
+     dur-base  : surface lifts, underline slide-ins, icon swaps, theme fade
+     dur-slow  : entrances (fade-up), image load settles, one-shot reveals
+     ease-out-quart : the site's signature settle curve (transforms, entrances)
+     ease-std       : plain ease (color / border / shadow fades) */
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 400ms;
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-std: ease;
+
+  --shadow-header: 0 12px 32px -24px rgba(120, 60, 140, 0.28);
 }
 
 /* Light stays the default (white brand); dark is an explicit choice. */
@@ -76,6 +90,8 @@
   --card-base: #1b1526;
   --wash-1: rgba(232, 121, 184, 0.07);
   --wash-2: rgba(168, 85, 200, 0.08);
+
+  --shadow-header: 0 12px 32px -24px rgba(0, 0, 0, 0.6);
 }
 
 @theme inline {
@@ -120,11 +136,15 @@ body {
   min-height: 100%;
   min-height: 100dvh;
   margin: 0;
-  /* Soft pink wash top-left, lilac wash top-right, themed base */
-  background:
+  /* Soft pink wash top-left, lilac wash top-right, themed base.
+     Base color lives on background-color (not inside the gradient) so the
+     theme cross-fade (.theme-transition) can animate it; gradients render
+     the same as before since --bg-end is opaque. */
+  background-color: var(--bg);
+  background-image:
     radial-gradient(1000px 520px at 0% -5%, var(--wash-1), transparent 55%),
     radial-gradient(900px 480px at 100% 0%, var(--wash-2), transparent 50%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-end) 100%);
+    linear-gradient(180deg, transparent 0%, var(--bg-end) 100%);
   background-attachment: fixed;
   color: var(--fg);
   font-family: var(--font-geist-sans);
@@ -155,28 +175,115 @@ body::before {
   color: var(--fg);
 }
 
-/* ─── Links ─── */
+/* ─── Theme switch cross-fade ───
+   JS contract (theme toggle only): add .theme-transition to <html>, flip
+   data-theme on the next frame, remove the class after ~300ms. Specific
+   properties only — never `all`. Deliberately NOT !important so the
+   reduced-motion kill-switch still wins. Grain overlay is exempt (blend-mode
+   flip would shimmer); the gradient washes snap but are near-invisible. */
+:root.theme-transition body,
+:root.theme-transition *,
+:root.theme-transition *::before,
+:root.theme-transition *::after {
+  transition:
+    background-color var(--dur-base) var(--ease-std),
+    color var(--dur-base) var(--ease-std),
+    border-color var(--dur-base) var(--ease-std),
+    fill var(--dur-base) var(--ease-std),
+    stroke var(--dur-base) var(--ease-std),
+    box-shadow var(--dur-base) var(--ease-std);
+}
+
+:root.theme-transition body::before {
+  transition: none;
+}
+
+/* ─── Keyboard focus (shared, on-brand) ─── */
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset: 2px;
+}
+
+/* ─── Links ───
+   .link: faint resting underline (40% accent) is a permanent gradient layer;
+   on hover a full-accent line slides in from the left over it. Both layers
+   share the same position so nothing jumps; clone keeps wrapped prose links
+   correct per line fragment. */
 .link {
   color: var(--fg);
-  text-decoration-line: underline;
-  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: color 160ms ease, text-decoration-color 160ms ease;
+  text-decoration: none;
+  background-image:
+    linear-gradient(var(--accent), var(--accent)),
+    linear-gradient(
+      color-mix(in srgb, var(--accent) 40%, transparent),
+      color-mix(in srgb, var(--accent) 40%, transparent)
+    );
+  background-repeat: no-repeat;
+  background-size: 0% 1px, 100% 1px;
+  background-position: 0 100%, 0 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition:
+    color var(--dur-fast) var(--ease-std),
+    background-size var(--dur-base) var(--ease-out-quart);
 }
 
 .link:hover {
   color: var(--accent);
-  text-decoration-color: var(--accent);
+  background-size: 100% 1px, 100% 1px;
 }
 
+/* .link-quiet: color fade + an underline that fades in, so the quiet family
+   shares the .link hover grammar without the slide. */
 .link-quiet {
   color: var(--fg-muted);
-  transition: color 160ms ease;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition:
+    color var(--dur-fast) var(--ease-std),
+    text-decoration-color var(--dur-fast) var(--ease-std);
 }
 
 .link-quiet:hover {
   color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* Underline slide-in for composite links (e.g. post-card titles): put
+   .hover-underline on the text span inside a Tailwind `group` link. */
+.hover-underline {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size var(--dur-base) var(--ease-out-quart);
+}
+
+.group:hover .hover-underline,
+a:hover > .hover-underline,
+.hover-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Directional arrow nudge — wrap the → / ← glyph:
+   <span class="arrow-icon">→</span> (add --back for ←). */
+.arrow-icon {
+  display: inline-block;
+  transition: transform var(--dur-fast) var(--ease-out-quart);
+}
+
+a:hover .arrow-icon,
+.group:hover .arrow-icon,
+button:hover .arrow-icon {
+  transform: translateX(2px);
+}
+
+a:hover .arrow-icon--back,
+.group:hover .arrow-icon--back,
+button:hover .arrow-icon--back {
+  transform: translateX(-2px);
 }
 
 /* ─── Motion helpers ─── */
@@ -192,7 +299,7 @@ body::before {
 }
 
 .animate-fade-up {
-  animation: fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: fade-up var(--dur-slow) var(--ease-out-quart) both;
 }
 
 @supports not (animation: fade-up 1s) {
@@ -200,6 +307,110 @@ body::before {
     opacity: 1;
     transform: none;
   }
+}
+
+/* Press feedback for pill/button-like targets. Declares the element's whole
+   transition — do not combine with Tailwind transition-* utilities. */
+.pressable {
+  transition:
+    transform var(--dur-fast) var(--ease-out-quart),
+    color var(--dur-fast) var(--ease-std),
+    background-color var(--dur-fast) var(--ease-std),
+    border-color var(--dur-fast) var(--ease-std);
+}
+
+.pressable:active {
+  transform: scale(0.96);
+}
+
+/* Image load settle: start hidden, add .is-loaded in onLoad (also check
+   img.complete on mount for cached images). */
+.img-fade {
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-out-quart);
+}
+
+.img-fade.is-loaded {
+  opacity: 1;
+}
+
+/* Two stacked icons cross-fading (theme toggle sun/moon): both children
+   share one grid cell; toggle .swap-hidden on the outgoing icon. */
+.swap-icon {
+  display: grid;
+  place-items: center;
+}
+
+.swap-icon > * {
+  grid-area: 1 / 1;
+  transition:
+    opacity var(--dur-base) var(--ease-out-quart),
+    transform var(--dur-base) var(--ease-out-quart);
+}
+
+.swap-icon > .swap-hidden {
+  opacity: 0;
+  transform: rotate(-30deg) scale(0.9);
+}
+
+/* Sticky header lifted state: component sets data-scrolled once past ~8px. */
+.site-header {
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color var(--dur-base) var(--ease-std),
+    box-shadow var(--dur-base) var(--ease-std);
+}
+
+.site-header[data-scrolled="true"] {
+  border-bottom-color: var(--border);
+  box-shadow: var(--shadow-header);
+}
+
+/* One-shot reveals for the about-page timeline (add class on viewport entry,
+   once). ring-pulse-once suits the H2 accent dot; draw-line the hairline. */
+@keyframes ring-pulse {
+  0% {
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  55% {
+    box-shadow: 0 0 0 7px var(--accent-soft);
+  }
+  100% {
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+}
+
+.ring-pulse-once {
+  animation: ring-pulse 350ms var(--ease-out-quart) 1;
+}
+
+@keyframes scale-x-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.draw-line {
+  transform-origin: left;
+  animation: scale-x-in var(--dur-slow) var(--ease-out-quart) both;
+}
+
+/* Anchor landing wash: deep-linked headings briefly tint then settle. */
+@keyframes target-wash {
+  from {
+    background-color: var(--accent-soft);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+h2:target,
+h3:target {
+  animation: target-wash 700ms var(--ease-std) 1 both;
 }
 
 /* ─── Utilities ─── */
@@ -212,6 +423,9 @@ body::before {
   background: color-mix(in srgb, var(--card-base) 88%, var(--accent-soft));
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
+  transition:
+    border-color var(--dur-base) var(--ease-std),
+    box-shadow var(--dur-base) var(--ease-std);
 }
 
 .card-soft:hover {
@@ -236,6 +450,25 @@ body::before {
 .cat-icon--xl {
   width: 2.25rem;
   height: 2.25rem;
+}
+
+/* One-time stroke reveal for the category-page hero mark: put .cat-draw-in
+   on the icon root at mount (paths carrying .cat-draw draw themselves in).
+   Declared BEFORE the ambient loop rules below on purpose: at equal
+   specificity the later ambient `animation` shorthand wins, so paths that
+   carry an ambient loop keep the loop instead of the one-shot reveal. */
+@keyframes draw-in {
+  from {
+    stroke-dashoffset: 64;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.cat-draw-in .cat-draw {
+  stroke-dasharray: 64;
+  animation: draw-in var(--dur-slow) var(--ease-out-quart) both;
 }
 
 @keyframes cat-breathe {
@@ -310,6 +543,33 @@ body::before {
   animation-delay: 0.45s !important;
 }
 
+/* Ambient loops are idle by default and run when the cursor (or keyboard
+   focus) engages the parent card/chip — motion answers the user instead of
+   running perpetually across list pages. The hero mark (--xl, category page
+   header) keeps its ambient loop as the one living element. */
+/* !important: the ambient rules above set the `animation` shorthand (which
+   implicitly resets play-state to running) at higher specificity than
+   `.cat-icon *` — without it, path-level loops would never pause. The
+   reduced-motion kill-switch still wins: its `animation: none !important`
+   zeroes animation-name, so play-state becomes irrelevant. */
+.cat-icon,
+.cat-icon * {
+  animation-play-state: paused !important;
+}
+
+.cat-icon--xl,
+.cat-icon--xl *,
+.category-card:hover .cat-icon,
+.category-card:hover .cat-icon *,
+.category-card:focus-visible .cat-icon,
+.category-card:focus-visible .cat-icon *,
+.category-chip:hover .cat-icon,
+.category-chip:hover .cat-icon *,
+.category-chip:focus-visible .cat-icon,
+.category-chip:focus-visible .cat-icon * {
+  animation-play-state: running !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cat-icon,
   .cat-icon * {
@@ -328,12 +588,20 @@ body::before {
   font-size: 12px;
   font-weight: 500;
   color: var(--fg-body);
-  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  transition:
+    border-color var(--dur-fast) var(--ease-std),
+    color var(--dur-fast) var(--ease-std),
+    background var(--dur-fast) var(--ease-std),
+    transform var(--dur-fast) var(--ease-out-quart);
 }
 
 .category-chip:hover {
   border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
   color: var(--accent);
+}
+
+.category-chip:active {
+  transform: scale(0.97);
 }
 
 .category-card {
@@ -344,11 +612,20 @@ body::before {
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--card-base) 90%, var(--accent-soft));
   padding: 1rem 1.05rem;
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  transition:
+    border-color var(--dur-fast) var(--ease-std),
+    box-shadow var(--dur-fast) var(--ease-std),
+    transform var(--dur-fast) var(--ease-out-quart);
 }
 
 .category-card:hover {
   border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
   box-shadow: var(--shadow-soft);
   transform: translateY(-1px);
+}
+
+/* Press sets the lifted card back down under the pointer. */
+.category-card:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
