@@ -12,6 +12,8 @@ export const site = {
     x: "https://x.com/ByProcyx",
     cial: "https://cial.ai",
     opencial: "https://opencial.ai",
+    opencialGithub: "https://github.com/eltmrc/opencial",
+    discord: "https://discord.gg/rggXQXcnZc",
   },
   socials: {
     discord: "procyx",
