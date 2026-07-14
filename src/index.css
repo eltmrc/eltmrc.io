@@ -1061,11 +1061,16 @@ h3:target {
 }
 
 /* Light-baked diagram / story SVGs: invert + hue-rotate in dark so they stay legible.
-   Skip dark terminal-style art under /story/cli- (already dark). */
+   Skip real photos, phone UI archives, and dark terminal art (cli-). */
 [data-theme="dark"] .prose-figure img[src*="/diagrams/"],
-[data-theme="dark"] .prose-figure img[src*="/story/"]:not([src*="/story/cli-"]) {
+[data-theme="dark"] .prose-figure img[src*="/story/"]:not([src*="/story/cli-"]):not([src*="/story/telegram-"]):not([src*="/story/cial-"]) {
   filter: invert(0.92) hue-rotate(180deg) saturate(0.85);
   border-color: var(--border);
+}
+
+/* Evolution strip uses real screenshots — never invert. */
+[data-theme="dark"] .prose-evo__img {
+  filter: none;
 }
 
 .card-soft {
