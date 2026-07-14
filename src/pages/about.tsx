@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { DiscordHandle } from "@/components/discord-handle";
 import { FadeIn } from "@/components/fade-in";
 import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
@@ -176,16 +177,20 @@ export function AboutPage() {
                 github.com/{site.handle}
               </a>
             </li>
-            <li className="group flex items-center justify-between gap-4 py-3">
-              <span className="text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg">Social</span>
+            <li className="group flex items-center justify-between gap-4 border-b border-border py-3">
+              <span className="text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg">X / Twitter</span>
               <a
                 href={site.links.x}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link"
               >
-                @{site.handle}
+                {site.socials.x}
               </a>
+            </li>
+            <li className="group flex items-center justify-between gap-4 py-3">
+              <span className="text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg">Discord</span>
+              <DiscordHandle className="link" />
             </li>
           </ul>
         </div>

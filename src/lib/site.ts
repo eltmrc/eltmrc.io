@@ -9,9 +9,14 @@ export const site = {
   email: "hello@eltmrc.io",
   links: {
     github: "https://github.com/eltmrc",
-    x: "https://x.com/eltmrc",
+    x: "https://x.com/ByProcyx",
     cial: "https://cial.ai",
     opencial: "https://opencial.ai",
+  },
+  socials: {
+    discord: "procyx",
+    x: "@ByProcyx",
+    github: "@eltmrc",
   },
   tagline: "Building software with care.",
 } as const;

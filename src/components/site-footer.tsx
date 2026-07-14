@@ -1,3 +1,4 @@
+import { DiscordHandle } from "@/components/discord-handle";
 import { site } from "@/lib/site";
 
 export function SiteFooter() {
@@ -26,6 +27,7 @@ export function SiteFooter() {
           >
             X
           </a>
+          <DiscordHandle className="link-quiet" />
           <a
             href={site.links.cial}
             target="_blank"

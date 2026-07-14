@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { CategoryCard } from "@/components/category-card";
+import { DiscordHandle } from "@/components/discord-handle";
 import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
 import { PostCard } from "@/components/post-card";
@@ -283,8 +284,8 @@ export function HomePage() {
             className="link"
           >
             X
-          </a>{" "}
-          and{" "}
+          </a>
+          ,{" "}
           <a
             href={site.links.github}
             target="_blank"
@@ -292,8 +293,9 @@ export function HomePage() {
             className="link"
           >
             GitHub
-          </a>
-          .
+          </a>{" "}
+          and Discord (<DiscordHandle className="link" />
+          ).
         </p>
       </FadeIn>
     </div>
