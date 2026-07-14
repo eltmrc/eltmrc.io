@@ -4,6 +4,8 @@ import { cn } from "@/lib/cn";
 
 export type RotatingPhrase = {
   text: string;
+  /** Optional date shown after the phrase — muted, smaller (no parens). */
+  when?: string;
   /** Substrings to wrap with prose-mark (first match each, case-sensitive). */
   marks?: readonly string[];
 };
@@ -17,6 +19,10 @@ type RotatingDropProps = {
 
 function normalize(p: string | RotatingPhrase): RotatingPhrase {
   return typeof p === "string" ? { text: p } : p;
+}
+
+function fullLabel(p: RotatingPhrase): string {
+  return p.when ? `${p.text} ${p.when}` : p.text;
 }
 
 /** Highlight mark substrings inside text (non-overlapping, first-wins order). */
@@ -56,10 +62,26 @@ function renderMarked(text: string, marks: readonly string[] = []): ReactNode {
   return out;
 }
 
+function PhraseBody({ item }: { item: RotatingPhrase }) {
+  return (
+    <>
+      {renderMarked(item.text, item.marks)}
+      {item.when ? (
+        <>
+          {" "}
+          <span className="text-[0.72em] font-normal tracking-wide text-fg-subtle">
+            {item.when}
+          </span>
+        </>
+      ) : null}
+    </>
+  );
+}
+
 /**
  * One phrase at a time: current drops out, next drops in.
  * Width stays stable via the longest phrase as an invisible sizer.
- * Optional per-phrase word marks (not whole-phrase highlight).
+ * Optional per-phrase word marks + subtle date suffix.
  */
 export function RotatingDrop({
   phrases,
@@ -79,7 +101,7 @@ export function RotatingDrop({
   }, [items.length, intervalMs, reduce]);
 
   const longest = items.reduce(
-    (a, b) => (a.text.length >= b.text.length ? a : b),
+    (a, b) => (fullLabel(a).length >= fullLabel(b).length ? a : b),
     items[0] ?? { text: "" },
   );
   const current = items[index] ?? items[0] ?? { text: "" };
@@ -87,7 +109,7 @@ export function RotatingDrop({
   if (reduce || items.length < 2) {
     return (
       <span className={cn("inline whitespace-nowrap", className)}>
-        {renderMarked(current.text, current.marks)}
+        <PhraseBody item={current} />
       </span>
     );
   }
@@ -103,19 +125,19 @@ export function RotatingDrop({
         className="invisible col-start-1 row-start-1 whitespace-nowrap"
         aria-hidden
       >
-        {longest.text}
+        <PhraseBody item={longest} />
       </span>
       <span className="relative col-start-1 row-start-1 inline-flex overflow-hidden whitespace-nowrap">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
-            key={current.text}
+            key={fullLabel(current)}
             className="inline-block whitespace-nowrap"
             initial={{ y: "110%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             exit={{ y: "-110%", opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            {renderMarked(current.text, current.marks)}
+            <PhraseBody item={current} />
           </motion.span>
         </AnimatePresence>
       </span>

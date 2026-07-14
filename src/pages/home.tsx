@@ -17,38 +17,46 @@ import { site } from "@/lib/site";
 
 /* Keep short — must sit on one line after “then ” inside max-w-xl. */
 const THEN_CHAPTERS = [
-  { text: "built a full OpenGL 3D engine (2018).", marks: ["OpenGL", "2018"] },
+  { text: "built a full OpenGL 3D engine.", when: "2018", marks: ["OpenGL"] },
   {
-    text: "co-founded dental AI SaaS, 100+ clinics (2022–2026).",
-    marks: ["AI SaaS", "2022–2026"],
+    text: "co-founded dental AI SaaS, 100+ clinics.",
+    when: "2022–2026",
+    marks: ["AI SaaS"],
   },
   {
-    text: "shipped ProClient — 250k+ downloads (2017–2019).",
-    marks: ["ProClient", "2017–2019"],
+    text: "shipped ProClient — 250k+ downloads.",
+    when: "2017–2019",
+    marks: ["ProClient"],
   },
   {
-    text: "scaled HardFight to 150k+ players (2014–2016).",
-    marks: ["HardFight", "2014–2016"],
+    text: "scaled HardFight to 150k+ players.",
+    when: "2014–2016",
+    marks: ["HardFight"],
   },
   {
-    text: "built military-grade drone software (2019–2020).",
-    marks: ["drone", "2019–2020"],
+    text: "built military-grade drone software.",
+    when: "2019–2020",
+    marks: ["drone"],
   },
   {
-    text: "shipped complex finance SaaS in prod (2022).",
-    marks: ["finance", "2022"],
+    text: "shipped complex finance SaaS in prod.",
+    when: "2022",
+    marks: ["finance"],
   },
   {
-    text: "helped 30+ startups as a freelancer (2021–2022).",
-    marks: ["30+", "2021–2022"],
+    text: "helped 30+ startups as a freelancer.",
+    when: "2021–2022",
+    marks: ["30+"],
   },
   {
-    text: "built OpenCial, the AI workspace (2026).",
-    marks: ["OpenCial", "2026"],
+    text: "built OpenCial, the AI workspace.",
+    when: "2026",
+    marks: ["OpenCial"],
   },
   {
-    text: "built a live electricity map for Enedis (2021).",
-    marks: ["Enedis", "2021"],
+    text: "built a live electricity map for Enedis.",
+    when: "2021",
+    marks: ["Enedis"],
   },
 ] as const;
 
