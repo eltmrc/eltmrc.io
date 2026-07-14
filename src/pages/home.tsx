@@ -103,7 +103,7 @@ export function HomePage() {
             alt=""
             width={32}
             height={32}
-            className="mt-0.5 h-8 w-8 shrink-0 rounded-lg object-contain ring-1 ring-border transition-[box-shadow] duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:ring-accent/30"
+            className="mt-0.5 h-8 w-8 shrink-0 rounded-lg object-contain"
           />
         ) : null}
         <div className="min-w-0 flex-1">
