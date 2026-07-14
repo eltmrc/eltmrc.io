@@ -37,20 +37,25 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header
-      data-scrolled={scrolled ? "true" : "false"}
-      className="site-header sticky top-0 z-40 backdrop-blur-xl supports-[backdrop-filter]:bg-bg/70"
-    >
-      <div className="mx-auto flex w-full max-w-2xl items-center justify-between px-6 py-5 sm:px-8">
-        <Link to="/" className="site-brand group text-[15px] font-medium tracking-tight text-fg">
+    <header className="site-header sticky top-0 z-40 flex justify-center px-4 pt-3 sm:pt-4">
+      <div
+        data-scrolled={scrolled ? "true" : "false"}
+        className="site-header__pill"
+      >
+        <Link
+          to="/"
+          className="site-brand group shrink-0 text-[14px] font-medium tracking-tight text-fg sm:text-[15px]"
+        >
           <span className="inline-flex items-baseline gap-1.5">
             <span className="site-brand__name">{site.name}</span>
-            <span className="site-brand__dot text-fg-muted">·</span>
-            <span className="site-brand__handle font-normal text-fg-muted">{site.handle}</span>
+            <span className="site-brand__dot hidden text-fg-muted sm:inline">·</span>
+            <span className="site-brand__handle hidden font-normal text-fg-muted sm:inline">
+              {site.handle}
+            </span>
           </span>
         </Link>
 
-        <nav className="flex items-center gap-0.5 sm:gap-1" aria-label="Main">
+        <nav className="flex items-center gap-0.5" aria-label="Main">
           {nav.map((item) => {
             const active = isActive(pathname, item.href);
             return (
@@ -59,7 +64,7 @@ export function SiteHeader() {
                 to={item.href}
                 data-active={active ? "true" : "false"}
                 className={cn(
-                  "site-nav-link group relative rounded-md px-2.5 py-1.5 text-[14px]",
+                  "site-nav-link group relative rounded-full px-2.5 py-1.5 text-[13px] sm:text-[14px]",
                   active ? "text-fg" : "text-fg-muted",
                 )}
               >
