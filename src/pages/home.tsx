@@ -186,7 +186,7 @@ export function HomePage() {
 
       <FadeIn delay={0.08} className="mt-12">
         <a
-          href={site.links.opencial}
+          href={site.links.cial}
           target="_blank"
           rel="noopener noreferrer"
           className="card-soft group block overflow-hidden rounded-2xl"
@@ -202,11 +202,12 @@ export function HomePage() {
               />
               <div>
                 <h2 className="text-[18px] font-semibold tracking-tight text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
-                  OpenCial
+                  Cial.app
                 </h2>
                 <p className="mt-1.5 max-w-md text-[14px] leading-relaxed text-fg-muted">
-                  A real AI workspace you own: agents, tools, and a product
-                  surface that lives on your machine — not a chat demo.
+                  The managed version of Cial — security, team-ready workflows,
+                  and access to powerful tools for everyone. Not just a chat
+                  demo.
                 </p>
               </div>
             </div>
