@@ -575,14 +575,15 @@ h3:target {
   overflow: visible;
 }
 
+/* Categories list — large enough that squishee detail & motion read. */
 .cat-icon--lg {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 5.5rem;
+  height: 5.5rem;
 }
 
 .cat-icon--xl {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4.5rem;
+  height: 4.5rem;
 }
 
 .category-chip {
