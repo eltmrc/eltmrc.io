@@ -28,7 +28,7 @@ export function CategoriesPage() {
       </FadeIn>
       <FadeIn delay={0.1}>
         <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-fg-muted">
-          Twenty topics I write about. Each has a quiet mark — click through to
+          Twenty topics I write about. Each has a living mark — click through to
           see matching posts.
         </p>
       </FadeIn>

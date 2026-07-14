@@ -565,125 +565,170 @@ h3:target {
   box-shadow: var(--shadow-soft-hover);
 }
 
-/* ─── Category icons (sober motion) ─── */
+/* ─── Category glyphs (Cial squishee language) ───
+   Filled violet→pink→indigo marks like cial.app pillar art — not stroke icons.
+   Jelly squash + orbit/pulse loops; paused until card/chip hover (or --xl hero). */
 .cat-icon {
   width: 1.25rem;
   height: 1.25rem;
   display: block;
-  color: var(--accent);
   flex-shrink: 0;
+  overflow: visible;
 }
 
 .cat-icon--lg {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.85rem;
+  height: 1.85rem;
 }
 
 .cat-icon--xl {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
-/* One-time stroke reveal for the category-page hero mark: put .cat-draw-in
-   on the icon root at mount (paths carrying .cat-draw draw themselves in).
-   Declared BEFORE the ambient loop rules below on purpose: at equal
-   specificity the later ambient `animation` shorthand wins, so paths that
-   carry an ambient loop keep the loop instead of the one-shot reveal. */
-@keyframes draw-in {
-  from {
-    stroke-dashoffset: 64;
+/* Whole-glyph jelly (CialMark counter-phase squash) */
+@keyframes cat-jelly {
+  0%,
+  100% {
+    transform: scale(1, 1);
   }
-  to {
-    stroke-dashoffset: 0;
+  40% {
+    transform: scale(1.06, 0.94);
   }
-}
-
-.cat-draw-in .cat-draw {
-  stroke-dasharray: 64;
-  animation: draw-in var(--dur-slow) var(--ease-out-quart) both;
-}
-
-@keyframes cat-breathe {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
+  72% {
+    transform: scale(0.98, 1.03);
+  }
 }
 
 @keyframes cat-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-1.5px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.5px);
+  }
 }
 
 @keyframes cat-rise {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-1px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.5px);
+  }
 }
 
 @keyframes cat-nudge {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(1px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(1.5px);
+  }
 }
 
 @keyframes cat-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-@keyframes cat-cog {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes cat-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes cat-bubble {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
-  50% { transform: translateY(-2px); opacity: 1; }
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
 }
 
-.cat-icon--pulse .cat-node,
-.cat-icon--pulse .cat-draw {
-  animation: cat-breathe 3.2s ease-in-out infinite;
+@keyframes cat-spec {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.55;
+  }
 }
 
-.cat-icon--float {
-  animation: cat-float 3.6s ease-in-out infinite;
+.cat-jelly {
+  transform-origin: 32px 42px;
+  transform-box: view-box;
+  animation: cat-jelly 2.6s ease-in-out infinite;
+}
+
+.cat-icon--float .cat-jelly {
+  animation:
+    cat-jelly 2.6s ease-in-out infinite,
+    cat-float 3.4s ease-in-out infinite;
 }
 
 .cat-icon--rise .cat-block {
-  animation: cat-rise 2.8s ease-in-out infinite;
+  animation: cat-rise 2.6s ease-in-out infinite;
 }
 
-.cat-icon--nudge {
-  animation: cat-nudge 3s ease-in-out infinite;
+.cat-icon--nudge .cat-jelly {
+  animation:
+    cat-jelly 2.6s ease-in-out infinite,
+    cat-nudge 2.8s ease-in-out infinite;
 }
 
-.cat-icon--spin-slow .cat-orbit {
-  transform-origin: 12px 12px;
-  animation: cat-spin 14s linear infinite;
+.cat-icon--orbit .cat-orbit-spin,
+.cat-icon--spin-slow .cat-orbit-spin {
+  transform-origin: 32px 32px;
+  transform-box: view-box;
+  animation: cat-spin 9s linear infinite;
 }
 
-.cat-icon--cog .cat-cog {
-  transform-origin: 12px 12px;
-  animation: cat-cog 10s linear infinite;
+.cat-icon--cog .cat-cog-spin {
+  transform-origin: 32px 32px;
+  transform-box: view-box;
+  animation: cat-spin 8s linear infinite;
+}
+
+.cat-icon--pulse .cat-node {
+  animation: cat-breathe 2.8s ease-in-out infinite;
 }
 
 .cat-icon--bubble .cat-node {
-  animation: cat-bubble 2.4s ease-in-out infinite;
+  animation: cat-bubble 2.2s ease-in-out infinite;
 }
 
-.cat-node--delay,
-.cat-block--delay,
-.cat-orbit--delay {
-  animation-delay: 0.45s !important;
+.cat-spec {
+  animation: cat-spec 2.6s ease-in-out infinite;
 }
 
-/* Ambient loops are idle by default and run when the cursor (or keyboard
-   focus) engages the parent card/chip — motion answers the user instead of
-   running perpetually across list pages. The hero mark (--xl, category page
-   header) keeps its ambient loop as the one living element. */
-/* !important: the ambient rules above set the `animation` shorthand (which
-   implicitly resets play-state to running) at higher specificity than
-   `.cat-icon *` — without it, path-level loops would never pause. The
-   reduced-motion kill-switch still wins: its `animation: none !important`
-   zeroes animation-name, so play-state becomes irrelevant. */
+.cat-node--d,
+.cat-block--d,
+.cat-sat--2 {
+  animation-delay: 0.4s !important;
+}
+
+.cat-sat--3 {
+  animation-delay: 0.8s !important;
+}
+
+/* Ambient loops idle until hover/focus — hero (--xl) always alive. */
 .cat-icon,
 .cat-icon * {
   animation-play-state: paused !important;
