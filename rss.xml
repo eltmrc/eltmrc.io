@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Eliot Maurice</title>
+    <link>https://eltmrc.io/</link>
+    <atom:link href="https://eltmrc.io/rss.xml" rel="self" type="application/rss+xml"/>
+    <description>Eliot Maurice (eltmrc). Builder in Paris. Co-founder of Cial and ClinicPilot, creator of OpenCial. Notes and articles on AI, software, and shipping products.</description>
+    <language>en</language>
+    <lastBuildDate>Tue, 14 Jul 2026 22:56:15 GMT</lastBuildDate>
+    <item>
+      <title>Why we&apos;re building Cial</title>
+      <link>https://eltmrc.io/writing/why-im-building-cial/</link>
+      <guid isPermaLink="true">https://eltmrc.io/writing/why-im-building-cial/</guid>
+      <pubDate>Mon, 13 Jul 2026 00:00:00 GMT</pubDate>
+      <description>From early Copilot to a self-editing AI workspace. The real story of Cial — Enzo, ClinicPilot, the Station F commute, and why it had to be open source.</description>
+    </item>
+    <item>
+      <title>How did we get here?</title>
+      <link>https://eltmrc.io/writing/how-did-we-get-here/</link>
+      <guid isPermaLink="true">https://eltmrc.io/writing/how-did-we-get-here/</guid>
+      <pubDate>Mon, 13 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Legos I couldn&apos;t afford, a game with no save button, and one line in Blocks.java. How I got into building things — year by year.</description>
+    </item>
+  </channel>
+</rss>
