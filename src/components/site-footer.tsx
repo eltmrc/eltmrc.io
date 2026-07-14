@@ -1,3 +1,4 @@
+import { CialMark } from "@/components/cial-mark";
 import { DiscordHandle } from "@/components/discord-handle";
 import { site } from "@/lib/site";
 
@@ -40,6 +41,22 @@ export function SiteFooter() {
             Email
           </a>
         </div>
+      </div>
+
+      {/* cial.app-style credit: Built with [mark] Cial */}
+      <div className="mt-6 flex items-center justify-center border-t border-border pt-6 sm:justify-start">
+        <a
+          href={site.links.cial}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-1.5 text-[12.5px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
+        >
+          <span>Built with</span>
+          <CialMark className="h-4 w-4 shrink-0" alive />
+          <span className="font-semibold text-fg-body transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
+            Cial
+          </span>
+        </a>
       </div>
     </footer>
   );

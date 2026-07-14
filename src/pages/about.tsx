@@ -52,6 +52,18 @@ export function AboutPage() {
             <p className="mt-2 text-[15px] text-fg-muted">
               Founder · builder · {site.handle}
             </p>
+            <p className="mt-2 inline-flex items-center gap-2 text-[14px] text-fg-muted">
+              <span
+                className="inline-flex h-3.5 w-5 shrink-0 overflow-hidden rounded-[2px] ring-1 ring-border"
+                title="France"
+                aria-hidden
+              >
+                <span className="h-full w-1/3 bg-[#002395]" />
+                <span className="h-full w-1/3 bg-white" />
+                <span className="h-full w-1/3 bg-[#ed2939]" />
+              </span>
+              <span>Paris, France</span>
+            </p>
           </div>
         </div>
       </FadeIn>
@@ -144,6 +156,20 @@ export function AboutPage() {
             Elsewhere
           </h2>
           <ul className="mt-4 space-y-0 text-[15px]">
+            <li className="group flex items-center justify-between gap-4 border-b border-border py-3">
+              <span className="text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg">Based in</span>
+              <span className="inline-flex items-center gap-2 text-fg">
+                <span
+                  className="inline-flex h-3 w-[1.15rem] shrink-0 overflow-hidden rounded-[2px] ring-1 ring-border"
+                  aria-hidden
+                >
+                  <span className="h-full w-1/3 bg-[#002395]" />
+                  <span className="h-full w-1/3 bg-white" />
+                  <span className="h-full w-1/3 bg-[#ed2939]" />
+                </span>
+                Paris, France
+              </span>
+            </li>
             <li className="group flex items-center justify-between gap-4 border-b border-border py-3">
               <span className="text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg">Product</span>
               <a
