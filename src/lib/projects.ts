@@ -14,7 +14,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     name: "OpenCial",
-    role: "Creator & maintainer",
+    role: "Creator & Maintainer",
     period: "Now",
     description:
       "A self-hosted AI workspace you own: agents, tools, and a product surface that lives on your machine.",
