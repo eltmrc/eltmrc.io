@@ -87,7 +87,6 @@ export function HomePage() {
         {project.icon === "cial-mark" ? (
           <CialMarkInteractive
             alive
-            portalBurst
             burstScale={1.2}
             aria-label="OpenCial"
             className="h-8 w-8"
@@ -217,7 +216,6 @@ export function HomePage() {
             <div className="flex min-w-0 items-start gap-3.5">
               <CialMarkInteractive
                 alive
-                portalBurst
                 burstScale={1.35}
                 aria-label="Cial"
                 className="h-10 w-10"

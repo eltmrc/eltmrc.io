@@ -73,7 +73,6 @@ export function WritingPostPage() {
           <div className="post-mark-hero" aria-label="OpenCial mark">
             <CialMarkInteractive
               alive
-              portalBurst
               burstScale={2.4}
               aria-label="OpenCial"
               className="post-mark-hero__mark h-36 w-36 sm:h-44 sm:w-44 md:h-52 md:w-52"

@@ -77,7 +77,6 @@ export function SiteFooter() {
             <CialMarkInteractive
               className="h-4 w-4"
               alive
-              portalBurst
               burstScale={0.85}
               aria-label="Cial mark"
             />

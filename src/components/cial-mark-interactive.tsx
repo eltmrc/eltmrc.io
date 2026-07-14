@@ -78,7 +78,9 @@ export const CialMarkInteractive = forwardRef<CialMarkInteractiveHandle, Props>(
       alive = true,
       shellClassName,
       onClick,
-      portalBurst = true,
+      // In-tree burst (default): sparks stack under the bubble (z-index).
+      // portalBurst only when a parent clips overflow and you accept sparks on top.
+      portalBurst = false,
       burstScale = 1,
       "aria-label": ariaLabel,
       interactive = true,
