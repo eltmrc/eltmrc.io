@@ -28,14 +28,14 @@ export function HomePage() {
   const renderProject = (project: Project, delay: number) => {
     const meta = [project.role, project.period].filter(Boolean).join(" · ");
     const body = (
-      <div className="flex items-start justify-between gap-4 -mx-2 rounded-xl px-2 py-4 transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:bg-surface">
+      <div className="list-row flex items-start justify-between gap-4 -mx-2 px-2 py-4">
         {project.icon ? (
           <img
             src={asset(project.icon)}
             alt=""
             width={32}
             height={32}
-            className="mt-0.5 h-8 w-8 shrink-0 rounded-lg object-contain ring-1 ring-border"
+            className="mt-0.5 h-8 w-8 shrink-0 rounded-lg object-contain ring-1 ring-border transition-[box-shadow] duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:ring-accent/30"
           />
         ) : null}
         <div className="min-w-0 flex-1">
@@ -177,7 +177,7 @@ export function HomePage() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden"
             >
               <ul className="divide-y divide-border border-t border-border">
@@ -191,7 +191,8 @@ export function HomePage() {
         <button
           type="button"
           onClick={() => setShowArchived((v) => !v)}
-          className="group pressable mt-2 inline-flex items-center gap-1.5 text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
+          aria-expanded={showArchived}
+          className="pressable group mt-2 -ml-1.5 inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 text-[13px] text-fg-muted hover:text-fg"
         >
           {showArchived
             ? "Hide archived projects"
@@ -203,9 +204,10 @@ export function HomePage() {
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
+            aria-hidden
             className={cn(
-              "h-3.5 w-3.5 transition-transform duration-[var(--dur-base)] ease-[var(--ease-out-quart)]",
-              showArchived && "rotate-180",
+              "chevron-icon h-3.5 w-3.5 text-fg-subtle group-hover:text-fg-muted",
+              showArchived && "is-open",
             )}
           >
             <path d="m6 9 6 6 6-6" />
@@ -221,7 +223,7 @@ export function HomePage() {
             </h2>
             <Link
               to="/writing/"
-              className="text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
+              className="group text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
             >
               All posts <span className="arrow-icon">→</span>
             </Link>
@@ -249,7 +251,7 @@ export function HomePage() {
             </h2>
             <Link
               to="/categories/"
-              className="text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
+              className="group text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
             >
               All 20 <span className="arrow-icon">→</span>
             </Link>

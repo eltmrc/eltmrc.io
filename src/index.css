@@ -43,12 +43,16 @@
      dur-base  : surface lifts, underline slide-ins, icon swaps, theme fade
      dur-slow  : entrances (fade-up), image load settles, one-shot reveals
      ease-out-quart : the site's signature settle curve (transforms, entrances)
-     ease-std       : plain ease (color / border / shadow fades) */
+     ease-std       : plain ease (color / border / shadow fades)
+     press-scale      : default squishee (.pressable, chips) ~0.96–0.97
+     press-scale-soft : large hit targets (rows, cards) — less squash */
   --dur-fast: 140ms;
   --dur-base: 220ms;
   --dur-slow: 400ms;
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-std: ease;
+  --press-scale: 0.97;
+  --press-scale-soft: 0.985;
 
   --shadow-header: 0 12px 32px -24px rgba(120, 60, 140, 0.28);
 }
@@ -176,11 +180,13 @@ body::before {
 }
 
 /* ─── Theme switch cross-fade ───
-   JS contract (theme toggle only): add .theme-transition to <html>, flip
-   data-theme on the next frame, remove the class after ~300ms. Specific
-   properties only — never `all`. Deliberately NOT !important so the
-   reduced-motion kill-switch still wins. Grain overlay is exempt (blend-mode
-   flip would shimmer); the gradient washes snap but are near-invisible. */
+   JS contract (theme toggle only): add .theme-transition to <html>,
+   double-rAF flip data-theme, remove class after ~280ms (past --dur-base).
+   Specific properties only — never `all`. Deliberately NOT !important so
+   the reduced-motion kill-switch still wins. Grain overlay is exempt
+   (blend-mode flip would shimmer); gradient washes snap near-invisibly.
+   Cial mark / burst subtrees opt out — jelly, SMIL, and particle motion
+   must not inherit a temporary transition shorthand. */
 :root.theme-transition body,
 :root.theme-transition *,
 :root.theme-transition *::before,
@@ -191,27 +197,48 @@ body::before {
     border-color var(--dur-base) var(--ease-std),
     fill var(--dur-base) var(--ease-std),
     stroke var(--dur-base) var(--ease-std),
-    box-shadow var(--dur-base) var(--ease-std);
+    box-shadow var(--dur-base) var(--ease-std),
+    outline-color var(--dur-base) var(--ease-std),
+    text-decoration-color var(--dur-base) var(--ease-std);
 }
 
-:root.theme-transition body::before {
+:root.theme-transition body::before,
+:root.theme-transition .cial-mark,
+:root.theme-transition .cial-mark *,
+:root.theme-transition .cial-mark *::before,
+:root.theme-transition .cial-mark *::after,
+:root.theme-transition .cial-mark-interactive,
+:root.theme-transition .cial-mark-interactive *,
+:root.theme-transition .cial-mark-interactive *::before,
+:root.theme-transition .cial-mark-interactive *::after,
+:root.theme-transition .cial-mark-burst,
+:root.theme-transition .cial-mark-burst *,
+:root.theme-transition .cial-mark-burst *::before,
+:root.theme-transition .cial-mark-burst *::after {
   transition: none;
 }
 
 /* ─── Keyboard focus (shared, on-brand) ─── */
 :focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
   outline-offset: 2px;
+  border-radius: 0.35rem;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* ─── Links ───
    .link: faint resting underline (40% accent) is a permanent gradient layer;
    on hover a full-accent line slides in from the left over it. Both layers
-   share the same position so nothing jumps; clone keeps wrapped prose links
-   correct per line fragment. */
+   share the same Y so nothing jumps; clone keeps wrapped prose links correct
+   per line fragment. Slight padding + 1.5px stroke clear descenders and avoid
+   subpixel shimmer on retina. */
 .link {
   color: var(--fg);
   text-decoration: none;
+  padding-bottom: 1px;
   background-image:
     linear-gradient(var(--accent), var(--accent)),
     linear-gradient(
@@ -219,7 +246,7 @@ body::before {
       color-mix(in srgb, var(--accent) 40%, transparent)
     );
   background-repeat: no-repeat;
-  background-size: 0% 1px, 100% 1px;
+  background-size: 0% 1.5px, 100% 1.5px;
   background-position: 0 100%, 0 100%;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
@@ -228,9 +255,10 @@ body::before {
     background-size var(--dur-base) var(--ease-out-quart);
 }
 
-.link:hover {
+.link:hover,
+.link:focus-visible {
   color: var(--accent);
-  background-size: 100% 1px, 100% 1px;
+  background-size: 100% 1.5px, 100% 1.5px;
 }
 
 /* .link-quiet: color fade + an underline that fades in, so the quiet family
@@ -246,7 +274,8 @@ body::before {
     text-decoration-color var(--dur-fast) var(--ease-std);
 }
 
-.link-quiet:hover {
+.link-quiet:hover,
+.link-quiet:focus-visible {
   color: var(--accent);
   text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
 }
@@ -254,21 +283,24 @@ body::before {
 /* Underline slide-in for composite links (e.g. post-card titles): put
    .hover-underline on the text span inside a Tailwind `group` link. */
 .hover-underline {
+  padding-bottom: 1px;
   background-image: linear-gradient(var(--accent), var(--accent));
   background-repeat: no-repeat;
-  background-size: 0% 1px;
+  background-size: 0% 1.5px;
   background-position: 0 100%;
   transition: background-size var(--dur-base) var(--ease-out-quart);
 }
 
 .group:hover .hover-underline,
 a:hover > .hover-underline,
+a:focus-visible > .hover-underline,
 .hover-underline:hover {
-  background-size: 100% 1px;
+  background-size: 100% 1.5px;
 }
 
 /* Directional arrow nudge — wrap the → / ← glyph:
-   <span class="arrow-icon">→</span> (add --back for ←). */
+   <span class="arrow-icon">→</span> (add --back for ←).
+   Hover nudges 3px; press steps to 4px for a soft follow-through. */
 .arrow-icon {
   display: inline-block;
   transition: transform var(--dur-fast) var(--ease-out-quart);
@@ -277,13 +309,38 @@ a:hover > .hover-underline,
 a:hover .arrow-icon,
 .group:hover .arrow-icon,
 button:hover .arrow-icon {
-  transform: translateX(2px);
+  transform: translate3d(3px, 0, 0);
+}
+
+a:active .arrow-icon,
+.group:active .arrow-icon,
+button:active .arrow-icon {
+  transform: translate3d(4px, 0, 0);
 }
 
 a:hover .arrow-icon--back,
 .group:hover .arrow-icon--back,
 button:hover .arrow-icon--back {
-  transform: translateX(-2px);
+  transform: translate3d(-3px, 0, 0);
+}
+
+a:active .arrow-icon--back,
+.group:active .arrow-icon--back,
+button:active .arrow-icon--back {
+  transform: translate3d(-4px, 0, 0);
+}
+
+/* Expand/collapse chevron (archived projects, TL;DR, …).
+   Toggle .is-open — do not also set Tailwind rotate-* on the same node. */
+.chevron-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--ease-out-quart);
+  transform-origin: center;
+}
+
+.chevron-icon.is-open {
+  transform: rotate(180deg);
 }
 
 /* ─── Motion helpers ─── */
@@ -309,18 +366,50 @@ button:hover .arrow-icon--back {
   }
 }
 
-/* Press feedback for pill/button-like targets. Declares the element's whole
-   transition — do not combine with Tailwind transition-* utilities. */
+/* Press feedback for pill/button-like targets — shared squishee language.
+   Declares the element's whole transition; do not combine with Tailwind
+   transition-* or active:scale-* utilities (they fight this block).
+   Hover scale (e.g. hover:scale-[1.03]) is fine; :active wins on press.
+   Never put .pressable on .cial-mark / .cial-mark-interactive — those own
+   transform via CSS jelly + motion/react pulse. */
 .pressable {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transform-origin: center;
   transition:
     transform var(--dur-fast) var(--ease-out-quart),
     color var(--dur-fast) var(--ease-std),
     background-color var(--dur-fast) var(--ease-std),
-    border-color var(--dur-fast) var(--ease-std);
+    border-color var(--dur-fast) var(--ease-std),
+    box-shadow var(--dur-fast) var(--ease-std);
 }
 
 .pressable:active {
-  transform: scale(0.96);
+  transform: scale(var(--press-scale));
+}
+
+/* Soft press for large hit targets when reusing .pressable chrome. */
+.pressable-soft:active {
+  transform: scale(var(--press-scale-soft));
+}
+
+/* Soft squishee rows (post cards, project rows). Hover tint + jelly press.
+   Own transition block — skip Tailwind transition-* / pressable on the same node. */
+.list-row {
+  border-radius: 0.75rem;
+  transition:
+    transform var(--dur-fast) var(--ease-out-quart),
+    background-color var(--dur-fast) var(--ease-std);
+  transform-origin: center;
+}
+
+.list-row:hover {
+  background-color: var(--surface);
+}
+
+.list-row:active {
+  /* Soft squishee — large hit targets squash less than .pressable. */
+  transform: scale(var(--press-scale-soft));
 }
 
 /* Image load settle: start hidden, add .is-loaded in onLoad (also check
@@ -335,14 +424,20 @@ button:hover .arrow-icon--back {
 }
 
 /* Two stacked icons cross-fading (theme toggle sun/moon): both children
-   share one grid cell; toggle .swap-hidden on the outgoing icon. */
+   share one grid cell; toggle .swap-hidden on the outgoing icon.
+   Opposite exit rotations make the swap read as a quiet spin, not a blink. */
 .swap-icon {
   display: grid;
   place-items: center;
+  line-height: 0;
 }
 
 .swap-icon > * {
   grid-area: 1 / 1;
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+  transform-origin: center;
+  backface-visibility: hidden;
   transition:
     opacity var(--dur-base) var(--ease-out-quart),
     transform var(--dur-base) var(--ease-out-quart);
@@ -350,7 +445,16 @@ button:hover .arrow-icon--back {
 
 .swap-icon > .swap-hidden {
   opacity: 0;
-  transform: rotate(-30deg) scale(0.9);
+  pointer-events: none;
+}
+
+/* Sun exits clockwise; moon exits counter-clockwise. */
+.swap-icon > svg:first-child.swap-hidden {
+  transform: rotate(48deg) scale(0.72);
+}
+
+.swap-icon > svg:last-child.swap-hidden {
+  transform: rotate(-48deg) scale(0.72);
 }
 
 /* Sticky header lifted state: component sets data-scrolled once past ~8px. */
@@ -364,6 +468,97 @@ button:hover .arrow-icon--back {
 .site-header[data-scrolled="true"] {
   border-bottom-color: var(--border);
   box-shadow: var(--shadow-header);
+}
+
+/* ─── Header interactions (brand · nav · theme) ───
+   Quiet squishee press + color settle on motion tokens only.
+   Prefer these over .pressable here so scale axes can squash. */
+
+.site-brand {
+  transition:
+    color var(--dur-base) var(--ease-std),
+    transform var(--dur-fast) var(--ease-out-quart);
+  transform-origin: left center;
+}
+
+.site-brand:hover {
+  color: var(--accent);
+}
+
+.site-brand__dot,
+.site-brand__handle {
+  transition: color var(--dur-base) var(--ease-std);
+}
+
+.site-brand:hover .site-brand__dot,
+.site-brand:hover .site-brand__handle {
+  color: color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+.site-brand:active {
+  transform: scale(var(--press-scale-soft), var(--press-scale));
+}
+
+.site-nav-link {
+  touch-action: manipulation;
+  transition:
+    transform var(--dur-fast) var(--ease-out-quart),
+    color var(--dur-base) var(--ease-std);
+  transform-origin: center bottom;
+}
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible {
+  color: var(--fg);
+}
+
+.site-nav-link[data-active="true"] {
+  color: var(--fg);
+}
+
+/* Squishee press — slightly flatter on Y so the active line feels grounded. */
+.site-nav-link:active {
+  transform: scale(var(--press-scale), 0.94);
+}
+
+.site-nav-link[data-active="true"]:active {
+  transform: scale(var(--press-scale-soft), 0.96);
+}
+
+.site-nav-link__hover-line {
+  transition: transform var(--dur-base) var(--ease-out-quart);
+}
+
+.site-nav-link__active-line {
+  /* layoutId owns position; keep the bar crisp under squishee presses */
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.site-nav-link__label {
+  transition: color var(--dur-base) var(--ease-std);
+}
+
+.site-theme-toggle {
+  touch-action: manipulation;
+  transition:
+    transform var(--dur-fast) var(--ease-out-quart),
+    color var(--dur-base) var(--ease-std);
+  transform-origin: center center;
+}
+
+.site-theme-toggle:hover,
+.site-theme-toggle:focus-visible {
+  color: var(--fg);
+}
+
+.site-theme-toggle:active {
+  /* Same spring as .pressable, lightly flatter on Y (icon-sized control). */
+  transform: scale(var(--press-scale), 0.94);
+}
+
+.site-theme-toggle__hover-line {
+  transition: transform var(--dur-base) var(--ease-out-quart);
 }
 
 /* One-shot reveals for the about-page timeline (add class on viewport entry,
@@ -449,11 +644,18 @@ h3:target {
 }
 
 .post-minimap__item {
+  cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-out-quart);
+  transform-origin: right center;
 }
 
 .post-minimap__item:hover {
-  transform: translate3d(-2px, 0, 0);
+  transform: translate3d(-2px, 0, 0) scale(1.02);
+}
+
+/* Squishee press — keep the hover nudge so the bar doesn't jump right. */
+.post-minimap__item:active {
+  transform: translate3d(-1px, 0, 0) scale(0.94);
 }
 
 .post-minimap__bar {
@@ -495,6 +697,49 @@ h3:target {
   }
 
   .post-minimap__label {
+    transform: none;
+  }
+
+  .post-minimap__item:hover,
+  .post-minimap__item:active {
+    transform: none;
+  }
+
+  /* Entrances stay visible; press squishee off (no scale). */
+  .animate-fade-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .pressable:active,
+  .pressable-soft:active,
+  .list-row:active,
+  .site-brand:active,
+  .site-nav-link:active,
+  .site-nav-link[data-active="true"]:active,
+  .site-theme-toggle:active,
+  .category-chip:hover,
+  .category-chip:active,
+  .category-card:hover,
+  .category-card:active,
+  .footer-icon:hover,
+  .footer-icon:active,
+  .footer-icon[data-copied="true"]:hover,
+  a.card-soft:hover,
+  button.card-soft:hover,
+  a.card-soft:active,
+  button.card-soft:active {
+    transform: none;
+  }
+
+  .footer-icon .footer-icon-check {
+    animation: none;
+  }
+
+  .swap-icon > .swap-hidden,
+  .swap-icon > svg:first-child.swap-hidden,
+  .swap-icon > svg:last-child.swap-hidden {
     transform: none;
   }
 }
@@ -557,12 +802,132 @@ h3:target {
   backdrop-filter: blur(10px);
   transition:
     border-color var(--dur-base) var(--ease-std),
-    box-shadow var(--dur-base) var(--ease-std);
+    box-shadow var(--dur-base) var(--ease-std),
+    transform var(--dur-fast) var(--ease-out-quart);
 }
 
 .card-soft:hover {
   border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
   box-shadow: var(--shadow-soft-hover);
+}
+
+/* Interactive feature cards only (anchor/button wrappers) — not static asides. */
+a.card-soft:hover,
+button.card-soft:hover {
+  transform: translateY(-1px);
+}
+
+a.card-soft:active,
+button.card-soft:active {
+  transform: translateY(0) scale(var(--press-scale-soft));
+}
+
+/* ─── Cial mark (instance port: idle CSS life + interactive burst) ─── */
+.cial-mark {
+  display: inline-flex;
+  transform-origin: center 70%;
+}
+
+.cial-mark--alive {
+  animation: cial-mark-jelly 1.9s ease-in-out infinite;
+}
+
+.cial-mark--alive .cial-mark__highlight {
+  animation: cial-mark-highlight 2.6s ease-in-out infinite;
+}
+
+.cial-mark__highlight circle {
+  opacity: 0.9;
+}
+
+@keyframes cial-mark-jelly {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  40% {
+    transform: scale(1.06, 0.93);
+  }
+  72% {
+    transform: scale(0.985, 1.025);
+  }
+}
+
+@keyframes cial-mark-highlight {
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+    opacity: 0.9;
+  }
+  25% {
+    transform: translate(1.6px, -1.1px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-1px, 0.7px);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(0.6px, -0.5px);
+    opacity: 0.75;
+  }
+}
+
+.cial-mark-interactive {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cial-mark-interactive__pulse {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cial-mark-burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 180px;
+  height: 180px;
+  margin: -90px 0 0 -90px;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.cial-mark-burst--portal {
+  position: fixed;
+  z-index: 80;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.cial-mark-burst__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cial-mark--alive {
+    animation: none;
+  }
+
+  .cial-mark--alive .cial-mark__highlight {
+    animation: none;
+  }
 }
 
 /* ─── Category glyphs (Cial squishee, motion/react always-on) ───
@@ -586,6 +951,7 @@ h3:target {
   height: 4.5rem;
 }
 
+/* Chip chrome only — do not animate .cat-icon (glyph jelly lives in motion/react). */
 .category-chip {
   display: inline-flex;
   align-items: center;
@@ -597,22 +963,36 @@ h3:target {
   font-size: 12px;
   font-weight: 500;
   color: var(--fg-body);
+  text-decoration: none;
+  transform-origin: center center;
   transition:
     border-color var(--dur-fast) var(--ease-std),
     color var(--dur-fast) var(--ease-std),
     background var(--dur-fast) var(--ease-std),
+    box-shadow var(--dur-fast) var(--ease-std),
     transform var(--dur-fast) var(--ease-out-quart);
 }
 
+/* Soft inflate on hover — squishee language matching the living marks. */
 .category-chip:hover {
   border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
   color: var(--accent);
+  background: color-mix(in srgb, var(--card-base) 55%, var(--accent-soft));
+  transform: scale(1.045);
 }
 
+/* Press squish — shared squishee token (from hover inflate back under finger). */
 .category-chip:active {
-  transform: scale(0.97);
+  transform: scale(var(--press-scale));
+  background: color-mix(in srgb, var(--card-base) 48%, var(--accent-soft));
 }
 
+.category-chip:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset: 3px;
+}
+
+/* Card surface — soft lift + border/glow settle on the signature curve. */
 .category-card {
   display: flex;
   flex-direction: column;
@@ -621,20 +1001,124 @@ h3:target {
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--card-base) 90%, var(--accent-soft));
   padding: 1rem 1.05rem;
+  text-decoration: none;
+  /* Transform stays fast for press; border/glow settle slower on ease-out-quart. */
   transition:
-    border-color var(--dur-fast) var(--ease-std),
-    box-shadow var(--dur-fast) var(--ease-std),
+    border-color var(--dur-base) var(--ease-out-quart),
+    box-shadow var(--dur-base) var(--ease-out-quart),
+    background var(--dur-base) var(--ease-out-quart),
     transform var(--dur-fast) var(--ease-out-quart);
 }
 
 .category-card:hover {
   border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft-hover);
+  background: color-mix(in srgb, var(--card-base) 84%, var(--accent-soft));
+  transform: translateY(-2px);
 }
 
-/* Press sets the lifted card back down under the pointer. */
+/* Press: drop the lift + soft squishee (large surface). */
 .category-card:active {
-  transform: translateY(0);
-  box-shadow: none;
+  transform: translateY(0) scale(var(--press-scale-soft));
+  box-shadow: var(--shadow-soft);
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
+}
+
+.category-card:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset: 3px;
+}
+
+/* ─── Footer social icons ───
+   Squishy hover lift + glow (violet #a855f7 → pink #ff5fa8), springy press.
+   Declares full transition set — do not stack Tailwind transition-* on top.
+   CialMarkInteractive inside keeps its own particle burst; only the shell
+   lifts/presses. */
+.footer-icon {
+  position: relative;
+  color: var(--fg-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--dur-fast) var(--ease-out-quart),
+    color var(--dur-fast) var(--ease-std),
+    background-color var(--dur-fast) var(--ease-std),
+    box-shadow var(--dur-base) var(--ease-out-quart);
+}
+
+.footer-icon:hover {
+  color: var(--fg);
+  transform: translateY(-2px) scale(1.07);
+  background: color-mix(in srgb, #a855f7 12%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, #a855f7 18%, transparent),
+    0 8px 18px -8px color-mix(in srgb, #ff5fa8 45%, transparent);
+}
+
+/* Snappier commit on press, then ease-out-quart spring-back via base transition.
+   Scale stays in the shared ~0.96–0.97 band so it doesn't fight Cial mark pulse. */
+.footer-icon:active {
+  transform: translateY(0) scale(var(--press-scale));
+  color: var(--fg);
+  background: color-mix(in srgb, #a855f7 20%, transparent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, #ff5fa8 28%, transparent),
+    0 2px 8px -4px color-mix(in srgb, #a855f7 40%, transparent);
+  transition-duration: 90ms, 90ms, 90ms, 90ms;
+}
+
+.footer-icon:focus-visible {
+  outline: none;
+  color: var(--fg);
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px color-mix(in srgb, #a855f7 55%, #ff5fa8);
+}
+
+/* Discord copy success — soft brand wash + check swap (see .swap-icon). */
+.footer-icon[data-copied="true"] {
+  color: #a855f7;
+  background: color-mix(in srgb, #a855f7 14%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, #ff5fa8 22%, transparent),
+    0 6px 14px -8px color-mix(in srgb, #ff5fa8 40%, transparent);
+}
+
+.footer-icon[data-copied="true"]:hover {
+  color: #a855f7;
+  transform: translateY(-1px) scale(1.04);
+}
+
+.footer-icon .footer-icon-check {
+  color: #a855f7;
+  animation: footer-check-pop var(--dur-base) var(--ease-out-quart) both;
+}
+
+@keyframes footer-check-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.55) rotate(-12deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.12) rotate(2deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+:root[data-theme="dark"] .footer-icon[data-copied="true"],
+:root[data-theme="dark"] .footer-icon .footer-icon-check {
+  color: #c084fc;
+}
+
+:root[data-theme="dark"] .footer-icon:hover {
+  background: color-mix(in srgb, #a855f7 16%, transparent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, #a855f7 22%, transparent),
+    0 8px 20px -8px color-mix(in srgb, #ff5fa8 50%, transparent);
 }

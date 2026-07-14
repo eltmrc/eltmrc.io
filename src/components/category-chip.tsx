@@ -16,7 +16,11 @@ export function CategoryChip({
   if (!cat) return null;
 
   return (
-    <Link to={`/categories/${cat.slug}/`} className={cn("category-chip", className)}>
+    <Link
+      to={`/categories/${cat.slug}/`}
+      className={cn("category-chip", className)}
+    >
+      {/* Size only — squishee loop stays on GlyphShell / motion. */}
       <CategoryIcon id={cat.icon} className="!h-4 !w-4" title={cat.name} />
       <span>{cat.name}</span>
     </Link>

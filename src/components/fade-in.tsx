@@ -11,8 +11,10 @@ type FadeInProps = {
 };
 
 /**
- * CSS-only entrance. Content is always visible if JS fails —
- * unlike motion `initial={{ opacity: 0 }}` which can leave a blank page.
+ * CSS-only entrance (`.animate-fade-up` + motion tokens).
+ * Content stays visible if JS fails — unlike motion
+ * `initial={{ opacity: 0 }}` which can leave a blank page.
+ * Reduced-motion: CSS kills the animation and forces opacity 1.
  */
 export function FadeIn({ children, className, delay, index }: FadeInProps) {
   const computedDelay =
@@ -24,7 +26,11 @@ export function FadeIn({ children, className, delay, index }: FadeInProps) {
   return (
     <div
       className={cn("animate-fade-up", className)}
-      style={{ animationDelay: `${computedDelay}s` }}
+      style={
+        computedDelay > 0
+          ? { animationDelay: `${computedDelay}s` }
+          : undefined
+      }
     >
       {children}
     </div>

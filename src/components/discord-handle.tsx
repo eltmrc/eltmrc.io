@@ -19,7 +19,7 @@ export function DiscordHandle({ className }: { className?: string }) {
       type="button"
       onClick={copy}
       title="Copy Discord username"
-      className={cn("pressable cursor-pointer", className)}
+      className={cn("pressable cursor-pointer rounded-sm", className)}
     >
       {copied ? (
         <span className="text-accent">copied!</span>

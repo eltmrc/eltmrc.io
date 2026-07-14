@@ -89,11 +89,17 @@ export function WritingPostPage() {
               type="button"
               onClick={() => setTldrOpen((v) => !v)}
               aria-expanded={tldrOpen}
-              className="group pressable flex w-full items-center justify-between gap-3 px-5 py-4 text-left sm:px-6"
+              className={cn(
+                "group pressable flex w-full cursor-pointer items-center justify-between gap-3",
+                "px-5 py-4 text-left sm:px-6",
+                "hover:bg-[color-mix(in_srgb,var(--accent)_7%,transparent)]",
+                "active:bg-[color-mix(in_srgb,var(--accent)_11%,transparent)]",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent/40",
+              )}
             >
               <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">
                 TL;DR
-                <span className="ml-2 font-normal normal-case tracking-normal text-fg-subtle">
+                <span className="ml-2 font-normal normal-case tracking-normal text-fg-subtle transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg-muted">
                   {tldrOpen
                     ? "Hide"
                     : `${post.tldr.length} key point${post.tldr.length === 1 ? "" : "s"}`}
@@ -108,8 +114,8 @@ export function WritingPostPage() {
                 strokeLinejoin="round"
                 aria-hidden
                 className={cn(
-                  "h-3.5 w-3.5 shrink-0 text-fg-muted transition-transform duration-[var(--dur-base)] ease-[var(--ease-out-quart)] group-hover:text-fg",
-                  tldrOpen && "rotate-180",
+                  "chevron-icon h-3.5 w-3.5 shrink-0 text-fg-muted group-hover:text-fg",
+                  tldrOpen && "is-open",
                 )}
               >
                 <path d="m6 9 6 6 6-6" />
@@ -165,7 +171,14 @@ export function WritingPostPage() {
                 href={site.links.opencialGithub}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pressable group inline-flex items-center gap-2 rounded-full border border-border bg-[color-mix(in_srgb,var(--card-base)_92%,transparent)] px-3.5 py-2 text-[13px] font-medium text-fg transition-[border-color,color,background-color] duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:border-accent/40 hover:text-accent"
+                className={cn(
+                  "pressable group inline-flex cursor-pointer items-center gap-2 rounded-full",
+                  "border border-border bg-[color-mix(in_srgb,var(--card-base)_92%,transparent)]",
+                  "px-3.5 py-2 text-[13px] font-medium text-fg",
+                  "hover:border-accent/40 hover:bg-accent-soft hover:text-accent",
+                  "hover:shadow-[0_0_0_3px_var(--accent-soft)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -184,7 +197,14 @@ export function WritingPostPage() {
                 href={site.links.discord}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pressable group inline-flex items-center gap-2 rounded-full border border-border bg-[color-mix(in_srgb,var(--card-base)_92%,transparent)] px-3.5 py-2 text-[13px] font-medium text-fg transition-[border-color,color,background-color] duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:border-accent/40 hover:text-accent"
+                className={cn(
+                  "pressable group inline-flex cursor-pointer items-center gap-2 rounded-full",
+                  "border border-border bg-[color-mix(in_srgb,var(--card-base)_92%,transparent)]",
+                  "px-3.5 py-2 text-[13px] font-medium text-fg",
+                  "hover:border-accent/40 hover:bg-accent-soft hover:text-accent",
+                  "hover:shadow-[0_0_0_3px_var(--accent-soft)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40",
+                )}
               >
                 <svg
                   viewBox="0 0 24 24"

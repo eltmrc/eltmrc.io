@@ -21,9 +21,14 @@ export function CategoryCard({
       style={{ animationDelay: `${0.05 + Math.min(index, 7) * 0.05}s` }}
     >
       <div className="flex items-center gap-4">
-        <CategoryIcon id={category.icon} className="cat-icon--lg shrink-0" title={category.name} />
+        {/* Glyph motion owns its own transform — keep shell size classes only. */}
+        <CategoryIcon
+          id={category.icon}
+          className="cat-icon--lg shrink-0"
+          title={category.name}
+        />
         <div className="min-w-0">
-          <h3 className="text-[16px] font-medium tracking-tight text-fg">
+          <h3 className="text-[16px] font-medium tracking-tight text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
             {category.name}
           </h3>
           {typeof count === "number" ? (

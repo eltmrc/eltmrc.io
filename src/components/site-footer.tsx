@@ -1,10 +1,11 @@
-import { CialMark } from "@/components/cial-mark";
+import { useEffect, useRef, useState } from "react";
+import { CialMarkInteractive } from "@/components/cial-mark-interactive";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
 
 function iconClass(className?: string) {
   return cn(
-    "inline-flex h-9 w-9 items-center justify-center rounded-full text-fg-muted transition-[color,background-color,transform] duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:bg-accent-soft hover:text-fg active:scale-95",
+    "footer-icon inline-flex h-9 w-9 items-center justify-center rounded-full",
     className,
   );
 }
@@ -33,6 +34,24 @@ function DiscordIcon({ size = 17 }: { size?: number }) {
   );
 }
 
+function CheckIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
+
 function MailIcon({ size = 16 }: { size?: number }) {
   return (
     <svg
@@ -53,19 +72,41 @@ function MailIcon({ size = 16 }: { size?: number }) {
 }
 
 function DiscordCopyButton() {
+  const [copied, setCopied] = useState(false);
+  const timer = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    return () => window.clearTimeout(timer.current);
+  }, []);
+
   const copy = () => {
     navigator.clipboard?.writeText(site.socials.discord).catch(() => {});
+    setCopied(true);
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setCopied(false), 1600);
   };
 
   return (
     <button
       type="button"
       onClick={copy}
-      title={`Copy Discord: ${site.socials.discord}`}
-      aria-label={`Copy Discord username ${site.socials.discord}`}
-      className={iconClass("cursor-pointer")}
+      title={copied ? "Copied!" : `Copy Discord: ${site.socials.discord}`}
+      aria-label={
+        copied
+          ? "Discord username copied"
+          : `Copy Discord username ${site.socials.discord}`
+      }
+      data-copied={copied ? "true" : undefined}
+      className={iconClass()}
     >
-      <DiscordIcon />
+      <span className="swap-icon" aria-hidden>
+        <span className={copied ? "swap-hidden" : undefined}>
+          <DiscordIcon />
+        </span>
+        <span className={copied ? "footer-icon-check" : "swap-hidden"}>
+          <CheckIcon />
+        </span>
+      </span>
     </button>
   );
 }
@@ -76,7 +117,6 @@ export function SiteFooter() {
   return (
     <footer className="mx-auto mt-auto w-full max-w-2xl px-6 pb-12 pt-16 sm:px-8">
       <div className="flex flex-col gap-5 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
-        {/* Built with Cial · © year — together, Cial credit just before copyright */}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-[13px] text-fg-muted">
           <a
             href={site.links.cial}
@@ -85,7 +125,13 @@ export function SiteFooter() {
             className="group inline-flex items-center gap-1.5 transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
           >
             <span>Built with</span>
-            <CialMark className="h-4 w-4 shrink-0" alive />
+            <CialMarkInteractive
+              className="h-4 w-4"
+              alive
+              portalBurst
+              burstScale={0.85}
+              aria-label="Cial mark"
+            />
             <span className="font-semibold text-fg-body transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
               Cial
             </span>
@@ -98,7 +144,6 @@ export function SiteFooter() {
           </span>
         </div>
 
-        {/* Socials as brand icons only */}
         <div className="flex items-center gap-0.5">
           <a
             href={site.links.github}
@@ -129,7 +174,13 @@ export function SiteFooter() {
             title="Cial"
             className={iconClass()}
           >
-            <CialMark className="h-4 w-4" />
+            <CialMarkInteractive
+              className="h-4 w-4"
+              alive
+              portalBurst
+              burstScale={0.9}
+              aria-label="Cial"
+            />
           </a>
           <a
             href={`mailto:${site.email}`}

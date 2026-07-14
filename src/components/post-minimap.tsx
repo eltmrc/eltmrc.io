@@ -99,9 +99,7 @@ export function PostMinimap({ headings }: PostMinimapProps) {
               <button
                 type="button"
                 onClick={() => jump(heading.id)}
-                className={cn(
-                  "group post-minimap__item flex max-w-[15rem] cursor-pointer items-center justify-end gap-2.5 py-1.5 pl-2 text-left outline-none",
-                )}
+                className="group post-minimap__item flex max-w-[15rem] cursor-pointer items-center justify-end gap-2.5 py-1.5 pl-2 text-left outline-none focus-visible:rounded-sm"
                 aria-current={active ? "location" : undefined}
                 title={heading.title}
               >

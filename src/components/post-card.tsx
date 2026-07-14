@@ -15,7 +15,7 @@ export function PostCard({
       className="group animate-fade-up"
       style={{ animationDelay: `${0.05 + Math.min(index, 7) * 0.05}s` }}
     >
-      <div className="-mx-2 rounded-xl px-2 py-4 transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:bg-surface">
+      <div className="list-row -mx-2 px-2 py-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
           <div className="min-w-0">
             <div className="mb-2 flex flex-wrap items-center gap-2">
