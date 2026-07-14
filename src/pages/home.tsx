@@ -6,6 +6,7 @@ import { DiscordHandle } from "@/components/discord-handle";
 import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
 import { PostCard } from "@/components/post-card";
+import { RotatingDrop } from "@/components/rotating-drop";
 import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
 import { getAllCategories } from "@/lib/categories";
@@ -13,6 +14,13 @@ import { getAllPosts, getCategoryCounts } from "@/lib/posts";
 import { projects, type Project } from "@/lib/projects";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
+
+const THEN_CHAPTERS = [
+  "military drones",
+  "finance SaaS",
+  "health care",
+  "freelancing",
+] as const;
 
 export function HomePage() {
   const posts = getAllPosts().slice(0, 4);
@@ -106,8 +114,13 @@ export function HomePage() {
             <div className="mt-4 max-w-xl space-y-3.5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
               <p>
                 I&apos;ve been building since 12 — picking up every tool that
-                helps people ship what they need. Minecraft mods in Java,
-                military drones, finance SaaS, health care, freelancing.
+                helps people ship what they need. Starting with Minecraft mods,
+                then{" "}
+                <RotatingDrop
+                  phrases={THEN_CHAPTERS}
+                  className="font-medium text-fg"
+                />
+                .
               </p>
               <p>
                 Now I work on <strong className="prose-mark">AI</strong> as
