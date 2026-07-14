@@ -32,9 +32,7 @@ export function CategoryPage() {
         </Link>
 
         <div className="mt-6 flex items-start gap-4">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-accent ring-1 ring-border">
-            <CategoryIcon id={cat.icon} className="cat-icon--xl" title={cat.name} />
-          </span>
+          <CategoryIcon id={cat.icon} className="cat-icon--xl shrink-0" title={cat.name} />
           <div>
             <h1 className="text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.15rem]">
               {cat.name}
