@@ -15,14 +15,15 @@ import { projects, type Project } from "@/lib/projects";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
 
+/* Keep short — must sit on one line after “then ” inside max-w-xl. */
 const THEN_CHAPTERS = [
-  "shipped a handmade modern OpenGL 3D engine with raytracing.",
-  "co-founded an AI-powered inventory & procurement SaaS for dentists.",
-  "built ProClient — a Minecraft client with 250k+ downloads.",
-  "worked on HardFight, a French modded server with 150k+ players.",
-  "flew into military drones and defense software.",
-  "shipped finance SaaS in the weeds of production.",
-  "freelanced across stacks until the next wave hit.",
+  "built a handmade OpenGL 3D engine.",
+  "co-founded AI SaaS for dental clinics.",
+  "shipped ProClient (250k+ downloads).",
+  "scaled HardFight to 150k+ players.",
+  "built military drone software.",
+  "shipped production finance SaaS.",
+  "freelanced until the next wave hit.",
 ] as const;
 
 export function HomePage() {

@@ -32,9 +32,13 @@ export function RotatingDrop({
   const longest = phrases.reduce((a, b) => (a.length >= b.length ? a : b), "");
   const current = phrases[index] ?? phrases[0] ?? "";
 
-  // Longer phrases wrap; sizer uses multi-line block so layout stays calm.
+  // Always one line — phrases must be short enough for the layout width.
   if (reduce || phrases.length < 2) {
-    return <span className={cn("inline", className)}>{current}</span>;
+    return (
+      <span className={cn("inline whitespace-nowrap", className)}>
+        {current}
+      </span>
+    );
   }
 
   return (
@@ -44,18 +48,18 @@ export function RotatingDrop({
         className,
       )}
     >
-      {/* Reserve space for the longest phrase so the block doesn't jump */}
+      {/* Reserve width for the longest phrase so the line doesn't jump */}
       <span
-        className="invisible col-start-1 row-start-1 whitespace-normal"
+        className="invisible col-start-1 row-start-1 whitespace-nowrap"
         aria-hidden
       >
         {longest}
       </span>
-      <span className="relative col-start-1 row-start-1 inline-grid overflow-hidden">
+      <span className="relative col-start-1 row-start-1 inline-flex overflow-hidden whitespace-nowrap">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={current}
-            className="col-start-1 row-start-1 inline-block whitespace-normal"
+            className="inline-block whitespace-nowrap"
             initial={{ y: "110%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             exit={{ y: "-110%", opacity: 0 }}
