@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import { CategoryIcon } from "@/components/category-icons";
 import { getCategory, type Category } from "@/lib/categories";
 import { cn } from "@/lib/cn";
 
+/** Non-linking category label (categories index removed). */
 export function CategoryChip({
   category,
   slug,
@@ -16,13 +16,10 @@ export function CategoryChip({
   if (!cat) return null;
 
   return (
-    <Link
-      to={`/categories/${cat.slug}/`}
-      className={cn("category-chip", className)}
-    >
+    <span className={cn("category-chip", className)}>
       {/* Size only — squishee loop stays on GlyphShell / motion. */}
       <CategoryIcon id={cat.icon} className="!h-4 !w-4" title={cat.name} />
       <span>{cat.name}</span>
-    </Link>
+    </span>
   );
 }

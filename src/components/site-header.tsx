@@ -7,7 +7,6 @@ import { site } from "@/lib/site";
 
 const nav = [
   { href: "/writing/", label: "Writing" },
-  { href: "/categories/", label: "Categories" },
   { href: "/about/", label: "About" },
 ] as const;
 

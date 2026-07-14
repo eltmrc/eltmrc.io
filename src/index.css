@@ -1340,6 +1340,8 @@ button.card-soft:active {
   font-weight: 500;
   color: var(--fg-body);
   text-decoration: none;
+  cursor: default;
+  pointer-events: none;
   transform-origin: center center;
   transition:
     border-color var(--dur-fast) var(--ease-std),
@@ -1350,61 +1352,6 @@ button.card-soft:active {
 }
 
 /* Soft inflate on hover — squishee language matching the living marks. */
-.category-chip:hover {
-  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
-  color: var(--accent);
-  background: color-mix(in srgb, var(--card-base) 55%, var(--accent-soft));
-  transform: scale(1.045);
-}
-
-/* Press squish — shared squishee token (from hover inflate back under finger). */
-.category-chip:active {
-  transform: scale(var(--press-scale));
-  background: color-mix(in srgb, var(--card-base) 48%, var(--accent-soft));
-}
-
-.category-chip:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
-  outline-offset: 3px;
-}
-
-/* Card surface — soft lift + border/glow settle on the signature curve. */
-.category-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--card-base) 90%, var(--accent-soft));
-  padding: 1rem 1.05rem;
-  text-decoration: none;
-  /* Transform stays fast for press; border/glow settle slower on ease-out-quart. */
-  transition:
-    border-color var(--dur-base) var(--ease-out-quart),
-    box-shadow var(--dur-base) var(--ease-out-quart),
-    background var(--dur-base) var(--ease-out-quart),
-    transform var(--dur-fast) var(--ease-out-quart);
-}
-
-.category-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
-  box-shadow: var(--shadow-soft-hover);
-  background: color-mix(in srgb, var(--card-base) 84%, var(--accent-soft));
-  transform: translateY(-2px);
-}
-
-/* Press: drop the lift + soft squishee (large surface). */
-.category-card:active {
-  transform: translateY(0) scale(var(--press-scale-soft));
-  box-shadow: var(--shadow-soft);
-  border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
-}
-
-.category-card:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
-  outline-offset: 3px;
-}
-
 /* ─── Footer social icons ───
    Squishy hover lift + glow (violet #a855f7 → pink #ff5fa8), springy press.
    Declares full transition set — do not stack Tailwind transition-* on top.

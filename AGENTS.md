@@ -18,7 +18,6 @@ src/pages/              # route pages (Home, Writing, Categories, About)
 src/components/         # chrome + markdown mapping + category icons
 src/lib/posts.ts        # load/parse posts (import.meta.glob + frontmatter)
 src/lib/frontmatter.ts  # tiny YAML frontmatter parser (no gray-matter)
-src/lib/categories.ts   # 20 fixed category slugs
 src/lib/site.ts         # name, urls, links
 src/App.tsx             # react-router routes
 .claude/skills/write-post/  # how to add posts (Claude)
@@ -54,7 +53,5 @@ Push to `main` → GitHub Actions → GitHub Pages. Custom domain: `public/CNAME
 
 ## Categories
 
-- Definitions: `src/lib/categories.ts` (20 fixed slugs)
 - Animated icons: `src/components/category-icons.tsx`
-- Routes: `/categories/`, `/categories/:slug/`
 - Posts set `category: <slug>` in frontmatter

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { FadeIn } from "@/components/fade-in";
 import { PostCard } from "@/components/post-card";
 import { Seo } from "@/components/seo";
@@ -23,12 +22,7 @@ export function WritingIndexPage() {
           Notes & essays
         </h1>
         <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-fg-muted">
-          Product decisions, tools I try, and field notes from building. Browse
-          by{" "}
-          <Link to="/categories/" className="link">
-            category
-          </Link>
-          .
+          Product decisions, tools I try, and field notes from building.
         </p>
       </FadeIn>
 

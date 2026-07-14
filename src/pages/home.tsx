@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
-import { CategoryCard } from "@/components/category-card";
 import { CialMarkInteractive } from "@/components/cial-mark-interactive";
 import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
@@ -9,8 +8,7 @@ import { PostCard } from "@/components/post-card";
 import { RotatingDrop } from "@/components/rotating-drop";
 import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
-import { getAllCategories } from "@/lib/categories";
-import { getAllPosts, getCategoryCounts } from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 import { projects, type Project } from "@/lib/projects";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
@@ -71,10 +69,6 @@ const THEN_CHAPTERS = [
 
 export function HomePage() {
   const posts = getAllPosts().slice(0, 4);
-  const counts = getCategoryCounts();
-  const featuredCategories = getAllCategories()
-    .filter((c) => (counts[c.slug] ?? 0) > 0)
-    .slice(0, 6);
 
   const [showArchived, setShowArchived] = useState(false);
   const activeProjects = projects.filter((p) => p.status === "active");
@@ -327,33 +321,7 @@ export function HomePage() {
         )}
       </section>
 
-      {featuredCategories.length > 0 ? (
-        <FadeIn delay={0.18} className="mt-16">
-          <div className="flex items-end justify-between gap-4">
-            <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
-              Categories
-            </h2>
-            <Link
-              to="/categories/"
-              className="group text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
-            >
-              All 20 <span className="arrow-icon">→</span>
-            </Link>
-          </div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {featuredCategories.map((cat, i) => (
-              <CategoryCard
-                key={cat.slug}
-                category={cat}
-                count={counts[cat.slug] ?? 0}
-                index={i}
-              />
-            ))}
-          </div>
-        </FadeIn>
-      ) : null}
-
-      <FadeIn delay={0.22} className="mt-16">
+      <FadeIn delay={0.18} className="mt-16">
         <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
           Connect
         </h2>

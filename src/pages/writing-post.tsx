@@ -256,14 +256,6 @@ export function WritingPostPage() {
           <Link to="/writing/" className="link">
             More writing
           </Link>
-          {post.category ? (
-            <>
-              {" · "}
-              <Link to={`/categories/${post.category}/`} className="link">
-                More in this category
-              </Link>
-            </>
-          ) : null}
           {" · "}
           <a
             href={site.links.x}

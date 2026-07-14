@@ -54,7 +54,5 @@ AI agents: use the **write-post** skill:
 | `/` | Landing |
 | `/writing` | Post index |
 | `/writing/:slug` | Post |
-| `/categories` | Category index |
-| `/categories/:slug` | Posts in a category |
 | `/about` | About |
 | `/rss.xml` | RSS feed (build-time) |

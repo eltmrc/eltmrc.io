@@ -5,8 +5,6 @@ import { SiteHeader } from "@/components/site-header";
 import { Seo } from "@/components/seo";
 import { site } from "@/lib/site";
 import { AboutPage } from "@/pages/about";
-import { CategoriesPage } from "@/pages/categories";
-import { CategoryPage } from "@/pages/category";
 import { HomePage } from "@/pages/home";
 import { NotFoundPage } from "@/pages/not-found";
 import { WritingIndexPage } from "@/pages/writing";
@@ -32,10 +30,6 @@ export default function App() {
             <Route path="/writing/" element={<WritingIndexPage />} />
             <Route path="/writing/:slug" element={<WritingPostPage />} />
             <Route path="/writing/:slug/" element={<WritingPostPage />} />
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/categories/" element={<CategoriesPage />} />
-            <Route path="/categories/:slug" element={<CategoryPage />} />
-            <Route path="/categories/:slug/" element={<CategoryPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/about/" element={<AboutPage />} />
             <Route path="*" element={<NotFoundPage />} />
