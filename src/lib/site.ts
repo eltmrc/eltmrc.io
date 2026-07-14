@@ -4,8 +4,7 @@ export const site = {
   title: "Eliot Maurice",
   description:
     "Founder of Cial. Writing about building software, AI workspaces, and the craft of shipping.",
-  // Until custom DNS is live, canonical URL is the GitHub Pages project URL
-  url: "https://eltmrc.github.io/eltmrc.io",
+  url: "https://eltmrc.io",
   locale: "en",
   email: "hello@eltmrc.io",
   links: {

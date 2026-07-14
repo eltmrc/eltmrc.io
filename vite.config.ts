@@ -8,13 +8,11 @@ import { parseFrontmatter } from "./src/lib/frontmatter";
 /**
  * Static site for GitHub Pages.
  *
- * Project site (no custom DNS yet): https://eltmrc.github.io/eltmrc.io/
- *   → base path required
- *
- * When DNS for eltmrc.io is ready, set CUSTOM_DOMAIN=1 (or remove base)
- * and put public/CNAME back.
+ * Custom domain https://eltmrc.io is live (public/CNAME + apex DNS),
+ * so root base is the default. Set PROJECT_PAGES=1 to build for the
+ * legacy project URL https://eltmrc.github.io/eltmrc.io/ instead.
  */
-const useProjectPages = process.env.CUSTOM_DOMAIN !== "1";
+const useProjectPages = process.env.PROJECT_PAGES === "1";
 const base = useProjectPages ? "/eltmrc.io/" : "/";
 
 function spaFallback(): Plugin {
