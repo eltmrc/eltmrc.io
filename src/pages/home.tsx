@@ -103,28 +103,28 @@ export function HomePage() {
             <h1 className="max-w-xl text-[2.1rem] font-semibold leading-[1.12] tracking-tight text-fg sm:text-[2.5rem]">
               Eliot Maurice
             </h1>
-            <p className="mt-4 max-w-xl text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
-              I&apos;ve been building since{" "}
-              <strong className="prose-mark">12</strong> — picking up every
-              tool that helps people ship what they need.{" "}
-              <strong className="prose-mark">Minecraft</strong> mods in Java,
-              military <strong className="prose-mark">drones</strong>,{" "}
-              <strong className="prose-mark">finance</strong> SaaS,{" "}
-              <strong className="prose-mark">health care</strong>, freelancing,
-              and now founder of{" "}
-              <a
-                href={site.links.cial}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link"
-              >
-                Cial
-              </a>{" "}
-              and <strong className="prose-mark">OSS</strong> contributor. Same
-              job the whole way: craft the best{" "}
-              <strong className="prose-mark">surfboards</strong> for the
-              technological waves.
-            </p>
+            <div className="mt-4 max-w-xl space-y-3.5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
+              <p>
+                I&apos;ve been building since 12 — picking up every tool that
+                helps people ship what they need. Minecraft mods in Java,
+                military drones, finance SaaS, health care, freelancing.
+              </p>
+              <p>
+                Now I work on <strong className="prose-mark">AI</strong> as
+                founder of{" "}
+                <a
+                  href={site.links.cial}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link"
+                >
+                  Cial
+                </a>{" "}
+                and <strong className="prose-mark">OSS</strong> contributor.
+                Same job the whole way: craft the best surfboards for the
+                technological waves.
+              </p>
+            </div>
           </div>
         </div>
       </FadeIn>
