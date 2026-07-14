@@ -472,7 +472,7 @@ button:active .arrow-icon--back {
   border-radius: 9999px;
   border: 1px solid var(--border);
   background: var(--bg);
-  padding: 0.4rem 0.5rem 0.4rem 1rem;
+  padding: 0.4rem 0.85rem 0.4rem 1.25rem;
   box-shadow: 0 10px 28px -16px rgba(120, 60, 140, 0.22);
   transition:
     border-color var(--dur-base) var(--ease-std),
