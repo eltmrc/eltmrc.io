@@ -16,10 +16,13 @@ import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
 
 const THEN_CHAPTERS = [
-  "military drones",
-  "finance SaaS",
-  "health care",
-  "freelancing",
+  "shipped a handmade modern OpenGL 3D engine with raytracing.",
+  "co-founded an AI-powered inventory & procurement SaaS for dentists.",
+  "built ProClient — a Minecraft client with 250k+ downloads.",
+  "worked on HardFight, a French modded server with 150k+ players.",
+  "flew into military drones and defense software.",
+  "shipped finance SaaS in the weeds of production.",
+  "freelanced across stacks until the next wave hit.",
 ] as const;
 
 export function HomePage() {
@@ -114,13 +117,12 @@ export function HomePage() {
             <div className="mt-4 max-w-xl space-y-3.5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
               <p>
                 I&apos;ve been building since 12 — picking up every tool that
-                helps people ship what they need. Starting with Minecraft mods,
+                helps people ship what they need. Started with Minecraft mods,
                 then{" "}
                 <RotatingDrop
                   phrases={THEN_CHAPTERS}
-                  className="font-medium text-fg"
+                  className="prose-mark font-medium"
                 />
-                .
               </p>
               <p>
                 Now I work on <strong className="prose-mark">AI</strong> as

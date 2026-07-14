@@ -32,32 +32,34 @@ export function RotatingDrop({
   const longest = phrases.reduce((a, b) => (a.length >= b.length ? a : b), "");
   const current = phrases[index] ?? phrases[0] ?? "";
 
+  // Longer phrases wrap; sizer uses multi-line block so layout stays calm.
   if (reduce || phrases.length < 2) {
-    return (
-      <span className={cn("inline text-fg", className)}>{current}</span>
-    );
+    return <span className={cn("inline", className)}>{current}</span>;
   }
 
   return (
     <span
       className={cn(
-        "rotating-drop relative inline-grid align-baseline text-fg",
+        "rotating-drop relative inline-grid max-w-full align-baseline",
         className,
       )}
     >
-      {/* Reserve width so the line doesn't jump when phrases change length */}
-      <span className="invisible col-start-1 row-start-1 whitespace-nowrap" aria-hidden>
+      {/* Reserve space for the longest phrase so the block doesn't jump */}
+      <span
+        className="invisible col-start-1 row-start-1 whitespace-normal"
+        aria-hidden
+      >
         {longest}
       </span>
-      <span className="relative col-start-1 row-start-1 inline-flex overflow-hidden whitespace-nowrap">
+      <span className="relative col-start-1 row-start-1 inline-grid overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={current}
-            className="inline-block"
+            className="col-start-1 row-start-1 inline-block whitespace-normal"
             initial={{ y: "110%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             exit={{ y: "-110%", opacity: 0 }}
-            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
             {current}
           </motion.span>
