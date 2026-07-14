@@ -418,6 +418,87 @@ h3:target {
   max-width: 42rem;
 }
 
+/* ─── Post minimap (Notion-style outline) ───
+   Pure CSS open/close — no React state on hover — so titles fade without
+   re-render flicker. Slight delay on close only. GPU transforms. */
+.post-minimap__label {
+  opacity: 0;
+  transform: translate3d(6px, 0, 0);
+  /* Close: settle curve + short delay so leaving between items doesn't flash */
+  transition:
+    opacity 280ms var(--ease-out-quart) 70ms,
+    transform 280ms var(--ease-out-quart) 70ms,
+    color var(--dur-fast) var(--ease-std),
+    text-shadow var(--dur-fast) var(--ease-std);
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+.post-minimap:hover .post-minimap__label,
+.post-minimap:focus-within .post-minimap__label {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  /* Open: immediate, same duration */
+  transition-delay: 0ms, 0ms, 0ms, 0ms;
+  pointer-events: auto;
+}
+
+.post-minimap__item:hover .post-minimap__label:not(.post-minimap__label--active) {
+  color: var(--accent);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.post-minimap__item {
+  transition: transform var(--dur-fast) var(--ease-out-quart);
+}
+
+.post-minimap__item:hover {
+  transform: translate3d(-2px, 0, 0);
+}
+
+.post-minimap__bar {
+  width: 0.625rem; /* 2.5 */
+  height: 2px;
+  background: color-mix(in srgb, var(--fg-subtle) 45%, transparent);
+  transition:
+    width var(--dur-base) var(--ease-out-quart),
+    height var(--dur-base) var(--ease-out-quart),
+    background-color var(--dur-base) var(--ease-std),
+    box-shadow var(--dur-base) var(--ease-std);
+}
+
+.post-minimap__bar--sub {
+  width: 0.5rem;
+}
+
+.post-minimap__bar--active {
+  width: 1rem;
+  height: 3px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.post-minimap__bar--sub.post-minimap__bar--active {
+  width: 0.75rem;
+}
+
+.post-minimap__item:hover .post-minimap__bar:not(.post-minimap__bar--active) {
+  width: 0.875rem;
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-minimap__label,
+  .post-minimap__item,
+  .post-minimap__bar {
+    transition: none;
+  }
+
+  .post-minimap__label {
+    transform: none;
+  }
+}
+
 /* Soft highlighter on **bold** key phrases — box-decoration-break keeps
    multi-line marks clean. Use sparingly in post body. */
 .prose-mark {
