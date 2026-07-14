@@ -1494,8 +1494,14 @@ button.card-soft:active {
 }
 
 /* ─── Portrait contact menu (squishee dropdown) ─── */
+/* Sit above following home sections (Cial.app card, etc.).
+   Parent FadeIn also needs a z-index when open — set via data-open. */
 .portrait-menu-root {
-  z-index: 20;
+  z-index: 30;
+}
+
+.portrait-menu-root[data-open="true"] {
+  z-index: 60;
 }
 
 .portrait-trigger {
@@ -1567,7 +1573,7 @@ button.card-soft:active {
   position: absolute;
   top: calc(100% + 0.55rem);
   left: 0;
-  z-index: 40;
+  z-index: 70;
   min-width: 15.5rem;
   transform-origin: top left;
   /* Hover bridge so the pointer can travel from face → menu. */

@@ -10,6 +10,7 @@ export const site = {
   links: {
     github: "https://github.com/eltmrc",
     x: "https://x.com/ByProcyx",
+    linkedin: "https://www.linkedin.com/in/eliot-m-2b43b418b/",
     cial: "https://cial.app",
     opencial: "https://opencial.ai",
     opencialGithub: "https://github.com/eltmrc/opencial",
@@ -18,5 +19,6 @@ export const site = {
   socials: {
     x: "@ByProcyx",
     github: "@eltmrc",
+    linkedin: "eliot-m",
   },
 } as const;

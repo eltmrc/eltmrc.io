@@ -164,7 +164,8 @@ export function HomePage() {
     <div className="pb-10 pt-6 sm:pt-10">
       <Seo title={site.title} description={site.description} path="/" titleTemplate={false} />
 
-      <FadeIn>
+      {/* z-40 so the portrait contact menu paints above the Cial.app card below */}
+      <FadeIn className="relative z-40">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
           <Portrait size={88} priority className="sm:mt-1" />
           <div className="min-w-0">
@@ -198,7 +199,7 @@ export function HomePage() {
         </div>
       </FadeIn>
 
-      <FadeIn delay={0.08} className="mt-12">
+      <FadeIn delay={0.08} className="relative z-10 mt-12">
         <a
           href={site.links.cial}
           target="_blank"
@@ -364,6 +365,15 @@ export function HomePage() {
             className="link"
           >
             X
+          </a>
+          ,{" "}
+          <a
+            href={site.links.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            LinkedIn
           </a>
           ,{" "}
           <a
