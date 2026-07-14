@@ -35,7 +35,7 @@ export const projects: Project[] = [
     icon: "/images/clinicpilot-icon.png",
   },
   {
-    name: "visaexpress.io",
+    name: "VisaExpress",
     role: "Founder",
     description:
       "French visa appointments as soon as tomorrow — appointment hunting service with a Discord notification bot.",
