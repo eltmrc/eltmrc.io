@@ -14,7 +14,7 @@ Static **Vite + React + Tailwind** site on GitHub Pages.
 
 ```
 content/writing/*.mdx   # blog posts (source of truth)
-src/pages/              # route pages (Home, Writing, Categories, About)
+src/pages/              # route pages (Home, Writing)
 src/components/         # chrome + markdown mapping + category icons
 src/lib/posts.ts        # load/parse posts (import.meta.glob + frontmatter)
 src/lib/frontmatter.ts  # tiny YAML frontmatter parser (no gray-matter)

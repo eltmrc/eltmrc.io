@@ -5,10 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
 
-const nav = [
-  { href: "/writing/", label: "Writing" },
-  { href: "/about/", label: "About" },
-] as const;
+const nav = [{ href: "/writing/", label: "Writing" }] as const;
 
 /** Spring for the shared active underline — snappy settle, soft overshoot. */
 const navLineTransition = {

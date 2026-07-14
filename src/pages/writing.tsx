@@ -10,7 +10,7 @@ export function WritingIndexPage() {
     <div className="pb-10 pt-6 sm:pt-10">
       <Seo
         title="Writing"
-        description="Essays and notes on software, AI, and building Cial."
+        description="Notes and articles on software, AI, and building Cial."
         path="/writing/"
       />
 
@@ -19,7 +19,7 @@ export function WritingIndexPage() {
           Writing
         </p>
         <h1 className="mt-3 text-[2rem] font-semibold tracking-tight text-fg sm:text-[2.25rem]">
-          Notes & essays
+          Notes & Articles
         </h1>
         <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-fg-muted">
           Product decisions, tools I try, and field notes from building.
