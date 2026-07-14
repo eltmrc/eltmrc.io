@@ -17,13 +17,39 @@ import { site } from "@/lib/site";
 
 /* Keep short — must sit on one line after “then ” inside max-w-xl. */
 const THEN_CHAPTERS = [
-  { text: "built a handmade OpenGL 3D engine.", marks: ["OpenGL"] },
-  { text: "co-founded AI SaaS for dental clinics.", marks: ["AI SaaS"] },
-  { text: "shipped ProClient (250k+ downloads).", marks: ["ProClient"] },
-  { text: "scaled HardFight to 150k+ players.", marks: ["HardFight"] },
-  { text: "built military drone software.", marks: ["drone"] },
-  { text: "shipped production finance SaaS.", marks: ["finance"] },
-  { text: "freelanced until the next wave hit.", marks: ["freelanced"] },
+  { text: "built a full OpenGL 3D engine (2018).", marks: ["OpenGL", "2018"] },
+  {
+    text: "co-founded dental AI SaaS, 100+ clinics (2022–2026).",
+    marks: ["AI SaaS", "2022–2026"],
+  },
+  {
+    text: "shipped ProClient — 250k+ downloads (2017–2019).",
+    marks: ["ProClient", "2017–2019"],
+  },
+  {
+    text: "scaled HardFight to 150k+ players (2014–2016).",
+    marks: ["HardFight", "2014–2016"],
+  },
+  {
+    text: "built military-grade drone software (2019–2020).",
+    marks: ["drone", "2019–2020"],
+  },
+  {
+    text: "shipped complex finance SaaS in prod (2022).",
+    marks: ["finance", "2022"],
+  },
+  {
+    text: "helped 30+ startups as a freelancer (2021–2022).",
+    marks: ["30+", "2021–2022"],
+  },
+  {
+    text: "built OpenCial, the AI workspace (2026).",
+    marks: ["OpenCial", "2026"],
+  },
+  {
+    text: "built a live electricity map for Enedis (2021).",
+    marks: ["Enedis", "2021"],
+  },
 ] as const;
 
 export function HomePage() {
