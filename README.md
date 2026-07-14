@@ -1,6 +1,6 @@
 # eltmrc.io
 
-Personal site for **Eliot Maurice** — writing, notes, and the work behind [Cial](https://cial.ai).
+Personal site for **Eliot Maurice** — writing, notes, and the work behind [Cial](https://cial.app).
 
 - **Stack:** Vite 7, React 19, Tailwind CSS 4, pnpm, Motion  
 - **Content:** MD/MDX files in `content/writing/` (no database)  

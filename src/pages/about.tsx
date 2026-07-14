@@ -154,7 +154,7 @@ export function AboutPage() {
               </p>
               <p className="text-[13px] text-fg-muted">
                 Self-hosted AI workspace ·{" "}
-                <span className="hover-underline text-fg">cial.ai</span>
+                <span className="hover-underline text-fg">cial.app</span>
               </p>
             </div>
           </div>

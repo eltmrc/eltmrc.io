@@ -10,7 +10,7 @@ export const site = {
   links: {
     github: "https://github.com/eltmrc",
     x: "https://x.com/ByProcyx",
-    cial: "https://cial.ai",
+    cial: "https://cial.app",
     opencial: "https://opencial.ai",
     opencialGithub: "https://github.com/eltmrc/opencial",
     discord: "https://discord.gg/YBx5CWKhNS",
