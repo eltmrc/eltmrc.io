@@ -7,7 +7,7 @@ export type Project = {
   href?: string;
   linkLabel?: string;
   status?: "active" | "archived";
-  /** Path under public/, rendered via asset(). */
+  /** Path under public/, or "cial-mark" for the animated bubble mark. */
   icon?: string;
 };
 
@@ -21,7 +21,7 @@ export const projects: Project[] = [
     href: "/writing/why-im-building-cial/",
     linkLabel: "Read the story",
     status: "active",
-    icon: "/images/cial-icon.png",
+    icon: "cial-mark",
   },
   {
     name: "ClinicPilot",

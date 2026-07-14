@@ -84,7 +84,20 @@ export function HomePage() {
     const meta = [project.role, project.period].filter(Boolean).join(" · ");
     const body = (
       <div className="list-row flex items-start justify-between gap-4 -mx-2 px-2 py-4">
-        {project.icon ? (
+        {project.icon === "cial-mark" ? (
+          <CialMarkInteractive
+            alive
+            portalBurst
+            burstScale={1.2}
+            aria-label="OpenCial"
+            className="h-8 w-8"
+            shellClassName="mt-0.5 shrink-0"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          />
+        ) : project.icon ? (
           <img
             src={asset(project.icon)}
             alt=""
