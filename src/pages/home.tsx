@@ -179,35 +179,31 @@ export function HomePage() {
                 then{" "}
                 <RotatingDrop phrases={THEN_CHAPTERS} />
               </p>
+              <p className="mt-4">
+                Now I work on <strong className="prose-mark">AI</strong> as
+                co-founder of{" "}
+                <a
+                  href={site.links.cial}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link"
+                >
+                  Cial
+                </a>{" "}
+                and <strong className="prose-mark">OSS</strong> contributor with{" "}
+                <a
+                  href={site.links.opencial}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link"
+                >
+                  OpenCial
+                </a>
+                .
+              </p>
             </div>
           </div>
         </div>
-      </FadeIn>
-
-      <FadeIn delay={0.06} className="mt-8">
-        <p className="w-full text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
-          Now I work on <strong className="prose-mark">AI</strong> as
-          co-founder of{" "}
-          <a
-            href={site.links.cial}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="link"
-          >
-            Cial
-          </a>{" "}
-          and <strong className="prose-mark">OSS</strong> contributor with{" "}
-          <a
-            href={site.links.opencial}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="link"
-          >
-            OpenCial
-          </a>
-          . Same job the whole way: craft the best surfboards for the
-          technological waves.
-        </p>
       </FadeIn>
 
       <FadeIn delay={0.08} className="relative z-10 mt-8">

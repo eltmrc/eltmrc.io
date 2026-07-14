@@ -143,7 +143,7 @@ export function ImageLightbox({
           {canNext ? (
             <button
               type="button"
-              className="image-lightbox__nav image-lightbox__nav--next pressable"
+              className="image-lightbox__nav image-lightbox__nav--next"
               aria-label="Next image"
               onClick={(e) => {
                 e.stopPropagation();

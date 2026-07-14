@@ -20,7 +20,7 @@ export function AboutPage() {
     <div className="pb-10 pt-6 sm:pt-10">
       <Seo
         title="About"
-        description={`About ${site.name} — builder since forever, founder of Cial, surfboards for tech waves.`}
+        description={`About ${site.name} — builder since forever, co-founder of Cial and OSS contributor with OpenCial.`}
         path="/about/"
       />
 
@@ -83,8 +83,7 @@ export function AboutPage() {
           >
             OpenCial
           </a>
-          , still shipping. The wave changes; the job doesn&apos;t — craft the
-          best surfboards for the technological waves.
+          .
         </p>
         <p>
           Experiences are still a bit unstructured on paper. That&apos;s fine.
