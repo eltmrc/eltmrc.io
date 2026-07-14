@@ -172,34 +172,35 @@ export function HomePage() {
             <h1 className="max-w-xl text-[2.1rem] font-semibold leading-[1.12] tracking-tight text-fg sm:text-[2.5rem]">
               Eliot Maurice
             </h1>
-            <div className="mt-4 max-w-xl space-y-3.5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
+            <div className="mt-4 max-w-xl text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
               <p>
                 I&apos;ve been building since 12 — picking up every tool that
                 helps people ship what they need. Started with Minecraft mods,
                 then{" "}
                 <RotatingDrop phrases={THEN_CHAPTERS} />
               </p>
-              <p>
-                Now I work on <strong className="prose-mark">AI</strong> as
-                founder of{" "}
-                <a
-                  href={site.links.cial}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link"
-                >
-                  Cial
-                </a>{" "}
-                and <strong className="prose-mark">OSS</strong> contributor.
-                Same job the whole way: craft the best surfboards for the
-                technological waves.
-              </p>
             </div>
           </div>
         </div>
       </FadeIn>
 
-      <FadeIn delay={0.08} className="relative z-10 mt-12">
+      <FadeIn delay={0.06} className="mt-8">
+        <p className="w-full text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
+          Now I work on <strong className="prose-mark">AI</strong> as founder of{" "}
+          <a
+            href={site.links.cial}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            Cial
+          </a>{" "}
+          and <strong className="prose-mark">OSS</strong> contributor. Same job
+          the whole way: craft the best surfboards for the technological waves.
+        </p>
+      </FadeIn>
+
+      <FadeIn delay={0.08} className="relative z-10 mt-8">
         <a
           href={site.links.cial}
           target="_blank"
