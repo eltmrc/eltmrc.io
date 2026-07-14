@@ -787,6 +787,42 @@ h3:target {
   margin-right: 0;
 }
 
+/* Side-by-side illustration (e.g. phone screenshot next to a paragraph).
+   Markdown: ![Caption |side](/images/…) then the wrapping prose. */
+.prose-figure--side {
+  float: right;
+  clear: right;
+  width: min(42%, 11.5rem);
+  max-width: 11.5rem;
+  margin: 0.15rem 0 1rem 1.15rem;
+}
+
+.prose-figure--side img {
+  max-height: 22rem;
+  width: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.prose-shell::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media (max-width: 639px) {
+  .prose-figure--side {
+    float: none;
+    width: min(70%, 14rem);
+    max-width: 14rem;
+    margin: 1.25rem auto;
+  }
+
+  .prose-figure--side figcaption {
+    text-align: center;
+  }
+}
+
 /* Light-baked diagram / story SVGs: invert + hue-rotate in dark so they stay legible.
    Skip dark terminal-style art under /story/cli- (already dark). */
 [data-theme="dark"] .prose-figure img[src*="/diagrams/"],

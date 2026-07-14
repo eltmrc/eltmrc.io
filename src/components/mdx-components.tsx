@@ -89,26 +89,39 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
     typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")
       ? asset(raw)
       : raw;
-  const alt = props.alt ?? "";
-  const caption = alt.trim();
+  const rawAlt = props.alt ?? "";
+  // Convention: "Caption text |side" floats the figure beside following prose.
+  const side = /\|\s*side\s*$/i.test(rawAlt);
+  const caption = rawAlt.replace(/\|\s*side\s*$/i, "").trim();
 
   return (
-    <figure className="prose-figure mt-8">
+    <figure
+      className={cn(
+        "prose-figure",
+        side ? "prose-figure--side" : "mt-8",
+      )}
+    >
       <img
         {...props}
         ref={ref}
         src={src}
         className={cn(
           "img-fade w-full rounded-xl border border-border",
+          side && "object-cover object-top",
           loaded && "is-loaded",
         )}
-        alt={alt}
+        alt={caption}
         loading="lazy"
         onLoad={() => setLoaded(true)}
         onError={() => setLoaded(true)}
       />
       {caption ? (
-        <figcaption className="mt-2.5 text-center text-[12.5px] leading-relaxed text-fg-subtle">
+        <figcaption
+          className={cn(
+            "mt-2 text-[12.5px] leading-relaxed text-fg-subtle",
+            side ? "text-left" : "text-center",
+          )}
+        >
           {caption}
         </figcaption>
       ) : null}
