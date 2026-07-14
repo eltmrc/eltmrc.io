@@ -199,44 +199,6 @@ export function HomePage() {
         </div>
       </FadeIn>
 
-      <FadeIn delay={0.08} className="relative z-10 mt-8">
-        <a
-          href={site.links.cial}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="card-soft group block overflow-visible rounded-2xl"
-        >
-          <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-            <div className="flex min-w-0 items-start gap-3.5">
-              <CialMarkInteractive
-                alive
-                burstScale={1.35}
-                aria-label="Cial"
-                className="h-10 w-10"
-                shellClassName="mt-0.5 shrink-0"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              />
-              <div>
-                <h2 className="text-[18px] font-semibold tracking-tight text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
-                  Cial.app
-                </h2>
-                <p className="mt-1.5 max-w-md text-[14px] leading-relaxed text-fg-muted">
-                  The managed version of Cial — security, team-ready workflows,
-                  and access to powerful tools for everyone. Not just a chat
-                  demo.
-                </p>
-              </div>
-            </div>
-            <span className="inline-flex shrink-0 items-center justify-center self-start rounded-full border border-border bg-bg px-3.5 py-1.5 text-[13px] font-medium text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:border-accent/40 group-hover:text-accent sm:self-center">
-              Visit <span className="arrow-icon">→</span>
-            </span>
-          </div>
-        </a>
-      </FadeIn>
-
       <section className="mt-14">
         <FadeIn delay={0.12}>
           <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
