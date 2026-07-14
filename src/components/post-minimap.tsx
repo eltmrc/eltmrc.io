@@ -7,9 +7,8 @@ type PostMinimapProps = {
 };
 
 /**
- * Notion-style document outline: a thin column of bars on the right edge.
- * Hover expands labels; click jumps to the section. Active section tracks
- * scroll. Desktop-only — not enough room beside max-w-2xl under xl.
+ * Notion-style document outline: bars on the right edge; titles fade in
+ * inline on hover (no card chrome). Click jumps; active tracks scroll.
  */
 export function PostMinimap({ headings }: PostMinimapProps) {
   const [activeId, setActiveId] = useState<string | null>(
@@ -38,7 +37,6 @@ export function PostMinimap({ headings }: PostMinimapProps) {
       }
       if (elements.length === 0) return;
 
-      // Honor deep-link hash once headings exist.
       const hash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
       if (hash && elements.some((el) => el.id === hash)) {
         setActiveId(hash);
@@ -51,7 +49,6 @@ export function PostMinimap({ headings }: PostMinimapProps) {
             else visible.delete(entry.target.id);
           }
 
-          // Prefer the topmost heading currently in the observation band.
           let best: string | null = null;
           let bestTop = Number.POSITIVE_INFINITY;
           for (const el of elements) {
@@ -65,7 +62,6 @@ export function PostMinimap({ headings }: PostMinimapProps) {
           if (best) setActiveId(best);
         },
         {
-          // Band around the upper third of the viewport — matches "where am I reading".
           rootMargin: "-12% 0px -68% 0px",
           threshold: [0, 0.25, 0.5, 1],
         },
@@ -88,7 +84,6 @@ export function PostMinimap({ headings }: PostMinimapProps) {
     if (!el) return;
     setActiveId(id);
     el.scrollIntoView({ behavior: "smooth", block: "start" });
-    // Keep the hash out of the history stack so back still leaves the post.
     history.replaceState(null, "", `#${id}`);
   }
 
@@ -105,70 +100,55 @@ export function PostMinimap({ headings }: PostMinimapProps) {
         }
       }}
     >
-      <div
-        className={cn(
-          "pointer-events-auto flex flex-col items-end gap-1.5 rounded-2xl py-2.5 transition-[padding,background-color,box-shadow,border-color] duration-[var(--dur-base)] ease-[var(--ease-out-quart)]",
-          open
-            ? "border border-border bg-[color-mix(in_srgb,var(--card-base)_92%,var(--accent-soft))] px-3 shadow-[var(--shadow-soft)] backdrop-blur-md"
-            : "border border-transparent bg-transparent px-1.5",
-        )}
-      >
-        <p
-          className={cn(
-            "mb-0.5 self-stretch text-[10px] font-medium uppercase tracking-[0.16em] text-fg-subtle transition-[opacity,max-height,margin] duration-[var(--dur-fast)] ease-[var(--ease-std)]",
-            open
-              ? "mb-1 max-h-4 opacity-100"
-              : "mb-0 max-h-0 overflow-hidden opacity-0",
-          )}
-        >
-          On this page
-        </p>
-        <ul className="flex flex-col items-end gap-1.5">
-          {headings.map((heading) => {
-            const active = heading.id === activeId;
-            return (
-              <li key={heading.id} className="flex w-full justify-end">
-                <button
-                  type="button"
-                  onClick={() => jump(heading.id)}
+      <ul className="pointer-events-auto flex flex-col items-end gap-2 py-1">
+        {headings.map((heading) => {
+          const active = heading.id === activeId;
+          return (
+            <li key={heading.id} className="flex w-full justify-end">
+              <button
+                type="button"
+                onClick={() => jump(heading.id)}
+                className={cn(
+                  "group flex max-w-[15rem] cursor-pointer items-center justify-end gap-2.5 text-left outline-none",
+                  "transition-transform duration-[var(--dur-fast)] ease-[var(--ease-out-quart)]",
+                  "hover:-translate-x-0.5 active:translate-x-0",
+                )}
+                aria-current={active ? "location" : undefined}
+                title={heading.title}
+              >
+                <span
                   className={cn(
-                    "group pressable flex max-w-[14rem] items-center justify-end gap-2.5 text-left",
-                    heading.level === 3 && "pr-0",
+                    "min-w-0 truncate text-[12px] leading-snug",
+                    "transition-[opacity,color,transform,text-shadow] duration-[var(--dur-base)] ease-[var(--ease-out-quart)]",
+                    open
+                      ? "translate-x-0 opacity-100"
+                      : "pointer-events-none translate-x-1.5 opacity-0",
+                    active
+                      ? "font-medium text-fg"
+                      : "text-fg-muted group-hover:text-accent",
+                    heading.level === 3 && "text-[11.5px]",
+                    // Soft accent wash on hover — no box, just the type.
+                    "group-hover:[text-shadow:0_0_18px_color-mix(in_srgb,var(--accent)_35%,transparent)]",
                   )}
-                  aria-current={active ? "location" : undefined}
-                  title={heading.title}
                 >
-                  <span
-                    className={cn(
-                      "min-w-0 truncate text-[12px] leading-snug transition-[opacity,color,transform] duration-[var(--dur-base)] ease-[var(--ease-out-quart)]",
-                      open
-                        ? "translate-x-0 opacity-100"
-                        : "pointer-events-none translate-x-1 opacity-0",
-                      active
-                        ? "font-medium text-fg"
-                        : "text-fg-muted group-hover:text-fg",
-                      heading.level === 3 && "text-[11.5px]",
-                    )}
-                  >
-                    {heading.title}
-                  </span>
-                  <span
-                    aria-hidden
-                    className={cn(
-                      "block shrink-0 rounded-full transition-[width,height,background-color,box-shadow] duration-[var(--dur-base)] ease-[var(--ease-out-quart)]",
-                      active
-                        ? "h-[3px] w-4 bg-accent shadow-[0_0_0_3px_var(--accent-soft)]"
-                        : "h-[2px] w-2.5 bg-fg-subtle/45 group-hover:bg-fg-muted",
-                      heading.level === 3 && !active && "w-2",
-                      heading.level === 3 && active && "w-3",
-                    )}
-                  />
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+                  <span className="hover-underline">{heading.title}</span>
+                </span>
+                <span
+                  aria-hidden
+                  className={cn(
+                    "block shrink-0 rounded-full transition-[width,height,background-color,box-shadow] duration-[var(--dur-base)] ease-[var(--ease-out-quart)]",
+                    active
+                      ? "h-[3px] w-4 bg-accent shadow-[0_0_0_3px_var(--accent-soft)]"
+                      : "h-[2px] w-2.5 bg-fg-subtle/45 group-hover:w-3.5 group-hover:bg-accent/70",
+                    heading.level === 3 && !active && "w-2",
+                    heading.level === 3 && active && "w-3",
+                  )}
+                />
+              </button>
+            </li>
+          );
+        })}
+      </ul>
     </nav>
   );
 }
