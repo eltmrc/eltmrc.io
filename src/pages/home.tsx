@@ -201,10 +201,7 @@ export function HomePage() {
                 className="mt-0.5 h-10 w-10 rounded-xl ring-1 ring-border transition-shadow duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:ring-accent/30"
               />
               <div>
-                <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
-                  Building
-                </p>
-                <h2 className="mt-1 text-[18px] font-semibold tracking-tight text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
+                <h2 className="text-[18px] font-semibold tracking-tight text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
                   OpenCial
                 </h2>
                 <p className="mt-1.5 max-w-md text-[14px] leading-relaxed text-fg-muted">
