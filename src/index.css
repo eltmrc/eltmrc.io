@@ -562,6 +562,7 @@ button:active .arrow-icon--back {
 }
 
 .site-theme-toggle {
+  cursor: pointer;
   touch-action: manipulation;
   transition:
     transform var(--dur-fast) var(--ease-out-quart),
@@ -1510,8 +1511,8 @@ button.card-soft:active {
 .portrait-trigger[aria-expanded="true"] .portrait-face--interactive {
   transform: scale(1.04);
   box-shadow:
-    0 0 0 3px color-mix(in srgb, #a855f7 18%, transparent),
-    0 12px 28px -12px color-mix(in srgb, #ff5fa8 42%, transparent);
+    0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent),
+    0 10px 22px -12px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 .portrait-trigger:active .portrait-face--interactive {
@@ -1539,34 +1540,40 @@ button.card-soft:active {
   opacity: 1;
   background: linear-gradient(
     160deg,
-    transparent 35%,
-    color-mix(in srgb, #a855f7 22%, transparent) 100%
+    transparent 45%,
+    color-mix(in srgb, var(--accent) 10%, transparent) 100%
   );
 }
 
 .portrait-menu {
   position: absolute;
-  top: calc(100% + 0.55rem);
+  top: calc(100% + 0.45rem);
   left: 0;
   z-index: 70;
   min-width: 15.5rem;
   transform-origin: top left;
   /* Hover bridge so the pointer can travel from face → menu. */
-  padding-top: 0.35rem;
-  margin-top: -0.35rem;
+  padding-top: 0.4rem;
+  margin-top: -0.4rem;
 }
 
 .portrait-menu__inner {
   border-radius: 0.95rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
-  background: color-mix(in srgb, var(--card-base) 92%, var(--accent-soft));
+  border: 1px solid var(--border);
+  /* Solid — no glass / transparency over the page. */
+  background: var(--bg);
   box-shadow:
     var(--shadow-soft-hover),
-    0 18px 40px -22px color-mix(in srgb, #a855f7 35%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+    0 14px 32px -18px rgba(20, 12, 30, 0.22);
   padding: 0.35rem;
   overflow: hidden;
+}
+
+[data-theme="dark"] .portrait-menu__inner {
+  background: var(--bg);
+  box-shadow:
+    var(--shadow-soft-hover),
+    0 16px 36px -16px rgba(0, 0, 0, 0.55);
 }
 
 .portrait-menu__item {
@@ -1588,13 +1595,13 @@ button.card-soft:active {
 .portrait-menu__item:focus-visible {
   outline: none;
   color: var(--fg);
-  background: color-mix(in srgb, #a855f7 12%, transparent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface-elevated));
   transform: translateX(2px);
 }
 
 .portrait-menu__item:active {
   transform: translateX(1px) scale(var(--press-scale));
-  background: color-mix(in srgb, #a855f7 18%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface-elevated));
   transition-duration: 90ms;
 }
 
@@ -1618,11 +1625,9 @@ button.card-soft:active {
 .portrait-menu__item:hover .portrait-menu__icon,
 .portrait-menu__item:focus-visible .portrait-menu__icon {
   color: var(--fg);
-  background: color-mix(in srgb, #a855f7 16%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface-elevated));
   transform: scale(1.06);
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, #a855f7 16%, transparent),
-    0 6px 14px -8px color-mix(in srgb, #ff5fa8 40%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .portrait-menu__label {

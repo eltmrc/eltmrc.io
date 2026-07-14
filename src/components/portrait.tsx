@@ -42,7 +42,7 @@ const CONTACTS: ContactItem[] = [
     icon: "linkedin",
   },
   {
-    label: "Join the OpenCial Discord",
+    label: "Join the Discord",
     href: site.links.discord,
     external: true,
     icon: "discord",
@@ -196,9 +196,6 @@ export function Portrait({
       className={cn("portrait-menu-root relative shrink-0", className)}
       data-open={open ? "true" : "false"}
       style={{ width: size, height: size }}
-      onMouseEnter={openMenu}
-      onMouseLeave={scheduleClose}
-      onFocusCapture={openMenu}
       onBlurCapture={(e) => {
         if (!rootRef.current?.contains(e.relatedTarget as Node)) {
           scheduleClose();
@@ -216,6 +213,9 @@ export function Portrait({
         aria-controls={menuId}
         aria-label="Contact Eliot"
         onClick={() => setOpen((v) => !v)}
+        onMouseEnter={openMenu}
+        onMouseLeave={scheduleClose}
+        onFocus={openMenu}
       >
         {shell}
       </button>
@@ -229,14 +229,24 @@ export function Portrait({
             className="portrait-menu"
             initial={{ opacity: 0, y: 6, scale: 0.92, scaleY: 0.88 }}
             animate={{ opacity: 1, y: 0, scale: 1, scaleY: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.94, scaleY: 0.92 }}
+            exit={{
+              opacity: 0,
+              y: 4,
+              scale: 0.94,
+              scaleY: 0.92,
+              transition: { duration: 0.14, ease: [0.4, 0, 1, 1] },
+              // Kill hit-testing immediately so the exit path can't re-open on hover.
+              pointerEvents: "none",
+            }}
             transition={{
               type: "spring",
               stiffness: 520,
               damping: 28,
               mass: 0.7,
             }}
-            onMouseEnter={openMenu}
+            /* Keep open while on the menu — never call openMenu here, or the
+               exit layer re-opens when the pointer re-enters its ghost box. */
+            onMouseEnter={clearClose}
             onMouseLeave={scheduleClose}
           >
             <div className="portrait-menu__inner">
