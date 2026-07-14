@@ -37,7 +37,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="site-header sticky top-0 z-40 flex justify-center px-6 pt-3 sm:px-8 sm:pt-4">
+    <header className="site-header sticky top-0 z-50 flex justify-center px-6 pt-3 sm:px-8 sm:pt-4">
       <div
         data-scrolled={scrolled ? "true" : "false"}
         className="site-header__pill"
@@ -48,14 +48,14 @@ export function SiteHeader() {
         >
           <span className="inline-flex items-baseline gap-1.5">
             <span className="site-brand__name">{site.name}</span>
-            <span className="site-brand__dot hidden text-fg-muted sm:inline">·</span>
-            <span className="site-brand__handle hidden font-normal text-fg-muted sm:inline">
+            <span className="site-brand__dot text-fg-muted">·</span>
+            <span className="site-brand__handle font-normal text-fg-muted">
               {site.handle}
             </span>
           </span>
         </Link>
 
-        <nav className="flex items-center gap-0.5" aria-label="Main">
+        <nav className="ml-auto flex items-center gap-0.5" aria-label="Main">
           {nav.map((item) => {
             const active = isActive(pathname, item.href);
             return (

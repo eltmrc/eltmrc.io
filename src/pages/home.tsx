@@ -157,8 +157,8 @@ export function HomePage() {
     <div className="pb-10 pt-6 sm:pt-10">
       <Seo title={site.title} description={site.description} path="/" titleTemplate={false} />
 
-      {/* z-40 so the portrait contact menu paints above the Cial.app card below */}
-      <FadeIn className="relative z-40">
+      {/* Above Cial card (z-10); keep under sticky header (z-50) so scroll doesn't cover the pill */}
+      <FadeIn className="relative z-20">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
           <Portrait size={88} priority className="sm:mt-1" />
           <div className="min-w-0">
