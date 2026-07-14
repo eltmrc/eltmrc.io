@@ -1,114 +1,157 @@
 import { motion } from "motion/react";
 import { G, type Reduce } from "./palette";
 
-/** Soft wrench with amber bolt head and pink tip accent — gentle nudge/rotate. */
+/**
+ * Tools — open kit: soft tray + screwdriver + hex bolt.
+ * Clean geometric shapes instead of a messy wrench silhouette.
+ */
 export function ToolsArt({ uid, reduce }: { uid: string; reduce: Reduce }) {
   return (
     <g>
       <defs>
-        <linearGradient id={`${uid}-body`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(168,85,247,0.42)" />
-          <stop offset="100%" stopColor="rgba(129,140,248,0.14)" />
+        <linearGradient id={`${uid}-tray`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="rgba(168,85,247,0.3)" />
+          <stop offset="100%" stopColor="rgba(129,140,248,0.12)" />
         </linearGradient>
-        <radialGradient id={`${uid}-bolt`} cx="40%" cy="35%" r="70%">
+        <linearGradient id={`${uid}-shaft`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={G.indigo} />
+          <stop offset="100%" stopColor={G.violet} />
+        </linearGradient>
+        <radialGradient id={`${uid}-bolt`} cx="38%" cy="32%" r="70%">
           <stop offset="0%" stopColor="#fde68a" />
           <stop offset="55%" stopColor={G.amber} />
           <stop offset="100%" stopColor="#d97706" />
         </radialGradient>
+        <linearGradient id={`${uid}-grip`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor={G.rose} />
+          <stop offset="100%" stopColor={G.pink} />
+        </linearGradient>
       </defs>
 
-      {/* soft ground shadow */}
-      <ellipse cx="32" cy="54" rx="14" ry="3.2" fill={G.violet} opacity="0.12" />
+      {/* soft tray / kit body */}
+      <rect
+        x="10"
+        y="18"
+        width="44"
+        height="32"
+        rx="9"
+        fill={`url(#${uid}-tray)`}
+        stroke={G.violet}
+        strokeOpacity="0.5"
+        strokeWidth="1.4"
+      />
+      {/* tray lip */}
+      <rect
+        x="10"
+        y="18"
+        width="44"
+        height="9"
+        rx="9"
+        fill={G.violet}
+        fillOpacity="0.14"
+      />
+      <circle cx="16.5" cy="22.5" r="1.5" fill={G.pink} />
+      <circle cx="21.5" cy="22.5" r="1.5" fill={G.indigo} opacity="0.75" />
+      <circle cx="26.5" cy="22.5" r="1.5" fill={G.cyan} opacity="0.55" />
 
+      {/* hex bolt — left, gentle spin */}
       <motion.g
-        style={{ transformBox: "view-box", transformOrigin: "32px 32px" }}
+        style={{ transformBox: "view-box", transformOrigin: "22px 40px" }}
+        animate={reduce ? {} : { rotate: [0, 12, -8, 0] }}
+        transition={
+          reduce
+            ? undefined
+            : { duration: 3.2, repeat: Infinity, ease: "easeInOut" }
+        }
+      >
+        <circle
+          cx="22"
+          cy="40"
+          r="8"
+          fill={`url(#${uid}-bolt)`}
+          stroke={G.amber}
+          strokeOpacity="0.45"
+          strokeWidth="1"
+        />
+        {/* hex face */}
+        <path
+          d="M22 34.4 L26.2 36.8 V41.6 L22 44 L17.8 41.6 V36.8 Z"
+          fill="#fff"
+          opacity="0.28"
+        />
+        <circle cx="20.6" cy="38.2" r="1.4" fill="#fff" opacity="0.55" />
+      </motion.g>
+
+      {/* screwdriver — right, soft nudge */}
+      <motion.g
+        style={{ transformBox: "view-box", transformOrigin: "42px 38px" }}
         animate={
           reduce
             ? {}
-            : {
-                rotate: [-6, 5, -4, 0, -6],
-                x: [0, 1.2, -0.6, 0, 0],
-                y: [0, -0.8, 0.4, 0, 0],
-              }
+            : { y: [0, -1.5, 0], rotate: [8, 4, 8] }
         }
         transition={
           reduce
             ? undefined
-            : {
-                duration: 3.4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                times: [0, 0.28, 0.55, 0.78, 1],
-              }
+            : { duration: 2.6, repeat: Infinity, ease: "easeInOut" }
         }
       >
-        {/* wrench body — filled, not a thin line icon */}
-        <path
-          d="M40.5 11.5
-             c-5.8-1.2-11.2 2.4-12.4 8.1
-             c-0.4 1.8-0.2 3.6 0.5 5.2
-             L16.8 36.6
-             c-1.1 1.1-1.2 2.9-0.2 4.1
-             l6.6 7.8
-             c1.1 1.3 3 1.4 4.2 0.3
-             L39.2 36.9
-             c1.5 0.6 3.2 0.8 4.9 0.5
-             c5.8-1.2 9.4-6.9 8.2-12.6
-             c-0.6-2.7-2.2-5-4.4-6.5
-             L42.2 24.5 40.5 11.5z"
-          fill={`url(#${uid}-body)`}
-          stroke={G.violet}
-          strokeOpacity="0.55"
-          strokeWidth="1.4"
-          strokeLinejoin="round"
+        {/* shaft */}
+        <rect
+          x="40"
+          y="30"
+          width="4"
+          height="18"
+          rx="2"
+          fill={`url(#${uid}-shaft)`}
+          transform="rotate(-28 42 39)"
         />
-
-        {/* jaw cutout / open throat */}
-        <path
-          d="M38.2 18.5 L42 22.4 L38.8 25.6 L35 21.7 Z"
-          fill={G.violet}
-          fillOpacity="0.18"
-          stroke={G.violet}
-          strokeOpacity="0.35"
-          strokeWidth="1"
-          strokeLinejoin="round"
+        {/* grip */}
+        <rect
+          x="36.5"
+          y="42"
+          width="7"
+          height="11"
+          rx="3.2"
+          fill={`url(#${uid}-grip)`}
+          transform="rotate(-28 40 47.5)"
         />
-
-        {/* pink accent stroke along handle tip */}
+        {/* tip */}
         <path
-          d="M19.5 41.2 L24.8 47.4"
-          stroke={G.pink}
-          strokeWidth="3.2"
-          strokeLinecap="round"
-          opacity="0.9"
+          d="M46.5 28.5 L49 25.2 L50.2 28.8 Z"
+          fill={G.cyan}
+          opacity="0.95"
+          transform="rotate(-28 48 27)"
         />
-        <path
-          d="M17.8 39.6 L20.4 42.6"
-          stroke={G.rose}
-          strokeWidth="2"
-          strokeLinecap="round"
-          opacity="0.55"
-        />
-
-        {/* amber bolt head at the open jaw */}
-        <circle
-          cx="43.5"
-          cy="17.5"
-          r="5.2"
-          fill={`url(#${uid}-bolt)`}
-          stroke={G.amber}
-          strokeOpacity="0.5"
-          strokeWidth="0.8"
-        />
-        <circle cx="42.2" cy="16" r="1.6" fill="#fff" opacity="0.55" />
-
-        {/* hex detail on bolt */}
-        <path
-          d="M43.5 14.6 L45.4 15.7 L45.4 17.9 L43.5 19 L41.6 17.9 L41.6 15.7 Z"
+        {/* grip rings */}
+        <rect
+          x="37.5"
+          y="45"
+          width="5"
+          height="1.4"
+          rx="0.7"
           fill="#fff"
-          opacity="0.22"
+          opacity="0.25"
+          transform="rotate(-28 40 45.7)"
         />
       </motion.g>
+
+      {/* tiny spark when tools "work" */}
+      <motion.path
+        d="M34 32 l0.9 2.2 2.2 0.9 -2.2 0.9 -0.9 2.2 -0.9-2.2 -2.2-0.9 2.2-0.9 z"
+        fill={G.amber}
+        style={{ transformBox: "fill-box", transformOrigin: "center" }}
+        animate={
+          reduce
+            ? { opacity: 0.35 }
+            : { scale: [0, 1.15, 0], opacity: [0, 1, 0], rotate: [0, 60, 120] }
+        }
+        transition={
+          reduce
+            ? undefined
+            : { duration: 2.6, repeat: Infinity, ease: "easeInOut", times: [0, 0.45, 1] }
+        }
+      />
     </g>
   );
 }
