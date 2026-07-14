@@ -2,6 +2,7 @@ import type { Components } from "react-markdown";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
+import { ImageLightbox } from "@/components/image-lightbox";
 import { asset } from "@/lib/asset";
 import { cn } from "@/lib/cn";
 import { slugifyHeading } from "@/lib/headings";
@@ -79,6 +80,7 @@ function A(props: ComponentPropsWithoutRef<"a">) {
 function Img(props: ComponentPropsWithoutRef<"img">) {
   const ref = useRef<HTMLImageElement>(null);
   const [loaded, setLoaded] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     // Cached images fire no load event — settle immediately.
     if (ref.current?.complete) setLoaded(true);
@@ -93,39 +95,60 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
   // Convention: "Caption text |side" floats the figure beside following prose.
   const side = /\|\s*side\s*$/i.test(rawAlt);
   const caption = rawAlt.replace(/\|\s*side\s*$/i, "").trim();
+  const srcStr = typeof src === "string" ? src : "";
 
   return (
-    <figure
-      className={cn(
-        "prose-figure",
-        side ? "prose-figure--side" : "mt-8",
-      )}
-    >
-      <img
-        {...props}
-        ref={ref}
-        src={src}
+    <>
+      <figure
         className={cn(
-          "img-fade w-full rounded-xl border border-border",
-          side && "object-cover object-top",
-          loaded && "is-loaded",
+          "prose-figure",
+          side ? "prose-figure--side" : "mt-8",
         )}
-        alt={caption}
-        loading="lazy"
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
-      />
-      {caption ? (
-        <figcaption
-          className={cn(
-            "mt-2 text-[12.5px] leading-relaxed text-fg-subtle",
-            side ? "text-left" : "text-center",
-          )}
+      >
+        <button
+          type="button"
+          className="prose-figure__zoom group block w-full cursor-zoom-in border-0 bg-transparent p-0 text-left"
+          onClick={() => setOpen(true)}
+          aria-label={caption ? `View larger: ${caption}` : "View larger image"}
         >
-          {caption}
-        </figcaption>
+          <img
+            {...props}
+            ref={ref}
+            src={src}
+            className={cn(
+              "img-fade w-full rounded-xl border border-border transition-[border-color,box-shadow,transform] duration-[var(--dur-base)] ease-[var(--ease-out-quart)]",
+              "group-hover:border-accent/30 group-hover:shadow-[var(--shadow-soft-hover)]",
+              side && "object-cover object-top",
+              loaded && "is-loaded",
+            )}
+            alt={caption}
+            loading="lazy"
+            onLoad={() => setLoaded(true)}
+            onError={() => setLoaded(true)}
+            draggable={false}
+          />
+        </button>
+        {caption ? (
+          <figcaption
+            className={cn(
+              "mt-2 text-[12.5px] leading-relaxed text-fg-subtle",
+              side ? "text-left" : "text-center",
+            )}
+          >
+            {caption}
+          </figcaption>
+        ) : null}
+      </figure>
+      {srcStr ? (
+        <ImageLightbox
+          open={open}
+          src={srcStr}
+          alt={caption}
+          caption={caption || undefined}
+          onClose={() => setOpen(false)}
+        />
       ) : null}
-    </figure>
+    </>
   );
 }
 

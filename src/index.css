@@ -787,6 +787,82 @@ h3:target {
   margin-right: 0;
 }
 
+.prose-figure__zoom:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 3px;
+  border-radius: 0.85rem;
+}
+
+/* Full-viewport image zoom (post figures). */
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  background: color-mix(in srgb, #0d0d0f 72%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: zoom-out;
+}
+
+.image-lightbox__close {
+  position: absolute;
+  top: max(0.85rem, env(safe-area-inset-top));
+  right: max(0.85rem, env(safe-area-inset-right));
+  z-index: 2;
+  display: inline-flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 18, 28, 0.72);
+  color: #f5f2fb;
+  cursor: pointer;
+}
+
+.image-lightbox__close:hover {
+  background: rgba(40, 32, 52, 0.9);
+  color: #fff;
+}
+
+.image-lightbox__figure {
+  margin: 0;
+  max-width: min(96vw, 72rem);
+  max-height: min(92vh, 56rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+}
+
+.image-lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: min(84vh, 50rem);
+  width: auto;
+  height: auto;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 64px -20px rgba(0, 0, 0, 0.55);
+  object-fit: contain;
+  background: #0d0d0f;
+}
+
+.image-lightbox__caption {
+  margin-top: 0.85rem;
+  max-width: 40rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: rgba(245, 242, 251, 0.72);
+}
+
 /* Side-by-side illustration (e.g. phone screenshot next to a paragraph).
    Markdown: ![Caption |side](/images/…) then the wrapping prose. */
 .prose-figure--side {
