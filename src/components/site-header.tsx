@@ -37,7 +37,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="site-header sticky top-0 z-40 flex justify-center px-4 pt-3 sm:pt-4">
+    <header className="site-header sticky top-0 z-40 flex justify-center px-6 pt-3 sm:px-8 sm:pt-4">
       <div
         data-scrolled={scrolled ? "true" : "false"}
         className="site-header__pill"

@@ -457,53 +457,39 @@ button:active .arrow-icon--back {
   transform: rotate(-48deg) scale(0.72);
 }
 
-/* Floating pill header — hugs brand → theme, not full width. */
+/* Floating pill header — solid, content-width (matches main max-w-2xl). */
 .site-header {
   pointer-events: none;
 }
 
 .site-header__pill {
   pointer-events: auto;
-  display: inline-flex;
-  max-width: calc(100vw - 2rem);
+  display: flex;
+  width: 100%;
+  max-width: 42rem; /* same as max-w-2xl main column */
   align-items: center;
   gap: 0.35rem 0.75rem;
   border-radius: 9999px;
-  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
-  background: color-mix(in srgb, var(--bg) 78%, transparent);
-  padding: 0.35rem 0.45rem 0.35rem 0.95rem;
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 40%, transparent) inset,
-    0 10px 28px -16px rgba(120, 60, 140, 0.28);
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  padding: 0.4rem 0.5rem 0.4rem 1rem;
+  box-shadow: 0 10px 28px -16px rgba(120, 60, 140, 0.22);
   transition:
     border-color var(--dur-base) var(--ease-std),
-    box-shadow var(--dur-base) var(--ease-std),
-    background var(--dur-base) var(--ease-std);
+    box-shadow var(--dur-base) var(--ease-std);
 }
 
 .site-header__pill[data-scrolled="true"] {
-  border-color: var(--border);
-  background: color-mix(in srgb, var(--bg) 86%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 28%, transparent) inset,
-    var(--shadow-header),
-    0 8px 24px -14px rgba(120, 60, 140, 0.22);
+  box-shadow: var(--shadow-header);
 }
 
 [data-theme="dark"] .site-header__pill {
-  background: color-mix(in srgb, var(--bg) 72%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 6%, transparent) inset,
-    0 12px 32px -18px rgba(0, 0, 0, 0.55);
+  background: var(--bg);
+  box-shadow: 0 12px 32px -18px rgba(0, 0, 0, 0.55);
 }
 
 [data-theme="dark"] .site-header__pill[data-scrolled="true"] {
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, #fff 8%, transparent) inset,
-    var(--shadow-header);
+  box-shadow: var(--shadow-header);
 }
 
 /* ─── Header interactions (brand · nav · theme) ───
