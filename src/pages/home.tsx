@@ -17,13 +17,13 @@ import { site } from "@/lib/site";
 
 /* Keep short — must sit on one line after “then ” inside max-w-xl. */
 const THEN_CHAPTERS = [
-  "built a handmade OpenGL 3D engine.",
-  "co-founded AI SaaS for dental clinics.",
-  "shipped ProClient (250k+ downloads).",
-  "scaled HardFight to 150k+ players.",
-  "built military drone software.",
-  "shipped production finance SaaS.",
-  "freelanced until the next wave hit.",
+  { text: "built a handmade OpenGL 3D engine.", marks: ["OpenGL"] },
+  { text: "co-founded AI SaaS for dental clinics.", marks: ["AI SaaS"] },
+  { text: "shipped ProClient (250k+ downloads).", marks: ["ProClient"] },
+  { text: "scaled HardFight to 150k+ players.", marks: ["HardFight"] },
+  { text: "built military drone software.", marks: ["drone"] },
+  { text: "shipped production finance SaaS.", marks: ["finance"] },
+  { text: "freelanced until the next wave hit.", marks: ["freelanced"] },
 ] as const;
 
 export function HomePage() {
@@ -120,10 +120,7 @@ export function HomePage() {
                 I&apos;ve been building since 12 — picking up every tool that
                 helps people ship what they need. Started with Minecraft mods,
                 then{" "}
-                <RotatingDrop
-                  phrases={THEN_CHAPTERS}
-                  className="prose-mark font-medium"
-                />
+                <RotatingDrop phrases={THEN_CHAPTERS} />
               </p>
               <p>
                 Now I work on <strong className="prose-mark">AI</strong> as

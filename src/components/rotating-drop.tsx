@@ -1,17 +1,65 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/cn";
 
+export type RotatingPhrase = {
+  text: string;
+  /** Substrings to wrap with prose-mark (first match each, case-sensitive). */
+  marks?: readonly string[];
+};
+
 type RotatingDropProps = {
-  phrases: readonly string[];
+  phrases: readonly (string | RotatingPhrase)[];
   /** ms between swaps (default 2400) */
   intervalMs?: number;
   className?: string;
 };
 
+function normalize(p: string | RotatingPhrase): RotatingPhrase {
+  return typeof p === "string" ? { text: p } : p;
+}
+
+/** Highlight mark substrings inside text (non-overlapping, first-wins order). */
+function renderMarked(text: string, marks: readonly string[] = []): ReactNode {
+  if (marks.length === 0) return text;
+
+  type Seg = { start: number; end: number };
+  const segs: Seg[] = [];
+  for (const m of marks) {
+    if (!m) continue;
+    let from = 0;
+    while (from < text.length) {
+      const i = text.indexOf(m, from);
+      if (i === -1) break;
+      const end = i + m.length;
+      const overlap = segs.some((s) => !(end <= s.start || i >= s.end));
+      if (!overlap) segs.push({ start: i, end });
+      from = end;
+    }
+  }
+  segs.sort((a, b) => a.start - b.start);
+
+  if (segs.length === 0) return text;
+
+  const out: ReactNode[] = [];
+  let cursor = 0;
+  segs.forEach((s, idx) => {
+    if (cursor < s.start) out.push(text.slice(cursor, s.start));
+    out.push(
+      <strong key={`${s.start}-${idx}`} className="prose-mark font-medium">
+        {text.slice(s.start, s.end)}
+      </strong>,
+    );
+    cursor = s.end;
+  });
+  if (cursor < text.length) out.push(text.slice(cursor));
+  return out;
+}
+
 /**
  * One phrase at a time: current drops out, next drops in.
- * Width stays roughly stable via the longest phrase as an invisible sizer.
+ * Width stays stable via the longest phrase as an invisible sizer.
+ * Optional per-phrase word marks (not whole-phrase highlight).
  */
 export function RotatingDrop({
   phrases,
@@ -20,23 +68,26 @@ export function RotatingDrop({
 }: RotatingDropProps) {
   const [index, setIndex] = useState(0);
   const reduce = useReducedMotion();
+  const items = phrases.map(normalize);
 
   useEffect(() => {
-    if (phrases.length < 2 || reduce) return;
+    if (items.length < 2 || reduce) return;
     const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % phrases.length);
+      setIndex((i) => (i + 1) % items.length);
     }, intervalMs);
     return () => window.clearInterval(id);
-  }, [phrases.length, intervalMs, reduce]);
+  }, [items.length, intervalMs, reduce]);
 
-  const longest = phrases.reduce((a, b) => (a.length >= b.length ? a : b), "");
-  const current = phrases[index] ?? phrases[0] ?? "";
+  const longest = items.reduce(
+    (a, b) => (a.text.length >= b.text.length ? a : b),
+    items[0] ?? { text: "" },
+  );
+  const current = items[index] ?? items[0] ?? { text: "" };
 
-  // Always one line — phrases must be short enough for the layout width.
-  if (reduce || phrases.length < 2) {
+  if (reduce || items.length < 2) {
     return (
       <span className={cn("inline whitespace-nowrap", className)}>
-        {current}
+        {renderMarked(current.text, current.marks)}
       </span>
     );
   }
@@ -48,24 +99,23 @@ export function RotatingDrop({
         className,
       )}
     >
-      {/* Reserve width for the longest phrase so the line doesn't jump */}
       <span
         className="invisible col-start-1 row-start-1 whitespace-nowrap"
         aria-hidden
       >
-        {longest}
+        {longest.text}
       </span>
       <span className="relative col-start-1 row-start-1 inline-flex overflow-hidden whitespace-nowrap">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
-            key={current}
+            key={current.text}
             className="inline-block whitespace-nowrap"
             initial={{ y: "110%", opacity: 0 }}
             animate={{ y: "0%", opacity: 1 }}
             exit={{ y: "-110%", opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            {current}
+            {renderMarked(current.text, current.marks)}
           </motion.span>
         </AnimatePresence>
       </span>
