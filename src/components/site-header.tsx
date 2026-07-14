@@ -24,12 +24,12 @@ const navLineTransition = {
   opacity: { duration: 0.16, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-/** Width layout spring — soft overshoot when the pill squishes. */
+/** Width layout spring — bouncy squishee when the pill narrows. */
 const pillLayoutTransition = {
   type: "spring" as const,
-  stiffness: 360,
-  damping: 20,
-  mass: 0.66,
+  stiffness: 280,
+  damping: 14,
+  mass: 0.78,
 };
 
 function isActive(pathname: string, href: string) {
@@ -53,16 +53,20 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Squishee jelly pulse whenever compact state flips (not on first paint).
+  // Stronger jelly pulse whenever compact state flips (skip first paint).
   useEffect(() => {
     if (!ready || preferReducedMotion) return;
     void jelly.start({
-      // Compressing width → briefly fatter on Y; expanding → opposite.
-      scaleY: scrolled ? [1, 1.07, 0.97, 1.015, 1] : [1, 0.95, 1.05, 0.99, 1],
-      scaleX: scrolled ? [1, 0.97, 1.02, 0.995, 1] : [1, 1.03, 0.97, 1.01, 1],
+      // Compressing width → fatter on Y; expanding → stretch out.
+      scaleY: scrolled
+        ? [1, 1.14, 0.9, 1.06, 0.98, 1.02, 1]
+        : [1, 0.9, 1.12, 0.94, 1.04, 0.99, 1],
+      scaleX: scrolled
+        ? [1, 0.92, 1.06, 0.96, 1.03, 0.99, 1]
+        : [1, 1.08, 0.93, 1.05, 0.97, 1.01, 1],
       transition: {
-        duration: 0.46,
-        times: [0, 0.22, 0.48, 0.74, 1],
+        duration: 0.62,
+        times: [0, 0.16, 0.34, 0.5, 0.68, 0.84, 1],
         ease: [0.22, 1, 0.36, 1],
       },
     });
@@ -90,41 +94,10 @@ export function SiteHeader() {
         >
           <span className="inline-flex items-baseline gap-1.5">
             <span className="site-brand__name">{site.name}</span>
-            <AnimatePresence initial={false}>
-              {!scrolled ? (
-                <motion.span
-                  key="brand-meta"
-                  className="inline-flex items-baseline gap-1.5 overflow-hidden whitespace-nowrap"
-                  initial={preferReducedMotion ? false : { opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: "auto" }}
-                  exit={
-                    preferReducedMotion
-                      ? undefined
-                      : {
-                          opacity: 0,
-                          width: 0,
-                          transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
-                        }
-                  }
-                  transition={
-                    preferReducedMotion
-                      ? { duration: 0 }
-                      : {
-                          type: "spring",
-                          stiffness: 380,
-                          damping: 26,
-                          mass: 0.7,
-                          opacity: { duration: 0.16 },
-                        }
-                  }
-                >
-                  <span className="site-brand__dot text-fg-muted">·</span>
-                  <span className="site-brand__handle font-normal text-fg-muted">
-                    {site.handle}
-                  </span>
-                </motion.span>
-              ) : null}
-            </AnimatePresence>
+            <span className="site-brand__dot text-fg-muted">·</span>
+            <span className="site-brand__handle font-normal text-fg-muted">
+              {site.handle}
+            </span>
           </span>
         </Link>
 
