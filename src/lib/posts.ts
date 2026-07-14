@@ -11,7 +11,7 @@ export type PostFrontmatter = {
   /** Primary category slug (see src/lib/categories.ts) */
   category?: string;
   tags?: string[];
-  /** Optional og / hero image path under /public */
+  /** Optional og / hero image path under /public, or "cial-mark" for the animated mark */
   image?: string;
   /** Optional TL;DR bullets shown at the top of the post */
   tldr?: string[];

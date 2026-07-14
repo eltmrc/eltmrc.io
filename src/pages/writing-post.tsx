@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { CategoryChip } from "@/components/category-chip";
+import { CialMarkInteractive } from "@/components/cial-mark-interactive";
 import { FadeIn } from "@/components/fade-in";
 import { PostMinimap } from "@/components/post-minimap";
 import { Prose } from "@/components/prose";
@@ -12,6 +13,9 @@ import { extractHeadings } from "@/lib/headings";
 import { formatDate, getPostBySlug } from "@/lib/posts";
 import { site } from "@/lib/site";
 
+/** Magic frontmatter value — animated instance sidebar mark as hero. */
+const CIAL_MARK_COVER = "cial-mark";
+
 export function WritingPostPage() {
   const { slug = "" } = useParams();
   const post = getPostBySlug(slug);
@@ -19,10 +23,12 @@ export function WritingPostPage() {
   const [coverLoaded, setCoverLoaded] = useState(false);
   const coverRef = useRef<HTMLImageElement>(null);
   const headings = post ? extractHeadings(post.content) : [];
+  const isMarkCover = post?.image === CIAL_MARK_COVER;
 
   useEffect(() => {
+    if (isMarkCover) return;
     if (coverRef.current?.complete) setCoverLoaded(true);
-  }, [post?.image]);
+  }, [post?.image, isMarkCover]);
 
   if (!post || post.draft) {
     return <Navigate to="/writing/" replace />;
@@ -62,7 +68,21 @@ export function WritingPostPage() {
         </div>
       </FadeIn>
 
-      {post.image ? (
+      {isMarkCover ? (
+        <FadeIn delay={0.04} className="mt-8">
+          <figure className="post-mark-hero" aria-label="OpenCial mark">
+            <div className="post-mark-hero__glow" aria-hidden />
+            <CialMarkInteractive
+              alive
+              portalBurst
+              burstScale={2.4}
+              aria-label="OpenCial"
+              className="post-mark-hero__mark h-36 w-36 sm:h-44 sm:w-44 md:h-52 md:w-52"
+              shellClassName="post-mark-hero__shell"
+            />
+          </figure>
+        </FadeIn>
+      ) : post.image ? (
         <FadeIn delay={0.04} className="mt-8">
           <figure className="overflow-hidden rounded-2xl border border-border">
             <img
