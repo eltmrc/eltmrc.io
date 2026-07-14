@@ -12,6 +12,8 @@ type PortraitProps = {
   shape?: "circle" | "rounded";
   /** When false, just the image — no contact menu. Default true. */
   menu?: boolean;
+  /** Path under public/. Default about/legacy portrait. */
+  src?: string;
 };
 
 type ContactItem = {
@@ -108,6 +110,7 @@ export function Portrait({
   priority,
   shape = "circle",
   menu = true,
+  src = "/images/portrait.jpg",
 }: PortraitProps) {
   const [loaded, setLoaded] = useState(false);
   const [open, setOpen] = useState(false);
@@ -165,7 +168,7 @@ export function Portrait({
     >
       <img
         ref={ref}
-        src={asset("/images/portrait.jpg")}
+        src={asset(src)}
         alt="Eliot Maurice"
         width={size}
         height={size}

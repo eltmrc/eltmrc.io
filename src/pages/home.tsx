@@ -160,7 +160,12 @@ export function HomePage() {
       {/* Above Cial card (z-10); keep under sticky header (z-50) so scroll doesn't cover the pill */}
       <FadeIn className="relative z-20">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
-          <Portrait size={88} priority className="sm:mt-1" />
+          <Portrait
+            size={88}
+            priority
+            className="sm:mt-1"
+            src="/images/portrait-home.png"
+          />
           <div className="min-w-0">
             <h1 className="max-w-xl text-[2.1rem] font-semibold leading-[1.12] tracking-tight text-fg sm:text-[2.5rem]">
               Eliot Maurice
