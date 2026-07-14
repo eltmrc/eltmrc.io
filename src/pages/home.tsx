@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { CategoryCard } from "@/components/category-card";
+import { CialMarkInteractive } from "@/components/cial-mark-interactive";
 import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
 import { PostCard } from "@/components/post-card";
@@ -193,12 +194,17 @@ export function HomePage() {
         >
           <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
             <div className="flex min-w-0 items-start gap-3.5">
-              <img
-                src={asset("/images/cial-icon.png")}
-                alt=""
-                width={40}
-                height={40}
-                className="mt-0.5 h-10 w-10 rounded-xl ring-1 ring-border transition-shadow duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:ring-accent/30"
+              <CialMarkInteractive
+                alive
+                portalBurst
+                burstScale={1.35}
+                aria-label="Cial"
+                className="h-10 w-10"
+                shellClassName="mt-0.5 shrink-0"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
               />
               <div>
                 <h2 className="text-[18px] font-semibold tracking-tight text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
