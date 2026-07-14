@@ -11,6 +11,7 @@ export const site = {
     github: "https://github.com/eltmrc",
     x: "https://x.com/eltmrc",
     cial: "https://cial.ai",
+    opencial: "https://opencial.ai",
   },
   tagline: "Building software with care.",
 } as const;

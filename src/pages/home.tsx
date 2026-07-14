@@ -50,19 +50,11 @@ export function HomePage() {
 
       <FadeIn delay={0.08} className="mt-12">
         <a
-          href={site.links.cial}
+          href={site.links.opencial}
           target="_blank"
           rel="noopener noreferrer"
           className="card-soft group block overflow-hidden rounded-2xl"
         >
-          <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface">
-            <img
-              src={asset("/images/cial-workspace.jpg")}
-              alt="Cial — AI workspace product preview"
-              className="h-full w-full object-cover transition-transform duration-[var(--dur-slow)] ease-[var(--ease-out-quart)] group-hover:scale-[1.02]"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/40 via-transparent to-transparent" />
-          </div>
           <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
             <div className="flex min-w-0 items-start gap-3.5">
               <img
@@ -77,7 +69,7 @@ export function HomePage() {
                   Building
                 </p>
                 <h2 className="mt-1 text-[18px] font-semibold tracking-tight text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
-                  Cial
+                  OpenCial
                 </h2>
                 <p className="mt-1.5 max-w-md text-[14px] leading-relaxed text-fg-muted">
                   A real AI workspace you own: agents, tools, and a product
