@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "motion/react";
 import { CategoryCard } from "@/components/category-card";
 import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
@@ -7,7 +9,8 @@ import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
 import { getAllCategories } from "@/lib/categories";
 import { getAllPosts, getCategoryCounts } from "@/lib/posts";
-import { projects } from "@/lib/projects";
+import { projects, type Project } from "@/lib/projects";
+import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
 
 export function HomePage() {
@@ -16,6 +19,77 @@ export function HomePage() {
   const featuredCategories = getAllCategories()
     .filter((c) => (counts[c.slug] ?? 0) > 0)
     .slice(0, 6);
+
+  const [showArchived, setShowArchived] = useState(false);
+  const activeProjects = projects.filter((p) => p.status === "active");
+  const archivedProjects = projects.filter((p) => p.status !== "active");
+
+  const renderProject = (project: Project, delay: number) => {
+    const meta = [project.role, project.period].filter(Boolean).join(" · ");
+    const body = (
+      <div className="flex items-start justify-between gap-4 -mx-2 rounded-xl px-2 py-4 transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:bg-surface">
+        {project.icon ? (
+          <img
+            src={asset(project.icon)}
+            alt=""
+            width={32}
+            height={32}
+            className="mt-0.5 h-8 w-8 shrink-0 rounded-lg object-contain ring-1 ring-border"
+          />
+        ) : null}
+        <div className="min-w-0 flex-1">
+          <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+            <span className="text-[15px] font-medium text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
+              {project.name}
+            </span>
+            <span className="text-[12px] text-fg-subtle">{meta}</span>
+            {project.status === "active" ? (
+              <span className="rounded-full border border-accent/30 bg-accent/5 px-2 py-0.5 text-[11px] leading-none text-accent transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:border-accent/50">
+                Active
+              </span>
+            ) : (
+              <span className="rounded-full border border-border px-2 py-0.5 text-[11px] leading-none text-fg-subtle">
+                Archived
+              </span>
+            )}
+          </p>
+          <p className="mt-1 text-[14px] leading-relaxed text-fg-muted">
+            {project.description}
+          </p>
+        </div>
+        {project.href ? (
+          <span className="shrink-0 text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
+            {project.linkLabel ?? "Visit"} <span className="arrow-icon">→</span>
+          </span>
+        ) : null}
+      </div>
+    );
+    const isInternal = project.href?.startsWith("/");
+    return (
+      <li
+        key={project.name}
+        className="animate-fade-up"
+        style={{ animationDelay: `${delay}s` }}
+      >
+        {project.href && isInternal ? (
+          <Link to={project.href} className="group block">
+            {body}
+          </Link>
+        ) : project.href ? (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block"
+          >
+            {body}
+          </a>
+        ) : (
+          body
+        )}
+      </li>
+    );
+  };
 
   return (
     <div className="pb-10 pt-6 sm:pt-10">
@@ -91,75 +165,51 @@ export function HomePage() {
           </h2>
         </FadeIn>
         <ul className="mt-1 divide-y divide-border">
-          {projects.map((project, i) => {
-            const meta = [project.role, project.period]
-              .filter(Boolean)
-              .join(" · ");
-            const body = (
-              <div className="flex items-start justify-between gap-4 -mx-2 rounded-xl px-2 py-4 transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:bg-surface">
-                {project.icon ? (
-                  <img
-                    src={asset(project.icon)}
-                    alt=""
-                    width={32}
-                    height={32}
-                    className="mt-0.5 h-8 w-8 shrink-0 rounded-lg object-contain ring-1 ring-border"
-                  />
-                ) : null}
-                <div className="min-w-0 flex-1">
-                  <p className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                    <span className="text-[15px] font-medium text-fg transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
-                      {project.name}
-                    </span>
-                    <span className="text-[12px] text-fg-subtle">{meta}</span>
-                    {project.status === "active" ? (
-                      <span className="rounded-full border border-accent/30 bg-accent/5 px-2 py-0.5 text-[11px] leading-none text-accent transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:border-accent/50">
-                        Active
-                      </span>
-                    ) : (
-                      <span className="rounded-full border border-border px-2 py-0.5 text-[11px] leading-none text-fg-subtle">
-                        Archived
-                      </span>
-                    )}
-                  </p>
-                  <p className="mt-1 text-[14px] leading-relaxed text-fg-muted">
-                    {project.description}
-                  </p>
-                </div>
-                {project.href ? (
-                  <span className="shrink-0 text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-accent">
-                    {project.linkLabel ?? "Visit"} <span className="arrow-icon">→</span>
-                  </span>
-                ) : null}
-              </div>
-            );
-            const isInternal = project.href?.startsWith("/");
-            return (
-              <li
-                key={project.name}
-                className="animate-fade-up"
-                style={{ animationDelay: `${0.12 + Math.min(i, 7) * 0.05}s` }}
-              >
-                {project.href && isInternal ? (
-                  <Link to={project.href} className="group block">
-                    {body}
-                  </Link>
-                ) : project.href ? (
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block"
-                  >
-                    {body}
-                  </a>
-                ) : (
-                  body
-                )}
-              </li>
-            );
-          })}
+          {activeProjects.map((project, i) =>
+            renderProject(project, 0.12 + Math.min(i, 7) * 0.05),
+          )}
         </ul>
+        <AnimatePresence initial={false}>
+          {showArchived && (
+            <motion.div
+              key="archived-projects"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <ul className="divide-y divide-border border-t border-border">
+                {archivedProjects.map((project, i) =>
+                  renderProject(project, Math.min(i, 7) * 0.04),
+                )}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <button
+          type="button"
+          onClick={() => setShowArchived((v) => !v)}
+          className="group pressable mt-2 inline-flex items-center gap-1.5 text-[13px] text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] hover:text-fg"
+        >
+          {showArchived
+            ? "Hide archived projects"
+            : `See archived projects (${archivedProjects.length})`}
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={cn(
+              "h-3.5 w-3.5 transition-transform duration-[var(--dur-base)] ease-[var(--ease-out-quart)]",
+              showArchived && "rotate-180",
+            )}
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
       </section>
 
       <section className="mt-14">
