@@ -76,21 +76,30 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
     typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")
       ? asset(raw)
       : raw;
+  const alt = props.alt ?? "";
+  const caption = alt.trim();
 
   return (
-    <img
-      {...props}
-      ref={ref}
-      src={src}
-      className={cn(
-        "img-fade mt-6 w-full rounded-xl border border-border",
-        loaded && "is-loaded",
-      )}
-      alt={props.alt ?? ""}
-      loading="lazy"
-      onLoad={() => setLoaded(true)}
-      onError={() => setLoaded(true)}
-    />
+    <figure className="prose-figure mt-8">
+      <img
+        {...props}
+        ref={ref}
+        src={src}
+        className={cn(
+          "img-fade w-full rounded-xl border border-border",
+          loaded && "is-loaded",
+        )}
+        alt={alt}
+        loading="lazy"
+        onLoad={() => setLoaded(true)}
+        onError={() => setLoaded(true)}
+      />
+      {caption ? (
+        <figcaption className="mt-2.5 text-center text-[12.5px] leading-relaxed text-fg-subtle">
+          {caption}
+        </figcaption>
+      ) : null}
+    </figure>
   );
 }
 
@@ -120,10 +129,7 @@ export const markdownComponents: Components = {
   ),
   li: (props) => <li className="pl-1" {...props} />,
   blockquote: (props) => (
-    <blockquote
-      className="mt-6 border-l-2 border-accent/40 pl-4 text-[15px] italic leading-relaxed text-fg-muted"
-      {...props}
-    />
+    <blockquote className="prose-callout mt-8" {...props} />
   ),
   code: (props) => {
     const isBlock =
@@ -146,6 +152,6 @@ export const markdownComponents: Components = {
     />
   ),
   hr: () => <hr className="my-10 border-border" />,
-  strong: (props) => <strong className="font-semibold text-fg" {...props} />,
+  strong: (props) => <strong className="prose-mark" {...props} />,
   img: Img,
 };

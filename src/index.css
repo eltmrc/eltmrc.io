@@ -418,6 +418,55 @@ h3:target {
   max-width: 42rem;
 }
 
+/* Soft highlighter on **bold** key phrases — box-decoration-break keeps
+   multi-line marks clean. Use sparingly in post body. */
+.prose-mark {
+  font-weight: 600;
+  color: var(--fg);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  border-radius: 0.25em;
+  padding: 0.05em 0.28em;
+}
+
+/* Pull-quote / key-moment callout rendered from markdown blockquotes. */
+.prose-callout {
+  margin-top: 2rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-left: 3px solid var(--accent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--card-base) 82%, var(--accent-soft));
+  box-shadow: var(--shadow-soft);
+  padding: 1rem 1.15rem 1rem 1.2rem;
+  font-style: normal;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--fg);
+}
+
+.prose-callout p {
+  margin: 0;
+  color: var(--fg);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.prose-callout p + p {
+  margin-top: 0.65rem;
+}
+
+.prose-figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Light-baked diagram SVGs: invert + hue-rotate in dark so they stay legible. */
+[data-theme="dark"] .prose-figure img[src*="/diagrams/"] {
+  filter: invert(0.92) hue-rotate(180deg) saturate(0.85);
+  border-color: var(--border);
+}
+
 .card-soft {
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--card-base) 88%, var(--accent-soft));

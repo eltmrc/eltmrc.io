@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { CategoryChip } from "@/components/category-chip";
 import { FadeIn } from "@/components/fade-in";
 import { Prose } from "@/components/prose";
 import { Seo } from "@/components/seo";
+import { asset } from "@/lib/asset";
 import { cn } from "@/lib/cn";
 import { formatDate, getPostBySlug } from "@/lib/posts";
 import { site } from "@/lib/site";
@@ -13,6 +14,12 @@ export function WritingPostPage() {
   const { slug = "" } = useParams();
   const post = getPostBySlug(slug);
   const [tldrOpen, setTldrOpen] = useState(false);
+  const [coverLoaded, setCoverLoaded] = useState(false);
+  const coverRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (coverRef.current?.complete) setCoverLoaded(true);
+  }, [post?.image]);
 
   if (!post || post.draft) {
     return <Navigate to="/writing/" replace />;
@@ -49,6 +56,26 @@ export function WritingPostPage() {
           <span>{post.readingTime}</span>
         </div>
       </FadeIn>
+
+      {post.image ? (
+        <FadeIn delay={0.04} className="mt-8">
+          <figure className="overflow-hidden rounded-2xl border border-border">
+            <img
+              ref={coverRef}
+              src={asset(post.image)}
+              alt=""
+              width={1200}
+              height={675}
+              className={cn(
+                "img-fade aspect-[16/9] w-full object-cover",
+                coverLoaded && "is-loaded",
+              )}
+              onLoad={() => setCoverLoaded(true)}
+              onError={() => setCoverLoaded(true)}
+            />
+          </figure>
+        </FadeIn>
+      ) : null}
 
       {post.tldr && post.tldr.length > 0 ? (
         <FadeIn delay={0.06} className="mt-10">
