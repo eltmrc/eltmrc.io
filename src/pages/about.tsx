@@ -179,7 +179,7 @@ export function AboutPage() {
               </a>
             </li>
             <li className="group flex items-center justify-between gap-4 border-b border-border py-3">
-              <span className="text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg">CTO</span>
+              <span className="text-fg-muted transition-colors duration-[var(--dur-fast)] ease-[var(--ease-std)] group-hover:text-fg">Co-founder & CTO</span>
               <a
                 href="https://clinicpilot.io"
                 target="_blank"

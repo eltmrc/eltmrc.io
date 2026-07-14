@@ -14,7 +14,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     name: "OpenCial",
-    role: "Founder",
+    role: "Creator & maintainer",
     period: "Now",
     description:
       "A self-hosted AI workspace you own: agents, tools, and a product surface that lives on your machine.",
@@ -25,7 +25,7 @@ export const projects: Project[] = [
   },
   {
     name: "ClinicPilot",
-    role: "CTO",
+    role: "Co-founder & CTO",
     period: "Now",
     description:
       "AI-powered equipment management for dental practices — the first of its kind in France, used by 100+ clinics.",
