@@ -70,8 +70,7 @@ export function WritingPostPage() {
 
       {isMarkCover ? (
         <FadeIn delay={0.04} className="mt-8">
-          <figure className="post-mark-hero" aria-label="OpenCial mark">
-            <div className="post-mark-hero__glow" aria-hidden />
+          <div className="post-mark-hero" aria-label="OpenCial mark">
             <CialMarkInteractive
               alive
               portalBurst
@@ -80,7 +79,7 @@ export function WritingPostPage() {
               className="post-mark-hero__mark h-36 w-36 sm:h-44 sm:w-44 md:h-52 md:w-52"
               shellClassName="post-mark-hero__shell"
             />
-          </figure>
+          </div>
         </FadeIn>
       ) : post.image ? (
         <FadeIn delay={0.04} className="mt-8">
