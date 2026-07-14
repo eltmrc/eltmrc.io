@@ -22,11 +22,13 @@ const THEN_CHAPTERS = [
     text: "co-founded dental AI SaaS, 100+ clinics.",
     when: "2022–2026",
     marks: ["AI SaaS"],
+    href: "https://clinicpilot.io",
   },
   {
     text: "shipped ProClient — 250k+ downloads.",
     when: "2017–2019",
     marks: ["ProClient"],
+    href: "https://x.com/ProClientMC",
   },
   {
     text: "scaled HardFight to 150k+ players.",
@@ -37,6 +39,7 @@ const THEN_CHAPTERS = [
     text: "built military-grade drone software.",
     when: "2019–2020",
     marks: ["drone"],
+    href: "https://generate.fr/systeme-internest-facilite-latterrissage-des-drones/",
   },
   {
     text: "shipped complex finance SaaS in prod.",
@@ -52,11 +55,13 @@ const THEN_CHAPTERS = [
     text: "built OpenCial, the AI workspace.",
     when: "2026",
     marks: ["OpenCial"],
+    href: "https://opencial.ai",
   },
   {
     text: "built a live electricity map for Enedis.",
     when: "2021",
     marks: ["Enedis"],
+    href: "https://www.enedis.fr/",
   },
 ] as const;
 

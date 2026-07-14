@@ -8,6 +8,8 @@ export type RotatingPhrase = {
   when?: string;
   /** Substrings to wrap with prose-mark (first match each, case-sensitive). */
   marks?: readonly string[];
+  /** Optional external link (opens in new tab). Marked words become the hit target. */
+  href?: string;
 };
 
 type RotatingDropProps = {
@@ -25,9 +27,52 @@ function fullLabel(p: RotatingPhrase): string {
   return p.when ? `${p.text} ${p.when}` : p.text;
 }
 
-/** Highlight mark substrings inside text (non-overlapping, first-wins order). */
-function renderMarked(text: string, marks: readonly string[] = []): ReactNode {
-  if (marks.length === 0) return text;
+function ExternalLink({
+  href,
+  children,
+  className,
+}: {
+  href: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn("link", className)}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {children}
+    </a>
+  );
+}
+
+/** Highlight mark substrings; optional href wraps marks (or whole text if no marks). */
+function renderMarked(
+  text: string,
+  marks: readonly string[] = [],
+  href?: string,
+): ReactNode {
+  const wrapMark = (content: ReactNode, key: string) => {
+    const inner = (
+      <strong key={key} className="prose-mark font-medium">
+        {content}
+      </strong>
+    );
+    if (!href) return inner;
+    return (
+      <ExternalLink key={key} href={href} className="font-medium">
+        <strong className="prose-mark font-medium">{content}</strong>
+      </ExternalLink>
+    );
+  };
+
+  if (marks.length === 0) {
+    if (!href) return text;
+    return <ExternalLink href={href}>{text}</ExternalLink>;
+  }
 
   type Seg = { start: number; end: number };
   const segs: Seg[] = [];
@@ -45,17 +90,16 @@ function renderMarked(text: string, marks: readonly string[] = []): ReactNode {
   }
   segs.sort((a, b) => a.start - b.start);
 
-  if (segs.length === 0) return text;
+  if (segs.length === 0) {
+    if (!href) return text;
+    return <ExternalLink href={href}>{text}</ExternalLink>;
+  }
 
   const out: ReactNode[] = [];
   let cursor = 0;
   segs.forEach((s, idx) => {
     if (cursor < s.start) out.push(text.slice(cursor, s.start));
-    out.push(
-      <strong key={`${s.start}-${idx}`} className="prose-mark font-medium">
-        {text.slice(s.start, s.end)}
-      </strong>,
-    );
+    out.push(wrapMark(text.slice(s.start, s.end), `${s.start}-${idx}`));
     cursor = s.end;
   });
   if (cursor < text.length) out.push(text.slice(cursor));
@@ -65,7 +109,7 @@ function renderMarked(text: string, marks: readonly string[] = []): ReactNode {
 function PhraseBody({ item }: { item: RotatingPhrase }) {
   return (
     <>
-      {renderMarked(item.text, item.marks)}
+      {renderMarked(item.text, item.marks, item.href)}
       {item.when ? (
         <>
           {" "}
@@ -81,7 +125,7 @@ function PhraseBody({ item }: { item: RotatingPhrase }) {
 /**
  * One phrase at a time: current drops out, next drops in.
  * Width stays stable via the longest phrase as an invisible sizer.
- * Optional per-phrase word marks + subtle date suffix.
+ * Optional marks, subtle dates, external links; pauses on hover when linked.
  */
 export function RotatingDrop({
   phrases,
@@ -89,16 +133,17 @@ export function RotatingDrop({
   className,
 }: RotatingDropProps) {
   const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   const reduce = useReducedMotion();
   const items = phrases.map(normalize);
 
   useEffect(() => {
-    if (items.length < 2 || reduce) return;
+    if (items.length < 2 || reduce || paused) return;
     const id = window.setInterval(() => {
       setIndex((i) => (i + 1) % items.length);
     }, intervalMs);
     return () => window.clearInterval(id);
-  }, [items.length, intervalMs, reduce]);
+  }, [items.length, intervalMs, reduce, paused]);
 
   const longest = items.reduce(
     (a, b) => (fullLabel(a).length >= fullLabel(b).length ? a : b),
@@ -106,9 +151,19 @@ export function RotatingDrop({
   );
   const current = items[index] ?? items[0] ?? { text: "" };
 
+  const pauseHandlers = {
+    onMouseEnter: () => setPaused(true),
+    onMouseLeave: () => setPaused(false),
+    onFocus: () => setPaused(true),
+    onBlur: () => setPaused(false),
+  };
+
   if (reduce || items.length < 2) {
     return (
-      <span className={cn("inline whitespace-nowrap", className)}>
+      <span
+        className={cn("inline whitespace-nowrap", className)}
+        {...pauseHandlers}
+      >
         <PhraseBody item={current} />
       </span>
     );
@@ -120,6 +175,7 @@ export function RotatingDrop({
         "rotating-drop relative inline-grid max-w-full align-baseline",
         className,
       )}
+      {...pauseHandlers}
     >
       <span
         className="invisible col-start-1 row-start-1 whitespace-nowrap"
