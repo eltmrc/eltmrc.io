@@ -473,12 +473,14 @@ button:active .arrow-icon--back {
   padding: 0.4rem 0.85rem 0.4rem 1.25rem;
   box-shadow: 0 10px 28px -16px rgba(120, 60, 140, 0.22);
   transform-origin: center top;
-  will-change: width, max-width, transform;
+  /* Width via CSS only — smoother than layout thrash + keyframe jelly. */
   transition:
+    width 320ms var(--ease-out-quart),
+    max-width 320ms var(--ease-out-quart),
+    padding 280ms var(--ease-out-quart),
+    gap 280ms var(--ease-out-quart),
     border-color var(--dur-base) var(--ease-std),
-    box-shadow var(--dur-base) var(--ease-std),
-    padding var(--dur-base) var(--ease-out-quart),
-    gap var(--dur-base) var(--ease-out-quart);
+    box-shadow var(--dur-base) var(--ease-std);
 }
 
 /* Top of page: span the main content column. */
@@ -487,12 +489,12 @@ button:active .arrow-icon--back {
   max-width: 42rem; /* max-w-2xl */
 }
 
-/* Scrolled: narrower, but still airy — not fully hug-content. */
+/* Scrolled: a bit narrower, still roomy. */
 .site-header__pill--compact {
-  width: 86%;
-  max-width: 36rem; /* ~ mid between full column and tight pill */
-  gap: 0.3rem 0.55rem;
-  padding: 0.38rem 0.75rem 0.38rem 1.15rem;
+  width: 88%;
+  max-width: 37rem;
+  gap: 0.3rem 0.6rem;
+  padding: 0.38rem 0.8rem 0.38rem 1.15rem;
   box-shadow: var(--shadow-header);
 }
 
@@ -507,7 +509,6 @@ button:active .arrow-icon--back {
 
 @media (prefers-reduced-motion: reduce) {
   .site-header__pill {
-    will-change: auto;
     transition:
       border-color var(--dur-base) var(--ease-std),
       box-shadow var(--dur-base) var(--ease-std);
