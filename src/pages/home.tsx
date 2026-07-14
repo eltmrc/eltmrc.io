@@ -210,7 +210,7 @@ export function HomePage() {
           href={site.links.cial}
           target="_blank"
           rel="noopener noreferrer"
-          className="card-soft group block overflow-hidden rounded-2xl"
+          className="card-soft group block overflow-visible rounded-2xl"
         >
           <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
             <div className="flex min-w-0 items-start gap-3.5">
