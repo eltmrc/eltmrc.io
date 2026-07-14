@@ -186,7 +186,8 @@ export function HomePage() {
 
       <FadeIn delay={0.06} className="mt-8">
         <p className="w-full text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
-          Now I work on <strong className="prose-mark">AI</strong> as founder of{" "}
+          Now I work on <strong className="prose-mark">AI</strong> as
+          co-founder of{" "}
           <a
             href={site.links.cial}
             target="_blank"
@@ -195,8 +196,17 @@ export function HomePage() {
           >
             Cial
           </a>{" "}
-          and <strong className="prose-mark">OSS</strong> contributor. Same job
-          the whole way: craft the best surfboards for the technological waves.
+          and <strong className="prose-mark">OSS</strong> contributor with{" "}
+          <a
+            href={site.links.opencial}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            OpenCial
+          </a>
+          . Same job the whole way: craft the best surfboards for the
+          technological waves.
         </p>
       </FadeIn>
 

@@ -64,8 +64,8 @@ export function AboutPage() {
           later. Finance SaaS. Health care. Freelancing.
         </p>
         <p>
-          Now I work on <strong className="prose-mark">AI</strong> as founder
-          of{" "}
+          Now I work on <strong className="prose-mark">AI</strong> as
+          co-founder of{" "}
           <a
             href={site.links.cial}
             target="_blank"
@@ -74,7 +74,7 @@ export function AboutPage() {
           >
             Cial
           </a>{" "}
-          /{" "}
+          and <strong className="prose-mark">OSS</strong> contributor with{" "}
           <a
             href={site.links.opencial}
             target="_blank"
@@ -83,9 +83,8 @@ export function AboutPage() {
           >
             OpenCial
           </a>
-          , <strong className="prose-mark">OSS</strong> contributor, still
-          shipping. The wave changes; the job doesn&apos;t — craft the best
-          surfboards for the technological waves.
+          , still shipping. The wave changes; the job doesn&apos;t — craft the
+          best surfboards for the technological waves.
         </p>
         <p>
           Experiences are still a bit unstructured on paper. That&apos;s fine.

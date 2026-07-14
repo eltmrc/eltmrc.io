@@ -3,7 +3,7 @@ export const site = {
   handle: "eltmrc",
   title: "Eliot Maurice",
   description:
-    "Coding since 12 — Minecraft, drones, finance SaaS, health care, freelancing, founder of Cial and OSS contributor. Surfboards for technological waves.",
+    "Coding since 12 — Minecraft, drones, finance SaaS, health care, freelancing, co-founder of Cial and OSS contributor with OpenCial. Surfboards for technological waves.",
   url: "https://eltmrc.io",
   locale: "en",
   email: "eliot@cial.app",
