@@ -744,20 +744,23 @@ h3:target {
   }
 }
 
-/* Soft highlighter on **bold** key phrases — box-decoration-break keeps
-   multi-line marks clean. Use sparingly in post body. */
+/* Soft highlighter on **bold** key phrases.
+   Negative horizontal margin cancels padding so punctuation after a mark
+   stays tight (no "Paris ." gap). box-decoration-break keeps multi-line washes. */
 .prose-mark {
   font-weight: 600;
   color: var(--fg);
   background: color-mix(in srgb, var(--accent) 14%, transparent);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  border-radius: 0.25em;
-  padding: 0.05em 0.28em;
+  border-radius: 0.2em;
+  padding: 0.06em 0.18em;
+  margin: 0 -0.18em;
 }
 
 /* Pull-quote / key-moment callout rendered from markdown blockquotes. */
 .prose-callout {
+  clear: both;
   margin-top: 2rem;
   border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
   border-radius: 1rem;
@@ -867,21 +870,31 @@ h3:target {
 .prose-figure--side {
   float: right;
   clear: right;
-  width: min(42%, 11.5rem);
-  max-width: 11.5rem;
-  margin: 0.15rem 0 1rem 1.15rem;
+  width: min(40%, 10.5rem);
+  max-width: 10.5rem;
+  margin: 0.15rem 0 1.25rem 1.25rem;
+  /* Isolate the figure so caption stays under the image, not mid-flow. */
+  display: flow-root;
 }
 
 .prose-figure--side img {
-  max-height: 22rem;
+  max-height: 18rem;
   width: 100%;
   object-fit: cover;
   object-position: top center;
+  border-radius: 1rem;
 }
 
-/* Keep floats inside their section — don't spill under the next h2. */
+.prose-figure--side figcaption {
+  display: block;
+  margin-top: 0.45rem;
+  max-width: 100%;
+}
+
+/* Keep floats inside their section — don't spill under the next h2 / figures. */
 .prose-shell h2,
-.prose-shell h3 {
+.prose-shell h3,
+.prose-shell .prose-figure:not(.prose-figure--side) {
   clear: both;
 }
 
