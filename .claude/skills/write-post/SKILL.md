@@ -61,6 +61,9 @@ date: "YYYY-MM-DD"
 tags: ["optional", "freeform"]
 draft: false
 image: "/images/foo.jpg"  # optional under public/
+tldr:                     # optional but preferred — 3-5 key points, shown in a TL;DR box on top
+  - First key point.
+  - Second key point.
 ---
 ```
 

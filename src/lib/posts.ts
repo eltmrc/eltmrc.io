@@ -13,6 +13,8 @@ export type PostFrontmatter = {
   tags?: string[];
   /** Optional og / hero image path under /public */
   image?: string;
+  /** Optional TL;DR bullets shown at the top of the post */
+  tldr?: string[];
 };
 
 export type PostMeta = PostFrontmatter & {
@@ -64,6 +66,7 @@ function parsePost(filePath: string, raw: string): Post | null {
     category,
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     image: data.image ? String(data.image) : undefined,
+    tldr: Array.isArray(data.tldr) ? data.tldr.map(String) : undefined,
     readingTime: stats.text,
     content,
   };

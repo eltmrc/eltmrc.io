@@ -47,6 +47,30 @@ export function WritingPostPage() {
         </div>
       </FadeIn>
 
+      {post.tldr && post.tldr.length > 0 ? (
+        <FadeIn delay={0.06} className="mt-10">
+          <aside className="card-soft rounded-2xl p-5 sm:p-6">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent">
+              TL;DR
+            </p>
+            <ul className="mt-3 space-y-2">
+              {post.tldr.map((point) => (
+                <li
+                  key={point}
+                  className="flex gap-2.5 text-[14px] leading-relaxed text-fg-body"
+                >
+                  <span
+                    aria-hidden
+                    className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-accent/60"
+                  />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </aside>
+        </FadeIn>
+      ) : null}
+
       <FadeIn delay={0.08} className="mt-10">
         <Prose source={post.content} />
       </FadeIn>
