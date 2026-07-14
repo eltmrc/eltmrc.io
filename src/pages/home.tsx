@@ -107,7 +107,10 @@ export function HomePage() {
               Eliot Maurice
             </h1>
             <p className="mt-4 max-w-xl text-[16px] leading-[1.75] text-fg-body sm:text-[17px]">
-              I build tools for how people work with AI. Creator of{" "}
+              I&apos;ve been building since my earliest ages — picking up every
+              tool that helps people ship what they need. Minecraft mods in
+              Java, military drones, finance SaaS, freelancing, and now founder
+              of{" "}
               <a
                 href={site.links.cial}
                 target="_blank"
@@ -115,9 +118,9 @@ export function HomePage() {
                 className="link"
               >
                 Cial
-              </a>
-              — a self-hosted AI workspace — and this is where I write about
-              software, systems, and the long path of shipping something real.
+              </a>{" "}
+              and OSS contributor. Same job the whole way: craft the best
+              surfboards for the technological waves.
             </p>
           </div>
         </div>

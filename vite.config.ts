@@ -38,7 +38,7 @@ function writeRss(): Plugin {
       const siteUrl = "https://eltmrc.github.io/eltmrc.io";
       const siteName = "Eliot Maurice";
       const siteDescription =
-        "Founder of Cial. Writing about building software, AI workspaces, and the craft of shipping.";
+        "Building since forever — Minecraft to drones to SaaS to Cial. Crafting the best surfboards for technological waves.";
 
       if (!fs.existsSync(writingDir)) return;
 

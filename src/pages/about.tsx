@@ -23,7 +23,7 @@ export function AboutPage() {
     <div className="pb-10 pt-6 sm:pt-10">
       <Seo
         title="About"
-        description={`About ${site.name} — founder of Cial, builder and writer.`}
+        description={`About ${site.name} — builder since forever, founder of Cial, surfboards for tech waves.`}
         path="/about/"
       />
 
@@ -50,7 +50,7 @@ export function AboutPage() {
               Eliot Maurice
             </h1>
             <p className="mt-2 text-[15px] text-fg-muted">
-              Founder · builder · {site.handle}
+              Builder · founder · OSS · {site.handle}
             </p>
             <p className="mt-2 inline-flex items-center gap-2 text-[14px] text-fg-muted">
               <span
@@ -73,11 +73,13 @@ export function AboutPage() {
         className="mt-10 space-y-5 text-[16px] leading-[1.75] text-fg-body sm:text-[17px]"
       >
         <p>
-          I&apos;m a founder and builder. I care about software that feels
-          intentional — fast, clear, and owned by the people who use it.
+          I&apos;ve been building since my earliest ages. Not a clean résumé
+          path — just a long stack of tools and domains, always with the same
+          itch: help the world build what it needs.
         </p>
         <p>
-          Today I&apos;m the creator of{" "}
+          Java and Minecraft when I was a kid. Military drones later. Finance
+          SaaS. Freelancing. Now founder of{" "}
           <a
             href={site.links.cial}
             target="_blank"
@@ -85,19 +87,27 @@ export function AboutPage() {
             className="link"
           >
             Cial
+          </a>{" "}
+          /{" "}
+          <a
+            href={site.links.opencial}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            OpenCial
           </a>
-          : a self-hosted AI workspace with real login, tools, and agents. The
-          idea is simple and hard at once — give people a durable place to work
-          with AI that isn&apos;t trapped in a chat tab.
+          , OSS contributor, still shipping. The wave changes; the job
+          doesn&apos;t — craft the best surfboards for the technological waves.
         </p>
         <p>
-          This site is personal. I write about technologies I try, decisions
-          behind the product, and the quieter parts of building something over
-          years rather than weekends.
+          Experiences are still a bit unstructured on paper. That&apos;s fine.
+          What compounds is the pattern: hit a wall, go after the tool, leave
+          something people can actually ride.
         </p>
         <p>
-          If you want to talk — product, collaboration, or just a sharp
-          technical note — email{" "}
+          This site is personal — notes, products, and the messy middle. If you
+          want to talk, email{" "}
           <a href={`mailto:${site.email}`} className="link">
             {site.email}
           </a>
