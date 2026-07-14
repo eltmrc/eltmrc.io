@@ -457,7 +457,7 @@ button:active .arrow-icon--back {
   transform: rotate(-48deg) scale(0.72);
 }
 
-/* Floating pill header — solid, content-width (matches main max-w-2xl). */
+/* Floating pill header — solid; full content width at rest, squishes on scroll. */
 .site-header {
   pointer-events: none;
 }
@@ -465,8 +465,6 @@ button:active .arrow-icon--back {
 .site-header__pill {
   pointer-events: auto;
   display: flex;
-  width: 100%;
-  max-width: 42rem; /* same as max-w-2xl main column */
   align-items: center;
   gap: 0.35rem 0.75rem;
   border-radius: 9999px;
@@ -474,12 +472,27 @@ button:active .arrow-icon--back {
   background: var(--bg);
   padding: 0.4rem 0.85rem 0.4rem 1.25rem;
   box-shadow: 0 10px 28px -16px rgba(120, 60, 140, 0.22);
+  transform-origin: center top;
+  will-change: width, max-width, transform;
   transition:
     border-color var(--dur-base) var(--ease-std),
-    box-shadow var(--dur-base) var(--ease-std);
+    box-shadow var(--dur-base) var(--ease-std),
+    padding var(--dur-base) var(--ease-out-quart),
+    gap var(--dur-base) var(--ease-out-quart);
 }
 
-.site-header__pill[data-scrolled="true"] {
+/* Top of page: span the main content column. */
+.site-header__pill--expanded {
+  width: 100%;
+  max-width: 42rem; /* max-w-2xl */
+}
+
+/* Scrolled: hug brand + nav — layout spring does the squishee. */
+.site-header__pill--compact {
+  width: max-content;
+  max-width: min(42rem, calc(100vw - 3rem));
+  gap: 0.25rem 0.45rem;
+  padding: 0.35rem 0.55rem 0.35rem 1rem;
   box-shadow: var(--shadow-header);
 }
 
@@ -488,8 +501,17 @@ button:active .arrow-icon--back {
   box-shadow: 0 12px 32px -18px rgba(0, 0, 0, 0.55);
 }
 
-[data-theme="dark"] .site-header__pill[data-scrolled="true"] {
+[data-theme="dark"] .site-header__pill--compact {
   box-shadow: var(--shadow-header);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__pill {
+    will-change: auto;
+    transition:
+      border-color var(--dur-base) var(--ease-std),
+      box-shadow var(--dur-base) var(--ease-std);
+  }
 }
 
 /* ─── Header interactions (brand · nav · theme) ───

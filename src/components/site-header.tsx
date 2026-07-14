@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useAnimationControls,
+  useReducedMotion,
+} from "motion/react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
@@ -19,6 +24,14 @@ const navLineTransition = {
   opacity: { duration: 0.16, ease: [0.22, 1, 0.36, 1] as const },
 };
 
+/** Width layout spring — soft overshoot when the pill squishes. */
+const pillLayoutTransition = {
+  type: "spring" as const,
+  stiffness: 360,
+  damping: 20,
+  mass: 0.66,
+};
+
 function isActive(pathname: string, href: string) {
   const base = href.replace(/\/$/, "");
   if (base === "") return pathname === "/" || pathname === "";
@@ -28,19 +41,48 @@ function isActive(pathname: string, href: string) {
 export function SiteHeader() {
   const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const preferReducedMotion = useReducedMotion();
+  const jelly = useAnimationControls();
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
+    setReady(true);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Squishee jelly pulse whenever compact state flips (not on first paint).
+  useEffect(() => {
+    if (!ready || preferReducedMotion) return;
+    void jelly.start({
+      // Compressing width → briefly fatter on Y; expanding → opposite.
+      scaleY: scrolled ? [1, 1.07, 0.97, 1.015, 1] : [1, 0.95, 1.05, 0.99, 1],
+      scaleX: scrolled ? [1, 0.97, 1.02, 0.995, 1] : [1, 1.03, 0.97, 1.01, 1],
+      transition: {
+        duration: 0.46,
+        times: [0, 0.22, 0.48, 0.74, 1],
+        ease: [0.22, 1, 0.36, 1],
+      },
+    });
+  }, [scrolled, ready, preferReducedMotion, jelly]);
+
   return (
     <header className="site-header sticky top-0 z-50 flex justify-center px-6 pt-3 sm:px-8 sm:pt-4">
-      <div
+      <motion.div
+        layout={!preferReducedMotion}
         data-scrolled={scrolled ? "true" : "false"}
-        className="site-header__pill"
+        className={cn(
+          "site-header__pill",
+          scrolled ? "site-header__pill--compact" : "site-header__pill--expanded",
+        )}
+        style={{ transformOrigin: "center top" }}
+        animate={jelly}
+        transition={{
+          layout: preferReducedMotion ? { duration: 0 } : pillLayoutTransition,
+        }}
+        initial={false}
       >
         <Link
           to="/"
@@ -48,10 +90,41 @@ export function SiteHeader() {
         >
           <span className="inline-flex items-baseline gap-1.5">
             <span className="site-brand__name">{site.name}</span>
-            <span className="site-brand__dot text-fg-muted">·</span>
-            <span className="site-brand__handle font-normal text-fg-muted">
-              {site.handle}
-            </span>
+            <AnimatePresence initial={false}>
+              {!scrolled ? (
+                <motion.span
+                  key="brand-meta"
+                  className="inline-flex items-baseline gap-1.5 overflow-hidden whitespace-nowrap"
+                  initial={preferReducedMotion ? false : { opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: "auto" }}
+                  exit={
+                    preferReducedMotion
+                      ? undefined
+                      : {
+                          opacity: 0,
+                          width: 0,
+                          transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
+                        }
+                  }
+                  transition={
+                    preferReducedMotion
+                      ? { duration: 0 }
+                      : {
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 26,
+                          mass: 0.7,
+                          opacity: { duration: 0.16 },
+                        }
+                  }
+                >
+                  <span className="site-brand__dot text-fg-muted">·</span>
+                  <span className="site-brand__handle font-normal text-fg-muted">
+                    {site.handle}
+                  </span>
+                </motion.span>
+              ) : null}
+            </AnimatePresence>
           </span>
         </Link>
 
@@ -92,7 +165,7 @@ export function SiteHeader() {
           })}
           <ThemeToggle />
         </nav>
-      </div>
+      </motion.div>
     </header>
   );
 }
