@@ -6,7 +6,11 @@ import { FadeIn } from "@/components/fade-in";
 import { Portrait } from "@/components/portrait";
 import { PostCard } from "@/components/post-card";
 import { RotatingDrop } from "@/components/rotating-drop";
-import { Seo } from "@/components/seo";
+import {
+  Seo,
+  personJsonLd,
+  websiteJsonLd,
+} from "@/components/seo";
 import { asset } from "@/lib/asset";
 import { getAllPosts } from "@/lib/posts";
 import { projects, type Project } from "@/lib/projects";
@@ -155,7 +159,15 @@ export function HomePage() {
 
   return (
     <div className="pb-10 pt-6 sm:pt-10">
-      <Seo title={site.title} description={site.description} path="/" titleTemplate={false} />
+      <Seo
+        title={site.title}
+        description={site.description}
+        path="/"
+        titleTemplate={false}
+        image={site.defaultOgImage}
+        imageAlt={`${site.name} portrait`}
+        jsonLd={[personJsonLd(), websiteJsonLd()]}
+      />
 
       {/* Above Cial card (z-10); keep under sticky header (z-50) so scroll doesn't cover the pill */}
       <FadeIn className="relative z-20">

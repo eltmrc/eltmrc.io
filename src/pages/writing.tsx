@@ -1,7 +1,8 @@
 import { FadeIn } from "@/components/fade-in";
 import { PostCard } from "@/components/post-card";
-import { Seo } from "@/components/seo";
+import { Seo, websiteJsonLd } from "@/components/seo";
 import { getAllPosts } from "@/lib/posts";
+import { absoluteUrl, site } from "@/lib/site";
 
 export function WritingIndexPage() {
   const posts = getAllPosts();
@@ -9,9 +10,21 @@ export function WritingIndexPage() {
   return (
     <div className="pb-10 pt-6 sm:pt-10">
       <Seo
-        title="Writing"
-        description="Notes and articles on software, AI, and building Cial."
+        title="Notes & Articles"
+        description="Notes and articles on software, AI, building Cial, and shipping products by Eliot Maurice."
         path="/writing/"
+        jsonLd={[
+          websiteJsonLd(),
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Notes & Articles",
+            url: absoluteUrl("/writing/"),
+            description:
+              "Notes and articles on software, AI, building Cial, and shipping products.",
+            isPartOf: { "@type": "WebSite", name: site.name, url: site.url },
+          },
+        ]}
       />
 
       <FadeIn>

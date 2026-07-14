@@ -1,12 +1,30 @@
 export const site = {
   name: "Eliot Maurice",
   handle: "eltmrc",
-  title: "Eliot Maurice",
+  title: "Eliot Maurice — builder, co-founder of Cial & OpenCial",
   description:
-    "Coding since 12 — Minecraft, drones, finance SaaS, health care, freelancing, co-founder of Cial and OSS contributor with OpenCial.",
+    "Eliot Maurice (eltmrc). Builder in Paris. Co-founder of Cial and ClinicPilot, creator of OpenCial. Notes and articles on AI, software, and shipping products.",
+  /** Shorter description for card previews when needed */
+  shortDescription:
+    "Builder in Paris. Co-founder of Cial and ClinicPilot. Creator of OpenCial.",
   url: "https://eltmrc.io",
-  locale: "en",
+  locale: "en_US",
+  lang: "en",
   email: "eliot@cial.app",
+  /** Default share image (absolute path under public/) */
+  defaultOgImage: "/images/portrait.jpg",
+  keywords: [
+    "Eliot Maurice",
+    "eltmrc",
+    "Cial",
+    "OpenCial",
+    "ClinicPilot",
+    "AI workspace",
+    "self-hosted AI",
+    "software engineer",
+    "Paris",
+    "builder",
+  ],
   links: {
     github: "https://github.com/eltmrc",
     x: "https://x.com/ByProcyx",
@@ -22,3 +40,11 @@ export const site = {
     linkedin: "eliot-m",
   },
 } as const;
+
+/** Absolute URL for a site path or public asset. */
+export function absoluteUrl(path = "/"): string {
+  if (/^https?:\/\//i.test(path)) return path;
+  const base = site.url.replace(/\/$/, "");
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${base}${p}`;
+}

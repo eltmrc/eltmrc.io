@@ -20,6 +20,7 @@ export default function App() {
           description={site.description}
           path="/"
           titleTemplate={false}
+          image={site.defaultOgImage}
         />
         <SiteHeader />
         <main className="mx-auto w-full max-w-2xl flex-1 px-6 sm:px-8">

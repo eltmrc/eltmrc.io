@@ -5,7 +5,12 @@ import { Seo } from "@/components/seo";
 export function NotFoundPage() {
   return (
     <div className="flex flex-col items-start py-20">
-      <Seo title="Not found" description="Page not found." path="/404" />
+      <Seo
+        title="Not found"
+        description="This page does not exist on eltmrc.io."
+        path="/404"
+        noindex
+      />
       <FadeIn>
         <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-fg-subtle">
           404

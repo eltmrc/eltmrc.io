@@ -6,7 +6,11 @@ import { CialMarkInteractive } from "@/components/cial-mark-interactive";
 import { FadeIn } from "@/components/fade-in";
 import { PostMinimap } from "@/components/post-minimap";
 import { Prose } from "@/components/prose";
-import { Seo } from "@/components/seo";
+import {
+  Seo,
+  articleJsonLd,
+  breadcrumbJsonLd,
+} from "@/components/seo";
 import { asset } from "@/lib/asset";
 import { cn } from "@/lib/cn";
 import { extractHeadings } from "@/lib/headings";
@@ -42,6 +46,27 @@ export function WritingPostPage() {
         path={`/writing/${post.slug}/`}
         type="article"
         publishedTime={post.date}
+        modifiedTime={post.date}
+        image={post.image}
+        keywords={[
+          ...site.keywords,
+          ...(post.tags ?? []),
+          post.category ?? "",
+        ].filter(Boolean)}
+        jsonLd={[
+          articleJsonLd({
+            title: post.title,
+            description: post.description,
+            path: `/writing/${post.slug}/`,
+            publishedTime: post.date,
+            image: post.image,
+          }),
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Writing", path: "/writing/" },
+            { name: post.title, path: `/writing/${post.slug}/` },
+          ]),
+        ]}
       />
 
       <PostMinimap headings={headings} />

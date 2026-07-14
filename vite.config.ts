@@ -1,9 +1,9 @@
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import fs from "node:fs";
-import { parseFrontmatter } from "./src/lib/frontmatter";
 
 /**
  * Static site for GitHub Pages.
@@ -20,87 +20,29 @@ function spaFallback(): Plugin {
     name: "spa-github-pages-fallback",
     closeBundle() {
       const dist = path.resolve(__dirname, "dist");
-      const index = path.join(dist, "index.html");
-      if (fs.existsSync(index)) {
-        fs.copyFileSync(index, path.join(dist, "404.html"));
-      }
       // Jekyll on GitHub Pages ignores folders starting with _ unless this exists
       fs.writeFileSync(path.join(dist, ".nojekyll"), "");
     },
   };
 }
 
-function writeRss(): Plugin {
+/** robots.txt, sitemap, RSS, prerendered SEO shells for crawlers. */
+function seoAssets(): Plugin {
   return {
-    name: "write-rss",
-    closeBundle() {
-      const writingDir = path.resolve(__dirname, "content/writing");
-      const siteUrl = "https://eltmrc.github.io/eltmrc.io";
-      const siteName = "Eliot Maurice";
-      const siteDescription =
-        "Coding since 12 — Minecraft, drones, finance SaaS, health care, freelancing, co-founder of Cial and OSS contributor with OpenCial.";
-
-      if (!fs.existsSync(writingDir)) return;
-
-      const posts = fs
-        .readdirSync(writingDir)
-        .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"))
-        .map((filename) => {
-          const raw = fs.readFileSync(path.join(writingDir, filename), "utf8");
-          const { data } = parseFrontmatter(raw);
-          if (!data.title || !data.date || data.draft) return null;
-          return {
-            slug: filename.replace(/\.mdx?$/, ""),
-            title: String(data.title),
-            description: String(data.description ?? ""),
-            date: String(data.date),
-          };
-        })
-        .filter((p): p is NonNullable<typeof p> => p !== null)
-        .sort((a, b) => (a.date < b.date ? 1 : -1));
-
-      const escapeXml = (s: string) =>
-        s
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&apos;");
-
-      const items = posts
-        .map(
-          (post) => `    <item>
-      <title>${escapeXml(post.title)}</title>
-      <link>${siteUrl}/writing/${post.slug}/</link>
-      <guid>${siteUrl}/writing/${post.slug}/</guid>
-      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      <description>${escapeXml(post.description)}</description>
-    </item>`,
-        )
-        .join("\n");
-
-      const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>${escapeXml(siteName)}</title>
-    <link>${siteUrl}</link>
-    <description>${escapeXml(siteDescription)}</description>
-    <language>en</language>
-${items}
-  </channel>
-</rss>
-`;
-
-      const dist = path.resolve(__dirname, "dist");
-      fs.mkdirSync(dist, { recursive: true });
-      fs.writeFileSync(path.join(dist, "rss.xml"), xml);
+    name: "seo-assets",
+    async closeBundle() {
+      // Absolute file URL so TypeScript doesn't resolve a missing .d.ts for .mjs
+      const mod = (await import(
+        pathToFileURL(path.resolve(__dirname, "scripts/seo-build.mjs")).href
+      )) as { runSeoBuild: () => void };
+      mod.runSeoBuild();
     },
   };
 }
 
 export default defineConfig({
   base,
-  plugins: [react(), tailwindcss(), writeRss(), spaFallback()],
+  plugins: [react(), tailwindcss(), spaFallback(), seoAssets()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -129,4 +71,3 @@ export default defineConfig({
     },
   },
 });
-
