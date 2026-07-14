@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FadeIn } from "@/components/fade-in";
+import { Portrait } from "@/components/portrait";
 import { Seo } from "@/components/seo";
 import { asset } from "@/lib/asset";
 import { cn } from "@/lib/cn";
@@ -8,13 +9,10 @@ import { site } from "@/lib/site";
 export function AboutPage() {
   /* Standard .img-fade load-settle contract: cached images fire no load
      event, so also check `complete` on mount. */
-  const portraitRef = useRef<HTMLImageElement>(null);
-  const [portraitLoaded, setPortraitLoaded] = useState(false);
   const workspaceRef = useRef<HTMLImageElement>(null);
   const [workspaceLoaded, setWorkspaceLoaded] = useState(false);
 
   useEffect(() => {
-    if (portraitRef.current?.complete) setPortraitLoaded(true);
     if (workspaceRef.current?.complete) setWorkspaceLoaded(true);
   }, []);
 
@@ -28,19 +26,7 @@ export function AboutPage() {
 
       <FadeIn>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-8">
-          <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-2xl shadow-[var(--shadow-soft)] ring-1 ring-border sm:h-44 sm:w-44">
-            <img
-              ref={portraitRef}
-              src={asset("/images/portrait.jpg")}
-              alt="Eliot Maurice"
-              className={cn(
-                "img-fade h-full w-full object-cover",
-                portraitLoaded && "is-loaded",
-              )}
-              onLoad={() => setPortraitLoaded(true)}
-              onError={() => setPortraitLoaded(true)}
-            />
-          </div>
+          <Portrait size={168} shape="rounded" priority />
           <div>
             <p className="text-[12px] font-medium uppercase tracking-[0.16em] text-fg-subtle">
               About

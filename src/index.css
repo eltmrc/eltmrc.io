@@ -1252,3 +1252,204 @@ button.card-soft:active {
     0 0 0 3px color-mix(in srgb, #a855f7 22%, transparent),
     0 8px 20px -8px color-mix(in srgb, #ff5fa8 50%, transparent);
 }
+
+/* ─── Portrait contact menu (squishee dropdown) ─── */
+.portrait-menu-root {
+  z-index: 20;
+}
+
+.portrait-trigger {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: inherit;
+  outline: none;
+}
+
+.portrait-trigger:focus-visible .portrait-face {
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px color-mix(in srgb, var(--accent) 55%, transparent),
+    var(--shadow-soft);
+}
+
+.portrait-face {
+  transition:
+    transform var(--dur-base) var(--ease-out-quart),
+    box-shadow var(--dur-base) var(--ease-out-quart),
+    ring-color var(--dur-fast) var(--ease-std);
+}
+
+.portrait-face--interactive {
+  transition:
+    transform var(--dur-base) var(--ease-out-quart),
+    box-shadow var(--dur-base) var(--ease-out-quart);
+}
+
+.portrait-trigger:hover .portrait-face--interactive,
+.portrait-trigger[aria-expanded="true"] .portrait-face--interactive {
+  transform: scale(1.04);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, #a855f7 18%, transparent),
+    0 12px 28px -12px color-mix(in srgb, #ff5fa8 42%, transparent);
+}
+
+.portrait-trigger:active .portrait-face--interactive {
+  transform: scale(var(--press-scale));
+  transition-duration: 90ms;
+}
+
+/* Soft accent wash when interactive — suggests “open me”. */
+.portrait-face__hint {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    160deg,
+    transparent 40%,
+    color-mix(in srgb, #a855f7 0%, transparent) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-std);
+}
+
+.portrait-trigger:hover .portrait-face__hint,
+.portrait-trigger[aria-expanded="true"] .portrait-face__hint {
+  opacity: 1;
+  background: linear-gradient(
+    160deg,
+    transparent 35%,
+    color-mix(in srgb, #a855f7 22%, transparent) 100%
+  );
+}
+
+.portrait-menu {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  left: 0;
+  z-index: 40;
+  min-width: 15.5rem;
+  transform-origin: top left;
+  /* Hover bridge so the pointer can travel from face → menu. */
+  padding-top: 0.35rem;
+  margin-top: -0.35rem;
+}
+
+.portrait-menu__inner {
+  border-radius: 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  background: color-mix(in srgb, var(--card-base) 92%, var(--accent-soft));
+  box-shadow:
+    var(--shadow-soft-hover),
+    0 18px 40px -22px color-mix(in srgb, #a855f7 35%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 0.35rem;
+  overflow: hidden;
+}
+
+.portrait-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  border-radius: 0.7rem;
+  padding: 0.58rem 0.7rem;
+  color: var(--fg-body);
+  text-decoration: none;
+  transition:
+    background-color var(--dur-fast) var(--ease-std),
+    color var(--dur-fast) var(--ease-std),
+    transform var(--dur-fast) var(--ease-out-quart);
+}
+
+.portrait-menu__item:hover,
+.portrait-menu__item:focus-visible {
+  outline: none;
+  color: var(--fg);
+  background: color-mix(in srgb, #a855f7 12%, transparent);
+  transform: translateX(2px);
+}
+
+.portrait-menu__item:active {
+  transform: translateX(1px) scale(var(--press-scale));
+  background: color-mix(in srgb, #a855f7 18%, transparent);
+  transition-duration: 90ms;
+}
+
+.portrait-menu__icon {
+  display: inline-flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  color: var(--fg-muted);
+  background: color-mix(in srgb, var(--surface-elevated) 80%, transparent);
+  transition:
+    color var(--dur-fast) var(--ease-std),
+    background-color var(--dur-fast) var(--ease-std),
+    transform var(--dur-fast) var(--ease-out-quart),
+    box-shadow var(--dur-base) var(--ease-out-quart);
+}
+
+.portrait-menu__item:hover .portrait-menu__icon,
+.portrait-menu__item:focus-visible .portrait-menu__icon {
+  color: var(--fg);
+  background: color-mix(in srgb, #a855f7 16%, transparent);
+  transform: scale(1.06);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, #a855f7 16%, transparent),
+    0 6px 14px -8px color-mix(in srgb, #ff5fa8 40%, transparent);
+}
+
+.portrait-menu__label {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.portrait-menu__arrow {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: var(--fg-subtle);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity var(--dur-fast) var(--ease-std),
+    transform var(--dur-fast) var(--ease-out-quart),
+    color var(--dur-fast) var(--ease-std);
+}
+
+.portrait-menu__item:hover .portrait-menu__arrow,
+.portrait-menu__item:focus-visible .portrait-menu__arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--accent);
+}
+
+@media (max-width: 639px) {
+  .portrait-menu {
+    left: 0;
+    right: auto;
+    min-width: min(16.5rem, calc(100vw - 2.5rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-face--interactive,
+  .portrait-menu__item,
+  .portrait-menu__icon,
+  .portrait-menu__arrow {
+    transition: none !important;
+  }
+
+  .portrait-trigger:hover .portrait-face--interactive,
+  .portrait-trigger[aria-expanded="true"] .portrait-face--interactive {
+    transform: none;
+  }
+}
