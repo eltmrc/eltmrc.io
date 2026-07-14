@@ -36,16 +36,17 @@ export const projects: Project[] = [
   },
   {
     name: "VisaExpress",
-    role: "Founder",
+    role: "Side",
     description:
       "French visa appointments as soon as tomorrow — appointment hunting service with a Discord notification bot.",
     href: "https://github.com/eltmrc/visaexpress.io",
     linkLabel: "GitHub",
     status: "archived",
+    icon: "/images/visaexpress-icon.svg",
   },
   {
     name: "ProClient",
-    role: "Project lead",
+    role: "Founder, Lead dev, CM",
     period: "2017",
     description:
       "Modded Minecraft client improving the player experience on Funcraft.net — 250,000+ downloads.",
@@ -54,7 +55,7 @@ export const projects: Project[] = [
   },
   {
     name: "HardFight",
-    role: "Java developer",
+    role: "Lead dev (Java)",
     period: "2016",
     description:
       "Minecraft game-server development — a community of 150,000 registered players.",

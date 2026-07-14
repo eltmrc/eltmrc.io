@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="VisaExpress — French flag and passport">
+  <!-- Soft plate -->
+  <rect width="64" height="64" rx="14" fill="#F4F2EE"/>
+
+  <!-- Passport body (French burgundy) -->
+  <rect x="14" y="12" width="36" height="44" rx="4" fill="#5C1520"/>
+  <rect x="14" y="12" width="36" height="44" rx="4" stroke="#3A0C13" stroke-width="1.25" opacity="0.55"/>
+
+  <!-- Spine highlight -->
+  <rect x="14" y="12" width="4.5" height="44" rx="2" fill="#3A0C13" opacity="0.45"/>
+
+  <!-- Cover gold crest (simplified) -->
+  <circle cx="35" cy="28" r="7.5" stroke="#D4B46A" stroke-width="1.4" fill="none"/>
+  <path
+    d="M35 22.8v10.4M31.2 26.2h7.6M32.2 33.2c1.1-1.4 2.1-2.1 2.8-2.1s1.7.7 2.8 2.1"
+    stroke="#D4B46A"
+    stroke-width="1.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Gold title line -->
+  <rect x="24" y="40" width="22" height="2.2" rx="1.1" fill="#D4B46A" opacity="0.9"/>
+  <rect x="27" y="44.5" width="16" height="1.8" rx="0.9" fill="#D4B46A" opacity="0.55"/>
+
+  <!-- French flag badge (bottom-left corner of cover) -->
+  <g transform="translate(18.5 47.5)">
+    <rect width="15" height="10" rx="1.5" fill="#fff" stroke="#3A0C13" stroke-width="0.6" opacity="0.95"/>
+    <rect x="0.4" y="0.4" width="4.7" height="9.2" rx="1" fill="#002395"/>
+    <rect x="5.1" y="0.4" width="4.8" height="9.2" fill="#fff"/>
+    <rect x="9.9" y="0.4" width="4.7" height="9.2" rx="1" fill="#ED2939"/>
+  </g>
+</svg>
