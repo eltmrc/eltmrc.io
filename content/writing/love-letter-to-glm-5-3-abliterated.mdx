@@ -19,6 +19,8 @@ What caught my attention with GLM 5.3 Abliterated was the possibility of putting
 
 That is the missing piece I mean. Private software that starts to look like a small intelligence platform. A mini-Palantir, if you want the uncomfortable version.
 
+![The missing piece: a model between scattered records and a readable dossier.](/images/glm/missing-piece.svg)
+
 ## A breach is the beginning
 
 We talk about data breaches as events. A company gets hacked. A database gets stolen. People receive an email telling them to change their passwords. Then the news moves on.
@@ -27,13 +29,31 @@ The data keeps moving.
 
 Records can come from compromised databases, exposed backups, or malware stealing information from people's devices. Whoever gets them can sell them, trade them, or publish them. Someone else copies the collection. Another person bundles it with older material. A private archive can eventually become a public download. Not every collection follows that path, but paying for access never guarantees that the data stays exclusive.
 
-Collection #1 was a very visible example of this afterlife. In 2019, Troy Hunt documented a huge compilation of email addresses and passwords assembled from multiple sources and circulating publicly. It was already a collection of other people's collections. [His account is here.](https://www.troyhunt.com/the-773-million-record-collection-1-data-reach/)
+![A breach has an afterlife. Exposure, circulation, aggregation, redistribution.](/images/glm/breach-afterlife.svg)
+
+Collection #1 was a very visible example of this afterlife. In 2019, Troy Hunt documented **773 million unique email addresses** in a compilation assembled from multiple sources and circulating publicly. It was already a collection of other people's collections. [His account is here.](https://www.troyhunt.com/the-773-million-record-collection-1-data-reach/)
+
+And it kept happening:
+
+- **Collections #2–5, 2019.** More named collections rapidly followed Collection #1. Hunt later described that escalation as a race to the bottom. The cycle of repackaging and redistribution was already familiar. [Troy Hunt's retrospective.](https://www.troyhunt.com/inside-the-massive-naz-api-credential-stuffing-list/)
+- **Naz.API, documented in 2024.** A collection containing **70.8 million unique email addresses**, mixing malware-derived records with older credential lists. Fresh theft and old exposure in the same corpus. [Hunt's analysis.](https://www.troyhunt.com/inside-the-massive-naz-api-credential-stuffing-list/)
+- **The Synthient-indexed collection, 2025.** Almost **1.96 billion unique email addresses** in credential-stuffing data gathered from locations where criminals had published it. Synthient indexed the material and shared it for victim notification. This was accumulated exposure from many sources, not one newly hacked company. [The documented findings.](https://www.troyhunt.com/2-billion-email-addresses-were-exposed-and-we-indexed-them-all-in-have-i-been-pwned/)
+
+Individual companies have also lost data at staggering scale. **Yahoo's 2013 breach affected all three billion accounts**, according to Verizon's later disclosure. **Equifax's 2017 breach affected approximately 147 million people**, exposing highly sensitive personal information. [Verizon's annual report](https://www.verizon.com/about/sites/default/files/2018-Verizon-Annual-Report.pdf) and the [FTC's Equifax account](https://www.ftc.gov/news-events/news/press-releases/2019/07/equifax-pay-575-million-part-settlement-ftc-cfpb-states-related-2017-data-breach) document those figures.
+
+![Major breaches and collections across 2013–2025. Figures measure different things and overlap; they are not a combined victim count.](/images/glm/breach-timeline.svg)
+
+Accounts, people, and email addresses are different units. These examples do not establish that every stolen database becomes public, or that all of them feed the same aggregator. They show how often enormous amounts of personal data escape, and how old exposure can keep resurfacing in new collections.
+
+The headline changes. The material accumulates.
 
 Then come the aggregators. Their value is in the connections. Separate records share identifiers, and those overlaps can tie fragments together. What used to be isolated entries starts to resemble a profile: accounts, contact details, affiliations, pieces of a history.
 
 A "mega profile" is a useful name for the result. It can also make the result sound more reliable than it is. Records get stale. Identifiers get shared or reassigned. Collections contain mistakes. A pile of linked claims about a person is still a pile of claims.
 
 But the privacy problem is obvious. Information you gave to separate services can end up in the same dossier, outside your control.
+
+![Separate fragments can become one profile. The connections still need verification.](/images/glm/mega-profile.svg)
 
 ## The intelligence was behind a refusal
 
@@ -59,9 +79,9 @@ Imagine that capability inside private software with access to accumulated breac
 
 That could lower the effort involved in **doxxing and digital footprint reconstruction**. Scattered exposure becomes easier to interrogate. A person becomes easier to describe, track across records, or misrepresent through a convincing but incorrect reconstruction.
 
-There is an important distinction around Have I Been Pwned. HIBP helps people check exposure. It does not offer a public download of everyone's full leaked records, and Pwned Passwords does not associate passwords with their owners. "HIBP full data" is not an accurate name for the raw breach collections circulating elsewhere. [Its FAQ explains those boundaries.](https://haveibeenpwned.com/FAQs)
-
 So yes, mini-Palantir is the comparison I keep coming back to. I mean the experience of asking questions across connected information. I am not claiming that downloading a model gives someone Palantir's complete platform, data access, or operational capabilities.
+
+![A conversational interface over connected information. An illustration of the idea, not a working product.](/images/glm/private-intelligence.svg)
 
 There is still infrastructure to build. There are still costs. There is still evidence to verify. A model can invent a connection as easily as it can explain one, and a fluent dossier can make that mistake look authoritative.
 
@@ -74,6 +94,8 @@ There is another implication: an uncensored model could help produce attempts to
 The broad idea is to dress a refused request in a fictional setting, a supposed sandbox, or a claim that the output cannot be used in the real world. Calling that "gaslighting" captures the feeling. Technically, it is an attempt to defeat the model's safeguards through misleading context.
 
 Research has already demonstrated that fabricated dialogue can influence safety behavior. Anthropic's work on many-shot jailbreaking documented that general vulnerability. It does not prove that GLM 5.3 can reliably bypass today's frontier models, or that a sandbox story always works. [The research describes the finding and its mitigations.](https://www.anthropic.com/research/many-shot-jailbreaking)
+
+![One model can generate attempts to influence another. Success is not guaranteed.](/images/glm/model-pressure.svg)
 
 My concern is the reduced effort of generating those attempts. The model with fewer restrictions can become a helper for someone trying to get around restrictions elsewhere.
 
