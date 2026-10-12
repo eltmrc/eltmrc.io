@@ -1,0 +1,5 @@
+cial-production-ui.webp is a browser capture of the deployed Cial client.
+Captured 2026-10-12 at 1440 x 860, Obsidian theme.
+The production JavaScript, CSS, fonts, icons and UI components are unchanged.
+An isolated local fixture supplies fictional records and a scripted conversation.
+This is not evidence of a model execution.
