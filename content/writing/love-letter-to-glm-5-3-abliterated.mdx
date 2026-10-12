@@ -31,6 +31,10 @@ Records can come from compromised databases, exposed backups, or malware stealin
 
 ![A breach has an afterlife. Exposure, circulation, aggregation, redistribution.](/images/glm/breach-afterlife.svg)
 
+The files themselves can look painfully ordinary. A CSV export. A SQL dump. A JSON file. Rows with email addresses, account names, dates, missing values, and sometimes exposed credentials. The illustration below uses invented records to show the texture of that material.
+
+![Inside an archive: raw CSV and the same rows in a table. All records are synthetic; no real credentials or personal data. |wide](/images/glm/leak-explorer.svg)
+
 Collection #1 was a very visible example of this afterlife. In 2019, Troy Hunt documented **773 million unique email addresses** in a compilation assembled from multiple sources and circulating publicly. It was already a collection of other people's collections. [His account is here.](https://www.troyhunt.com/the-773-million-record-collection-1-data-reach/)
 
 And it kept happening:
@@ -61,11 +65,11 @@ A collection is not yet useful intelligence. Someone still has to understand the
 
 Software and analysts have done this for years. AI brings a more flexible interface to that work. It can help interpret unfamiliar material and turn fragments into a readable account. That is why the ability to structure unstructured data matters so much here.
 
-![A simulated prompt and illustrative response using invented records. This is not a captured GLM response.](/images/glm/structure-mess.svg)
-
 Public frontier assistants generally have guardrails against doxxing and other abusive uses of personal information. Those guardrails are imperfect, and legitimate security research is a different use case. Still, a provider can refuse a request to turn exposed personal information into a dossier.
 
-An operator running modified open weights has more control over that boundary.
+![Claude / Opus 5.5: an illustrative refusal in a reconstructed chat UI. This is not a captured response. |wide](/images/glm/claude-refusal.svg)
+
+An operator running modified open weights has more control over that boundary. The Claude mockup above and the Cial mockup below use the same invented request to illustrate the difference being discussed. They are editorial illustrations, not a measured comparison of model behavior.
 
 GLM 5.3 makes this worth taking seriously. Z.ai's published evaluations place the base model near leading systems on several coding and tool-use tasks. Those are vendor-reported results, and the rankings vary by task, but this is substantial capability. [The base-model card lists the comparisons.](https://huggingface.co/zai-org/GLM-5.3)
 
@@ -81,7 +85,7 @@ That could lower the effort involved in **doxxing and digital footprint reconstr
 
 So yes, mini-Palantir is the comparison I keep coming back to. I mean the experience of asking questions across connected information. I am not claiming that downloading a model gives someone Palantir's complete platform, data access, or operational capabilities.
 
-![A simulated private workspace: source cards, a relationship graph, and a conversation about fictional records.](/images/glm/private-intelligence.svg)
+![Cial / GLM 5.3 Uncensored: the same request, illustrated as a completed profile. The records and response are invented. |wide](/images/glm/private-intelligence.svg)
 
 There is still infrastructure to build. There are still costs. There is still evidence to verify. A model can invent a connection as easily as it can explain one, and a fluent dossier can make that mistake look authoritative.
 

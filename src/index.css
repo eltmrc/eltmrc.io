@@ -1702,3 +1702,10 @@ button.card-soft:active {
     transform: none;
   }
 }
+
+/* Detailed editorial screenshots can extend beyond the reading column. */
+.prose-figure--wide {
+  width: min(960px, calc(100vw - 48px));
+  max-width: none;
+  margin-left: calc((100% - min(960px, calc(100vw - 48px))) / 2);
+}

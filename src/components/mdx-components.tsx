@@ -92,9 +92,10 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
       ? asset(raw)
       : raw;
   const rawAlt = props.alt ?? "";
-  // Convention: "Caption text |side" floats the figure beside following prose.
+  // Caption suffix: |side floats a figure; |wide expands a detailed illustration.
   const side = /\|\s*side\s*$/i.test(rawAlt);
-  const caption = rawAlt.replace(/\|\s*side\s*$/i, "").trim();
+  const wide = /\|\s*wide\s*$/i.test(rawAlt);
+  const caption = rawAlt.replace(/\|\s*(side|wide)\s*$/i, "").trim();
   const srcStr = typeof src === "string" ? src : "";
 
   return (
@@ -103,6 +104,7 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
         className={cn(
           "prose-figure",
           side ? "prose-figure--side" : "mt-8",
+          wide && "prose-figure--wide",
         )}
       >
         <button
