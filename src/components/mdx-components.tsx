@@ -92,10 +92,13 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
       ? asset(raw)
       : raw;
   const rawAlt = props.alt ?? "";
-  // Caption suffix: |side floats a figure; |wide expands a detailed illustration.
-  const side = /\|\s*side\s*$/i.test(rawAlt);
-  const wide = /\|\s*wide\s*$/i.test(rawAlt);
-  const caption = rawAlt.replace(/\|\s*(side|wide)\s*$/i, "").trim();
+  // Layout suffix can hide the visible caption while preserving accessible alt text.
+  const suffix = /\|\s*(side|wide)(?:\s*,\s*(nocaption))?\s*$/i;
+  const layout = rawAlt.match(suffix);
+  const side = layout?.[1]?.toLowerCase() === "side";
+  const wide = layout?.[1]?.toLowerCase() === "wide";
+  const hideCaption = layout?.[2]?.toLowerCase() === "nocaption";
+  const caption = rawAlt.replace(suffix, "").trim();
   const srcStr = typeof src === "string" ? src : "";
 
   return (
@@ -130,7 +133,7 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
             draggable={false}
           />
         </button>
-        {caption ? (
+        {caption && !hideCaption ? (
           <figcaption
             className={cn(
               "mt-2 text-[12.5px] leading-relaxed text-fg-subtle",
