@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" fill="none" role="img" aria-label="Not Palantir level, quite close tho">
+  <rect width="720" height="300" rx="16" fill="#faf8fc"/>
+  <path d="M60 200h600" stroke="#d8d0e2" stroke-width="2"/>
+  <rect x="62" y="168" width="72" height="28" rx="5" fill="#fff" stroke="rgba(80,50,100,0.14)" stroke-width="1.2"/>
+  <path d="M60 196h76" stroke="#c9a8de" stroke-width="4" stroke-linecap="round"/>
+  <text x="98" y="226" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" fill="#9a93a8">a laptop</text>
+  <circle cx="500" cy="200" r="8" fill="#a855c8"/>
+  <text x="500" y="164" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="700" fill="#17141f">you, 2026</text>
+  <text x="500" y="232" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" fill="#c97070">quite close tho</text>
+  <g>
+    <rect x="560" y="128" width="26" height="72" fill="#e9e2f0" stroke="rgba(80,50,100,0.14)" stroke-width="1.2"/>
+    <rect x="588" y="100" width="26" height="100" fill="#e9e2f0" stroke="rgba(80,50,100,0.14)" stroke-width="1.2"/>
+    <rect x="616" y="72" width="26" height="128" fill="#e9e2f0" stroke="rgba(80,50,100,0.14)" stroke-width="1.2"/>
+    <rect x="644" y="142" width="16" height="58" fill="#e9e2f0" stroke="rgba(80,50,100,0.14)" stroke-width="1.2"/>
+  </g>
+  <text x="608" y="56" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12.5" font-weight="700" fill="#17141f">Palantir</text>
+  <rect x="550" y="246" width="126" height="22" rx="11" fill="#f4f0f8"/>
+  <text x="613" y="261" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="10.5" fill="#9a93a8">enterprise, call sales</text>
+  <text x="360" y="270" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" fill="#9a93a8">not the level. close enough to matter.</text>
+</svg>

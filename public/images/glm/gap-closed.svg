@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" fill="none" role="img" aria-label="The gap between the frontier and the uncensored copies, 2024 vs now">
+  <rect width="720" height="300" rx="16" fill="#faf8fc"/>
+  <rect x="40" y="40" width="300" height="220" rx="18" fill="#fff" stroke="rgba(80,50,100,0.14)" stroke-width="1.2"/>
+  <text x="66" y="70" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#9a93a8">2024</text>
+  <rect x="80" y="90" width="60" height="130" rx="8" fill="#a855c8"/>
+  <rect x="170" y="175" width="60" height="45" rx="8" fill="#c9a8de"/>
+  <text x="110" y="248" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="10.5" fill="#9a93a8">frontier</text>
+  <text x="200" y="248" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="10.5" fill="#9a93a8">uncensored copy</text>
+  <path d="M244 98v68" stroke="#c97070" stroke-width="2" stroke-dasharray="4 5"/>
+  <path d="M238 104l6 -8l6 8" fill="none" stroke="#c97070" stroke-width="2"/>
+  <path d="M238 160l6 8l6 -8" fill="none" stroke="#c97070" stroke-width="2"/>
+  <text x="266" y="135" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" font-weight="600" fill="#c97070">the gap</text>
+  <rect x="380" y="40" width="300" height="220" rx="18" fill="#fff" stroke="rgba(80,50,100,0.14)" stroke-width="1.2"/>
+  <text x="406" y="70" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#9a93a8">2026</text>
+  <rect x="450" y="90" width="60" height="130" rx="8" fill="#a855c8"/>
+  <rect x="540" y="90" width="60" height="130" rx="8" fill="#c9a8de"/>
+  <text x="480" y="248" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="10.5" fill="#9a93a8">frontier</text>
+  <text x="570" y="248" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="10.5" fill="#9a93a8">uncensored copy</text>
+  <rect x="552" y="52" width="112" height="24" rx="12" fill="#8fd4a8" fill-opacity="0.25"/>
+  <text x="608" y="68" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" font-weight="600" fill="#2f7a4f">the gap is gone</text>
+</svg>

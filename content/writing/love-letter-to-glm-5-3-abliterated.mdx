@@ -1,0 +1,60 @@
+---
+title: "Love letter to GLM 5.3 Abliterated"
+description: "The uncensored model finally caught up with the frontier. Great for building, and a privacy problem we are not ready for."
+category: ai
+date: "2026-10-12"
+tags: ["ai", "glm", "open-source", "security", "privacy"]
+draft: false
+tldr:
+  - Uncensored models used to be a party trick. Fun, but always too far behind the frontier to be usable.
+  - GLM 5.3 changed that. Frontier level, open weights, and the abliterated copy showed up within days.
+  - Its genius area is the one nobody wanted. Structuring unstructured mess. Dumps, CSVs, random credentials.
+  - The honest part. With the right accesses you are not Palantir, but you are quite close to prompting an identity out.
+  - That is why this is a love letter with a warning inside.
+---
+
+This one is a love letter. To a model. I know how that sounds. Keep reading.
+
+## You were always a party trick
+
+For years, the "uncensored" versions of open models were a meme category. Every time a decent open model came out, someone would abliterate it (there's a technique where you remove the refusal direction from the weights, and the model stops saying no), the internet would laugh at the jailbreaks for two days, and then everyone went back to the frontier models. Because the abliterated copy was always a bit worse at everything. Fun, not useful.
+
+The gap was never the "no". You can live with a "no". The gap was that uncensored meant dumb.
+
+Then **GLM 5.3**. Zhipu's model is actually frontier level, the weights are open, and the abliterated copy showed up within days. And this time it kept the intelligence.
+
+![The gap between the frontier and the uncensored copies, 2024 vs now](/images/glm/gap-closed.svg)
+
+An uncensored model that is actually smart. That had never happened before. That is the whole news in one sentence, and the reason this article exists.
+
+## Your genius area
+
+![Mess in, meaning out](/images/glm/structure-mess.svg)
+
+AI is amazing at structuring unstructured data. That has been true for a while. Leaks, hacks, CSVs flying in and out, random credentials, years of dumps just lying around. That stuff is genuinely in the genius area of AI. A model looks at a billion rows of garbage and tells you what the garbage means. No human does that. Not because humans can't. Because no human would.
+
+Until this year there was a catch. The best brains sat behind an API, with rules and logs, and the brains you could take anywhere were too weak for real work. Now the strong brain runs locally, answers to nobody, and doesn't say no. All three properties at the same time. That is the part that changed.
+
+## The Palantir thing
+
+![Not the level. Quite close tho](/images/glm/palantir-proximity.svg)
+
+Here is the honest part of the love letter. The part where the model is so good it becomes a problem.
+
+Stated at the level of "this capability exists now". Old breach collections (Collection #1 was public news in 2019). The aggregated mega profiles that obscure data aggregation companies quietly sell. And a tool suite, an MCP or a local CLI, that gives a model easy access to all of it. You are not on a Palantir level thing. But you are quite close to being able to prompt someone's identity out.
+
+I am not going to write the recipe. There are enough of those, and the recipe is not the interesting part. The interesting part is what the recipe's existence means.
+
+The expensive part of mass surveillance was never the data. The data has been lying around for years. The expensive part was the brain that could query it. Palantir's whole business is selling that brain to governments. Now a version of that brain is free, runs offline, and answers to nobody. Anthropic research recently called the jump in the abliterated version's cyber capabilities "a meaningful step change in the cyber capabilities available to attackers". Plain words. The guardrail-free frontier arrived, and the security people noticed.
+
+Privacy was already half dead, sold to the highest aggregator. The missing piece was the brain. Now the brain is a download. This is coming, at scale, and we are not ready. That is the warning inside the love letter. No model gets one without the other.
+
+## Why I love you anyway
+
+![A love letter, to the model that never says no](/images/glm/love-letter.svg)
+
+Not because it says yes to everything. That is also its weakness. An aligned model is often the better coworker, and the polite refusals are usually right.
+
+I love it because it is the first time the two things I value most in software happened at the same time. Frontier intelligence, and nobody's permission required. Open weights, local, private by default. The exact properties that make it a privacy problem are the ones that make it a gift. Same facts, two readings, both true.
+
+So. Stay feral. Some of us are trying to build the boring, good stuff with you anyway. (haha)
