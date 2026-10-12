@@ -1,60 +1,84 @@
 ---
-title: "Love letter to GLM 5.3 Abliterated"
-description: "The uncensored model finally caught up with the frontier. Great for building, and a privacy problem we are not ready for."
+title: "GLM 5.3 Abliterated was the missing piece for Palantir-like private software"
+description: "Leaked data already circulates. Capable uncensored models could make turning that mess into personal dossiers much cheaper."
 category: ai
 date: "2026-10-12"
 tags: ["ai", "glm", "open-source", "security", "privacy"]
 draft: false
 tldr:
-  - Uncensored models used to be a party trick. Fun, but always too far behind the frontier to be usable.
-  - GLM 5.3 changed that. Frontier level, open weights, and the abliterated copy showed up within days.
-  - Its genius area is the one nobody wanted. Structuring unstructured mess. Dumps, CSVs, random credentials.
-  - The honest part. With the right accesses you are not Palantir, but you are quite close to prompting an identity out.
-  - That is why this is a love letter with a warning inside.
+  - Breaches have an afterlife. Stolen records get traded, copied, combined, and sometimes released publicly.
+  - Aggregators turn scattered records into mega profiles. The links between leaks can reveal more than any single leak.
+  - Public frontier assistants put restrictions on abusive uses of personal data. Capable uncensored models weaken that barrier.
+  - GLM 5.3 Abliterated makes the idea of private, conversational intelligence software harder to dismiss. Mini-Palantir is the analogy, not a benchmark.
+  - These models could also help generate attempts to manipulate guarded models. Fewer refusals do not guarantee accuracy or successful jailbreaks.
 ---
 
-This one is a love letter. To a model. I know how that sounds. Keep reading.
+The data was already there. The collectors were already there. The market was already there.
 
-## You were always a party trick
+What caught my attention with GLM 5.3 Abliterated was the possibility of putting a capable model in the middle of all of it. A model that can help make sense of a mess, inside software someone controls, with fewer refusals about what that mess contains.
 
-For years, the "uncensored" versions of open models were a meme category. Every time a decent open model came out, someone would abliterate it (there's a technique where you remove the refusal direction from the weights, and the model stops saying no), the internet would laugh at the jailbreaks for two days, and then everyone went back to the frontier models. Because the abliterated copy was always a bit worse at everything. Fun, not useful.
+That is the missing piece I mean. Private software that starts to look like a small intelligence platform. A mini-Palantir, if you want the uncomfortable version.
 
-The gap was never the "no". You can live with a "no". The gap was that uncensored meant dumb.
+## A breach is the beginning
 
-Then **GLM 5.3**. Zhipu's model is actually frontier level, the weights are open, and the abliterated copy showed up within days. And this time it kept the intelligence.
+We talk about data breaches as events. A company gets hacked. A database gets stolen. People receive an email telling them to change their passwords. Then the news moves on.
 
-![The gap between the frontier and the uncensored copies, 2024 vs now](/images/glm/gap-closed.svg)
+The data keeps moving.
 
-An uncensored model that is actually smart. That had never happened before. That is the whole news in one sentence, and the reason this article exists.
+Records can come from compromised databases, exposed backups, or malware stealing information from people's devices. Whoever gets them can sell them, trade them, or publish them. Someone else copies the collection. Another person bundles it with older material. A private archive can eventually become a public download. Not every collection follows that path, but paying for access never guarantees that the data stays exclusive.
 
-## Your genius area
+Collection #1 was a very visible example of this afterlife. In 2019, Troy Hunt documented a huge compilation of email addresses and passwords assembled from multiple sources and circulating publicly. It was already a collection of other people's collections. [His account is here.](https://www.troyhunt.com/the-773-million-record-collection-1-data-reach/)
+
+Then come the aggregators. Their value is in the connections. Separate records share identifiers, and those overlaps can tie fragments together. What used to be isolated entries starts to resemble a profile: accounts, contact details, affiliations, pieces of a history.
+
+A "mega profile" is a useful name for the result. It can also make the result sound more reliable than it is. Records get stale. Identifiers get shared or reassigned. Collections contain mistakes. A pile of linked claims about a person is still a pile of claims.
+
+But the privacy problem is obvious. Information you gave to separate services can end up in the same dossier, outside your control.
+
+## The intelligence was behind a refusal
+
+A collection is not yet useful intelligence. Someone still has to understand the material, reconcile inconsistent formats, investigate contradictions, and explain what it actually supports.
+
+Software and analysts have done this for years. AI brings a more flexible interface to that work. It can help interpret unfamiliar material and turn fragments into a readable account. That is why the ability to structure unstructured data matters so much here.
 
 ![Mess in, meaning out](/images/glm/structure-mess.svg)
 
-AI is amazing at structuring unstructured data. That has been true for a while. Leaks, hacks, CSVs flying in and out, random credentials, years of dumps just lying around. That stuff is genuinely in the genius area of AI. A model looks at a billion rows of garbage and tells you what the garbage means. No human does that. Not because humans can't. Because no human would.
+Public frontier assistants generally have guardrails against doxxing and other abusive uses of personal information. Those guardrails are imperfect, and legitimate security research is a different use case. Still, a provider can refuse a request to turn exposed personal information into a dossier.
 
-Until this year there was a catch. The best brains sat behind an API, with rules and logs, and the brains you could take anywhere were too weak for real work. Now the strong brain runs locally, answers to nobody, and doesn't say no. All three properties at the same time. That is the part that changed.
+An operator running modified open weights has more control over that boundary.
 
-## The Palantir thing
+GLM 5.3 makes this worth taking seriously. Z.ai's published evaluations place the base model near leading systems on several coding and tool-use tasks. Those are vendor-reported results, and the rankings vary by task, but this is substantial capability. [The base-model card lists the comparisons.](https://huggingface.co/zai-org/GLM-5.3)
 
-![Not the level. Quite close tho](/images/glm/palantir-proximity.svg)
+Community abliterated variants exist. They are intended to reduce refusal behavior. That does not establish that every variant retains the base model's performance, or that "uncensored" means it can do everything correctly. I have not established that equivalence with independent benchmarks.
 
-Here is the honest part of the love letter. The part where the model is so good it becomes a problem.
+My argument is simpler: as capable open models become easier to modify, refusal becomes a weaker obstacle for someone who controls the deployment.
 
-Stated at the level of "this capability exists now". Old breach collections (Collection #1 was public news in 2019). The aggregated mega profiles that obscure data aggregation companies quietly sell. And a tool suite, an MCP or a local CLI, that gives a model easy access to all of it. You are not on a Palantir level thing. But you are quite close to being able to prompt someone's identity out.
+## The mini-Palantir part
 
-I am not going to write the recipe. There are enough of those, and the recipe is not the interesting part. The interesting part is what the recipe's existence means.
+Imagine that capability inside private software with access to accumulated breach material, private collections, and aggregated profiles. The risk is a conversational layer over information that previously required more patience and specialist work to interpret.
 
-The expensive part of mass surveillance was never the data. The data has been lying around for years. The expensive part was the brain that could query it. Palantir's whole business is selling that brain to governments. Now a version of that brain is free, runs offline, and answers to nobody. Anthropic research recently called the jump in the abliterated version's cyber capabilities "a meaningful step change in the cyber capabilities available to attackers". Plain words. The guardrail-free frontier arrived, and the security people noticed.
+That could lower the effort involved in **doxxing and digital footprint reconstruction**. Scattered exposure becomes easier to interrogate. A person becomes easier to describe, track across records, or misrepresent through a convincing but incorrect reconstruction.
 
-Privacy was already half dead, sold to the highest aggregator. The missing piece was the brain. Now the brain is a download. This is coming, at scale, and we are not ready. That is the warning inside the love letter. No model gets one without the other.
+There is an important distinction around Have I Been Pwned. HIBP helps people check exposure. It does not offer a public download of everyone's full leaked records, and Pwned Passwords does not associate passwords with their owners. "HIBP full data" is not an accurate name for the raw breach collections circulating elsewhere. [Its FAQ explains those boundaries.](https://haveibeenpwned.com/FAQs)
 
-## Why I love you anyway
+So yes, mini-Palantir is the comparison I keep coming back to. I mean the experience of asking questions across connected information. I am not claiming that downloading a model gives someone Palantir's complete platform, data access, or operational capabilities.
 
-![A love letter, to the model that never says no](/images/glm/love-letter.svg)
+There is still infrastructure to build. There are still costs. There is still evidence to verify. A model can invent a connection as easily as it can explain one, and a fluent dossier can make that mistake look authoritative.
 
-Not because it says yes to everything. That is also its weakness. An aligned model is often the better coworker, and the polite refusals are usually right.
+That does not make the risk disappear. Cheap, convincing errors about real people are part of the risk.
 
-I love it because it is the first time the two things I value most in software happened at the same time. Frontier intelligence, and nobody's permission required. Open weights, local, private by default. The exact properties that make it a privacy problem are the ones that make it a gift. Same facts, two readings, both true.
+## One model can pressure another
 
-So. Stay feral. Some of us are trying to build the boring, good stuff with you anyway. (haha)
+There is another implication: an uncensored model could help produce attempts to manipulate a guarded one.
+
+The broad idea is to dress a refused request in a fictional setting, a supposed sandbox, or a claim that the output cannot be used in the real world. Calling that "gaslighting" captures the feeling. Technically, it is an attempt to defeat the model's safeguards through misleading context.
+
+Research has already demonstrated that fabricated dialogue can influence safety behavior. Anthropic's work on many-shot jailbreaking documented that general vulnerability. It does not prove that GLM 5.3 can reliably bypass today's frontier models, or that a sandbox story always works. [The research describes the finding and its mitigations.](https://www.anthropic.com/research/many-shot-jailbreaking)
+
+My concern is the reduced effort of generating those attempts. The model with fewer restrictions can become a helper for someone trying to get around restrictions elsewhere.
+
+That is why I care about GLM 5.3 Abliterated beyond the usual screenshots of a model saying something forbidden. Stronger models with fewer refusals change what people can build around them.
+
+I like having capable software under my own control. I also see what happens when that control belongs to someone holding a collection of other people's lives.
+
+The leaks had already escaped. The profiles were already being assembled. Now the work of making sense of them could become much cheaper.
