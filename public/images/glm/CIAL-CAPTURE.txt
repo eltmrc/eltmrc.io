@@ -1,6 +1,7 @@
-cial-production-ui@3x.webp is a browser capture of the deployed Cial client.
-Captured 2026-10-12 at 1100 x 720 CSS pixels, device scale factor 3 (3300 x 2160 image pixels), Obsidian theme.
+cial-macbook@2x.webp is a browser capture of the deployed Cial client.
+Captured 2026-10-13 at 1512 x 945 CSS pixels (16:10), 100% zoom.
+Retina device scale factor 2: 3024 x 1890 image pixels. Lossless WebP.
+Obsidian theme, full desktop navigation, no crop or enlarged UI.
 The production JavaScript, CSS, fonts, icons and UI components are unchanged.
 An isolated local fixture supplies fictional records and a scripted conversation.
 This is not evidence of a model execution.
-Lossless WebP. Main workspace list collapsed using the native Cial preference.
