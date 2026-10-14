@@ -89,7 +89,7 @@ function Img(props: ComponentPropsWithoutRef<"img">) {
   const raw = props.src;
   const src =
     typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//")
-      ? asset(raw)
+      ? `${asset(raw)}?v=${__BUILD_ID__}`
       : raw;
   const rawAlt = props.alt ?? "";
   // Layout suffix can hide the visible caption while preserving accessible alt text.

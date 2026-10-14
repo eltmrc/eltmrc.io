@@ -42,6 +42,8 @@ function seoAssets(): Plugin {
 
 export default defineConfig({
   base,
+  // Post images keep stable URLs; a per-build query busts Pages' 10-minute cache.
+  define: { __BUILD_ID__: JSON.stringify(Date.now().toString(36)) },
   plugins: [react(), tailwindcss(), spaFallback(), seoAssets()],
   resolve: {
     alias: {
