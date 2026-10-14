@@ -92,9 +92,9 @@ function Stream({ text, onDone }: { text: string; onDone?: () => void }) {
 }
 
 const PLACEHOLDERS = [
-  "Morgan Vale",
-  "morgan.vale@gmail.com",
-  "morgan_v",
+  "John Doe",
+  "john.doe@gmail.com",
+  "john_d",
   "+33 6 …",
 ];
 
@@ -202,8 +202,8 @@ export function MosaicDemo() {
                 <div className="mosaic-empty">
                   <p className="mosaic-empty__hint">
                     {query ? "No match. Try " : "Start typing a name, email or handle. Try "}
-                    <button className="mosaic-link" onClick={() => { setQuery("Morgan"); inputRef.current?.focus(); }}>
-                      Morgan
+                    <button className="mosaic-link" onClick={() => { setQuery("John"); inputRef.current?.focus(); }}>
+                      John
                     </button>
                     .
                   </p>
@@ -358,7 +358,7 @@ function RunSession({ subject, onReset }: { subject: Subject; onReset: () => voi
 
       <div className="mosaic-run__scroll" ref={scrollRef}>
         <UserMsg>
-          Resolve everything on <b>morgan.vale@gmail.com</b>. Don't stop at the easy sources.
+          Resolve everything on <b>john.doe@gmail.com</b>. Don't stop at the easy sources.
         </UserMsg>
 
         {shown >= 1 && (
@@ -574,7 +574,7 @@ function Composite({ reduce }: { reduce: boolean | null }) {
       <div className="mosaic-composite__head">
         <Avatar hot />
         <div>
-          <div className="mosaic-composite__name">Morgan Vale — resolved</div>
+          <div className="mosaic-composite__name">John Doe — resolved</div>
           <div className="mosaic-composite__tag">7 leaks · one person</div>
         </div>
         <span className="mosaic-composite__badge">dossier</span>

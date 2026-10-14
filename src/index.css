@@ -2143,3 +2143,8 @@ button.card-soft:active {
   .mosaic-tree__branches, .mosaic-contacts { grid-template-columns: 1fr; }
   .mosaic-faces { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* mini-Palantir: real portrait photos */
+.mosaic-face__img { aspect-ratio: 1 / 1; }
+.mosaic-face__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mosaic-face figcaption { display: flex; align-items: center; justify-content: center; gap: 5px; }

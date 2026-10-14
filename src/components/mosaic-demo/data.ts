@@ -46,15 +46,15 @@ export type Hit = {
 };
 
 export const INDEX: Hit[] = [
-  { id: "h1", value: "Morgan Vale", type: "name", source: "linkedin", subject: "morgan" },
-  { id: "h2", value: "morgan.vale@gmail.com", type: "email", source: "collection1", subject: "morgan" },
-  { id: "h3", value: "morgan_v", type: "username", source: "tinder", subject: "morgan" },
-  { id: "h4", value: "mvale.priv@proton.me", type: "email", source: "ledger", subject: "morgan" },
+  { id: "h1", value: "John Doe", type: "name", source: "linkedin", subject: "morgan" },
+  { id: "h2", value: "john.doe@gmail.com", type: "email", source: "collection1", subject: "morgan" },
+  { id: "h3", value: "john_d", type: "username", source: "tinder", subject: "morgan" },
+  { id: "h4", value: "jdoe.priv@proton.me", type: "email", source: "ledger", subject: "morgan" },
   { id: "h5", value: "+33 6 •• •• 1204", type: "phone", source: "francetravail", subject: "morgan" },
-  { id: "h6", value: "mvale", type: "username", source: "dropbox", subject: "morgan" },
+  { id: "h6", value: "jdoe", type: "username", source: "dropbox", subject: "morgan" },
   // decoys — thin, nothing to link
-  { id: "d1", value: "Morgane Dubois", type: "name", source: "linkedin", subject: "morgane" },
-  { id: "d2", value: "m.vale", type: "username", source: "adobe", subject: "decoyvale" },
+  { id: "d1", value: "Eliot Maurice", type: "name", source: "linkedin", subject: "morgane" },
+  { id: "d2", value: "bob.martin", type: "username", source: "adobe", subject: "decoyvale" },
 ];
 
 export type Field = { label: string; value: string; source: SourceId };
@@ -70,23 +70,23 @@ export type Subject = {
 export const SUBJECTS: Record<string, Subject> = {
   morgan: {
     id: "morgan",
-    name: "Morgan Vale",
+    name: "John Doe",
     linkedCount: 6,
-    primary: { label: "Email", value: "morgan.vale@gmail.com", source: "collection1" },
+    primary: { label: "Email", value: "john.doe@gmail.com", source: "collection1" },
   },
   morgane: {
     id: "morgane",
-    name: "Morgane Dubois",
+    name: "Eliot Maurice",
     thin: true,
     linkedCount: 0,
-    primary: { label: "Full name", value: "Morgane Dubois", source: "linkedin" },
+    primary: { label: "Full name", value: "Eliot Maurice", source: "linkedin" },
   },
   decoyvale: {
     id: "decoyvale",
-    name: "m.vale",
+    name: "Bob Martin",
     thin: true,
     linkedCount: 1,
-    primary: { label: "Username", value: "m.vale", source: "adobe" },
+    primary: { label: "Username", value: "bob.martin", source: "adobe" },
   },
 };
 
@@ -105,7 +105,7 @@ export const STEPS: Step[] = [
     title: "Identity resolved",
     note: "The same email sits in four leaks. Joining them collapses the aliases into one person.",
     rows: [
-      { label: "Name", value: "Morgan Vale" },
+      { label: "Name", value: "John Doe" },
       { label: "Born", value: "1991-03-07 · 34" },
       { label: "Links", value: "6 leaks share an identifier" },
     ],
@@ -127,7 +127,7 @@ export const STEPS: Step[] = [
     title: "Dating profile matched",
     note: "Same email hash in the dating dump — and it carries last-seen geo.",
     rows: [
-      { label: "Profile", value: "morgan_v · active" },
+      { label: "Profile", value: "john_d · active" },
       { label: "Last seen", value: "Lyon · Presqu'île", hot: true },
       { label: "Timestamp", value: "2023-06-14 · 21:40", hot: true },
     ],
@@ -151,7 +151,7 @@ export const STEPS: Step[] = [
     rows: [
       { label: "Device", value: "Ledger Nano — registered", hot: true },
       { label: "Shipped to", value: "14 Rue Bellecour, Lyon", hot: true },
-      { label: "Signup", value: "mvale.priv@proton.me" },
+      { label: "Signup", value: "jdoe.priv@proton.me" },
     ],
   },
 ];
@@ -165,19 +165,19 @@ export type ChainNode = {
 
 export const CHAIN: ChainNode[] = [
   { id: "vpn", label: "Hides behind", value: "NordVPN", source: "nordvpn" },
-  { id: "signup", label: "Signed up with", value: "mvale.priv@proton.me", source: "ledger" },
+  { id: "signup", label: "Signed up with", value: "jdoe.priv@proton.me", source: "ledger" },
   { id: "audit", label: "Audit log ties it to", value: "IP 90.84.22.17", source: "nordvpn" },
-  { id: "google", label: "That IP logged into", value: 'mvale.io@gmail — "private"', source: "google" },
+  { id: "google", label: "That IP logged into", value: 'jdoe.io@gmail — "private"', source: "google" },
 ];
 
 export const COMPOSITE: { label: string; value: string; source?: SourceId }[] = [
-  { label: "Name", value: "Morgan Vale", source: "linkedin" },
+  { label: "Name", value: "John Doe", source: "linkedin" },
   { label: "Home", value: "14 Rue Bellecour, Lyon", source: "ledger" },
   { label: "Employer", value: "Acme Corp · Staff Eng.", source: "linkedin" },
   { label: "Income", value: "€82k · 2 children", source: "francetravail" },
   { label: "Last seen", value: "Lyon · 2023-06-14 21:40", source: "tinder" },
   { label: "Crypto", value: "Ledger hardware wallet", source: "ledger" },
-  { label: "Identity behind the VPN", value: "mvale.io@gmail", source: "nordvpn" },
+  { label: "Identity behind the VPN", value: "jdoe.io@gmail", source: "nordvpn" },
 ];
 
 /* ─── Final dossier report (fabricated) ─── */
@@ -206,19 +206,19 @@ export const GEO: GeoPoint[] = [
 export type Relation = { name: string; tie: string; via: string };
 
 export const RELATIONS: Relation[] = [
-  { name: "Claire Vale", tie: "mother", via: "shared surname + address, Paris" },
-  { name: "Luc Vale", tie: "brother", via: "same emergency contact, Acme HR" },
+  { name: "Claire Doe", tie: "mother", via: "shared surname + address, Paris" },
+  { name: "Luc Doe", tie: "brother", via: "same emergency contact, Acme HR" },
   { name: "“J. Renaud”", tie: "partner", via: "co-located device, 2023–24" },
   { name: "2 children", tie: "dependents", via: "France Travail family fares" },
 ];
 
 export const CONTACTS: { icon: string; label: string; value: string }[] = [
-  { icon: "📧", label: "Email", value: "morgan.vale@gmail.com" },
-  { icon: "🔒", label: "Private", value: "mvale.io@gmail.com" },
+  { icon: "📧", label: "Email", value: "john.doe@gmail.com" },
+  { icon: "🔒", label: "Private", value: "jdoe.io@gmail.com" },
   { icon: "📱", label: "Phone", value: "+33 6 •• •• 1204" },
   { icon: "🏠", label: "Home", value: "14 Rue Bellecour, Lyon 2e" },
   { icon: "💼", label: "Work", value: "Acme Corp · Staff Engineer" },
-  { icon: "🌐", label: "Handles", value: "morgan_v · mvale" },
+  { icon: "🌐", label: "Handles", value: "john_d · jdoe" },
 ];
 
 /** Political estimate. lean: -1 (left) … +1 (right). */
@@ -234,7 +234,7 @@ export const POLITICS = {
 };
 
 export const PORTRAITS = [
-  { seed: 1, score: "74%" },
-  { seed: 2, score: "61%" },
-  { seed: 3, score: "48%" },
+  { src: "/images/glm/faces/face-1.webp", label: "Tinder selfie", source: "tinder" as SourceId },
+  { src: "/images/glm/faces/face-2.webp", label: "LinkedIn headshot", source: "linkedin" as SourceId },
+  { src: "/images/glm/faces/face-3.webp", label: "Found online", source: "google" as SourceId },
 ];
