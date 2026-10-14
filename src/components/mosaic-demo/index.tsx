@@ -136,7 +136,7 @@ export function MosaicDemo() {
   }
 
   return (
-    <div className="mosaic">
+    <div className="mosaic" id="demo">
       <div className="mosaic__bar">
         <span className="mosaic__dots" aria-hidden>
           <i /><i /><i />

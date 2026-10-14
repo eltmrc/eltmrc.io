@@ -2160,3 +2160,4 @@ button.card-soft:active {
 .mosaic-indexed { justify-content: center; }
 .mosaic { margin-top: 1.25rem; }
 @media (prefers-reduced-motion: reduce) { .mosaic-hero svg { animation: none; } }
+.mosaic { scroll-margin-top: 5rem; }
