@@ -805,6 +805,31 @@ h3:target {
 }
 
 /* Pull-quote / key-moment callout rendered from markdown blockquotes. */
+/* Inline product chips (remark-brands): logo before the name. */
+.brand {
+  white-space: nowrap;
+  font-weight: 520;
+  color: var(--fg);
+}
+
+.brand::before {
+  content: "";
+  display: inline-block;
+  width: 1.08em;
+  height: 1.08em;
+  margin-right: 0.3em;
+  vertical-align: -0.2em;
+  background: center / contain no-repeat;
+  border-radius: 0.3em;
+  box-shadow: 0 1px 2px rgba(60, 30, 90, 0.14);
+}
+
+.brand--glm::before { background-image: url("/images/brands/glm.svg"); }
+.brand--claude::before { background-image: url("/images/brands/claude.svg"); }
+.brand--openai::before { background-image: url("/images/brands/openai.svg"); }
+.brand--anthropic::before { background-image: url("/images/brands/anthropic.svg"); }
+.brand--cial::before { background-image: url("/images/brands/cial.svg"); box-shadow: none; }
+
 .prose-callout {
   clear: both;
   margin-top: 2rem;

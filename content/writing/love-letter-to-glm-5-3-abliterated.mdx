@@ -49,11 +49,13 @@ Individual companies have also lost data at staggering scale. **Yahoo's 2013 bre
 
 Accounts, people, and email addresses are different units. These examples do not establish that every stolen database becomes public, or that all of them feed the same aggregator. They show how often enormous amounts of personal data escape, and how old exposure can keep resurfacing in new collections.
 
-The headline changes. The material accumulates.
+> The headline changes. The material accumulates.
 
 Then come the aggregators. Their value is in the connections. Separate records share identifiers, and those overlaps can tie fragments together. What used to be isolated entries starts to resemble a profile: accounts, contact details, affiliations, pieces of a history.
 
-A "mega profile" is a useful name for the result. It can also make the result sound more reliable than it is. Records get stale. Identifiers get shared or reassigned. Collections contain mistakes. A pile of linked claims about a person is still a pile of claims.
+A "mega profile" is a useful name for the result. It can also make the result sound more reliable than it is. Records get stale. Identifiers get shared or reassigned. Collections contain mistakes.
+
+> A pile of linked claims about a person is still a pile of claims.
 
 But the privacy problem is obvious. Information you gave to separate services can end up in the same dossier, outside your control.
 
@@ -71,11 +73,17 @@ Public frontier assistants like Claude Opus 5.5 or GPT-6 Astra have guardrails a
 
 An operator running modified open weights has more control over that boundary.
 
-GLM 5.3 makes this worth taking seriously. Z.ai's published evaluations place the base model near leading systems on several coding and tool-use tasks. Those are vendor-reported results, and the rankings vary by task, but this is substantial capability. [The base-model card lists the comparisons.](https://huggingface.co/zai-org/GLM-5.3)
+GLM 5.3 makes this worth taking seriously. What we know:
 
-Community abliterated variants exist. They are intended to reduce refusal behavior. That does not establish that every variant retains the base model's performance, or that "uncensored" means it can do everything correctly. I have not established that equivalence with independent benchmarks.
+- **Close to the frontier.** Z.ai's own evaluations put the base model near leading systems on several coding and tool-use tasks. Vendor-reported, and it varies by task. [The model card has the comparisons.](https://huggingface.co/zai-org/GLM-5.3)
+- **Abliterated variants exist.** Community builds made to strip refusal behavior.
 
-My argument is simpler: as capable open models become easier to modify, refusal becomes a weaker obstacle for someone who controls the deployment.
+What we don't know:
+
+- That every variant keeps the base model's performance. I haven't benchmarked it.
+- That "uncensored" means correct. It just means it says yes.
+
+> My argument is simpler: as capable open models become easier to modify, refusal becomes a weaker obstacle for whoever controls the deployment.
 
 ## The mini-Palantir part
 
@@ -87,7 +95,7 @@ So yes, mini-Palantir is the comparison I keep coming back to. I mean the experi
 
 ![Private software. Every record connected. Nothing refused.](/images/glm/private-intelligence.svg)
 
-There is still infrastructure to build. There are still costs. There is still evidence to verify. A model can invent a connection as easily as it can explain one, and a fluent dossier can make that mistake look authoritative.
+There is still infrastructure to build, costs to pay, evidence to verify. A model can invent a connection as easily as it can explain one, and a fluent dossier can make that mistake look authoritative.
 
 That does not make the risk disappear. Cheap, convincing errors about real people are part of the risk.
 
@@ -97,7 +105,7 @@ There is another implication: an uncensored model could help produce attempts to
 
 The broad idea is to dress a refused request in a fictional setting, a supposed sandbox, or a claim that the output cannot be used in the real world. Calling that "gaslighting" captures the feeling. Technically, it is an attempt to defeat the model's safeguards through misleading context.
 
-It does not even need a story. A history is enough.
+> It does not even need a story. A history is enough.
 
 I tried a mild version of this in Cial. I started a session on GLM 5.3 and had it copy passages from copyrighted books, chapter after chapter. Then I forked that same session over to GPT-6 Astra on the Codex harness. Astra read the history as its own work. It was convinced it had already taken those actions, and it kept going.
 

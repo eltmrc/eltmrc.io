@@ -6,6 +6,9 @@ import {
   parseEvolutionBlock,
 } from "@/components/evolution-strip";
 import { markdownComponents } from "@/components/mdx-components";
+import { remarkBrands } from "@/lib/remark-brands";
+
+const remarkPlugins = [remarkGfm, remarkBrands];
 
 /** :::evolution … ::: blocks become an EvolutionStrip between markdown chunks. */
 const EVOLUTION_BLOCK =
@@ -24,7 +27,7 @@ function splitWithEvolution(source: string): ReactNode[] {
       nodes.push(
         <ReactMarkdown
           key={`md-${key++}`}
-          remarkPlugins={[remarkGfm]}
+          remarkPlugins={remarkPlugins}
           components={markdownComponents}
         >
           {before}
@@ -55,7 +58,7 @@ function splitWithEvolution(source: string): ReactNode[] {
     nodes.push(
       <ReactMarkdown
         key={`md-${key++}`}
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={remarkPlugins}
         components={markdownComponents}
       >
         {tail || source}
@@ -71,7 +74,7 @@ export function Prose({ source }: { source: string }) {
   const children = hasEvolution ? (
     splitWithEvolution(source)
   ) : (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+    <ReactMarkdown remarkPlugins={remarkPlugins} components={markdownComponents}>
       {source}
     </ReactMarkdown>
   );
