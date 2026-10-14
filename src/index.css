@@ -2060,3 +2060,86 @@ button.card-soft:active {
   background: linear-gradient(180deg, var(--accent-pink), var(--accent));
   padding: 2px 6px; border-radius: 999px;
 }
+
+/* ── mini-Palantir: final dossier report ── */
+.mosaic-report {
+  margin-top: 4px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: 16px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, var(--card-base)), var(--card-base));
+  padding: 18px 18px 16px;
+  box-shadow: var(--shadow-soft);
+}
+.mosaic-report__title { font-size: 17px; font-weight: 750; color: var(--fg); letter-spacing: -0.01em; }
+.mosaic-report__lede { margin: 6px 0 4px; font-size: 13px; color: var(--fg-muted); line-height: 1.55; }
+.mosaic-report__h {
+  display: flex; align-items: center; gap: 8px;
+  margin: 20px 0 10px; font-size: 14.5px; font-weight: 700; color: var(--fg);
+  padding-top: 14px; border-top: 1px solid var(--border);
+}
+.mosaic-report__est {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--accent); background: var(--accent-soft); padding: 2px 7px; border-radius: 999px;
+}
+.mosaic-report__cap { margin: 8px 0 0; font-size: 12px; color: var(--fg-subtle); line-height: 1.5; }
+.mosaic-report__warn {
+  margin-top: 18px; padding: 12px 14px; border-radius: 11px; font-size: 12.5px; line-height: 1.55;
+  color: var(--fg-body); background: var(--surface); border: 1px solid var(--border);
+}
+
+/* life timeline */
+.mosaic-life { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.mosaic-life li { display: grid; grid-template-columns: 22px 64px 1fr auto; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; }
+.mosaic-life li:nth-child(odd) { background: var(--surface); }
+.mosaic-life__icon { font-size: 15px; text-align: center; }
+.mosaic-life__when { font-size: 12px; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.mosaic-life__text { font-size: 13.5px; color: var(--fg-body); line-height: 1.45; }
+.mosaic-life__text strong { color: var(--fg); font-weight: 650; }
+.mosaic-life__src { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 6px; background: var(--card-base); border: 1px solid var(--border); }
+
+/* map */
+.mosaic-map { height: 250px; border-radius: 13px; overflow: hidden; border: 1px solid var(--border); z-index: 0; }
+.mosaic-map .leaflet-container { background: #eef1f6; font-family: var(--font-sans); }
+.mosaic-maptip { font-size: 11px !important; font-weight: 600; border-radius: 7px !important; border: 1px solid var(--border) !important; box-shadow: var(--shadow-soft) !important; }
+[data-theme="dark"] .mosaic-map .leaflet-tile-pane { filter: invert(1) hue-rotate(185deg) brightness(0.92) contrast(0.92); }
+
+/* family tree */
+.mosaic-tree { display: flex; flex-direction: column; align-items: center; }
+.mosaic-tree__root { font-weight: 700; color: #fff; font-size: 13.5px; padding: 7px 16px; border-radius: 999px; background: linear-gradient(180deg, var(--accent-pink), var(--accent)); box-shadow: var(--shadow-soft); }
+.mosaic-tree__branches { margin-top: 14px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; width: 100%; position: relative; }
+.mosaic-tree__branches::before { content: ""; position: absolute; top: -8px; left: 50%; width: 1px; height: 8px; background: var(--border); }
+.mosaic-tree__node { border: 1px solid var(--border); border-radius: 11px; padding: 10px 12px; background: var(--card-base); }
+.mosaic-tree__name { font-weight: 650; color: var(--fg); font-size: 13.5px; }
+.mosaic-tree__tie { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 1px; }
+.mosaic-tree__via { font-size: 11.5px; color: var(--fg-subtle); margin-top: 3px; line-height: 1.4; }
+
+/* contacts */
+.mosaic-contacts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+.mosaic-contact { display: flex; align-items: center; gap: 9px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--card-base); }
+.mosaic-contact__icon { font-size: 14px; }
+.mosaic-contact__label { font-size: 11.5px; color: var(--fg-subtle); min-width: 52px; }
+.mosaic-contact__value { font-size: 13px; font-weight: 600; color: var(--fg); font-family: var(--font-mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* politics */
+.mosaic-politics { border: 1px solid var(--border); border-radius: 12px; padding: 14px; background: var(--card-base); }
+.mosaic-politics__label { font-weight: 650; color: var(--fg); font-size: 14px; }
+.mosaic-gauge { margin: 12px 0 10px; }
+.mosaic-gauge__bar { position: relative; height: 8px; border-radius: 999px; background: linear-gradient(90deg, #e0556b, #e8d7a0 50%, #4f86d6); }
+.mosaic-gauge__dot { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: #fff; border: 3px solid var(--accent); transform: translate(-50%, -50%); box-shadow: var(--shadow-soft); }
+.mosaic-gauge__ends { display: flex; justify-content: space-between; font-size: 11px; color: var(--fg-subtle); }
+.mosaic-politics__signals { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 5px; font-size: 13px; color: var(--fg-body); }
+.mosaic-politics__conf { margin-top: 10px; font-size: 11.5px; color: var(--fg-subtle); font-style: italic; }
+
+/* portraits */
+.mosaic-faces { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mosaic-face { margin: 0; }
+.mosaic-face__img { aspect-ratio: 5 / 6; border-radius: 11px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-soft); position: relative; }
+.mosaic-face__img::after { content: "AI"; position: absolute; top: 6px; right: 6px; font-size: 9px; font-weight: 800; letter-spacing: 0.06em; color: #fff; background: rgba(20,10,30,0.5); padding: 2px 5px; border-radius: 5px; backdrop-filter: blur(2px); }
+.mosaic-face figcaption { margin-top: 5px; font-size: 11.5px; color: var(--fg-subtle); text-align: center; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 560px) {
+  .mosaic-life li { grid-template-columns: 20px 52px 1fr; }
+  .mosaic-life__src { display: none; }
+  .mosaic-tree__branches, .mosaic-contacts { grid-template-columns: 1fr; }
+  .mosaic-faces { grid-template-columns: repeat(3, 1fr); }
+}

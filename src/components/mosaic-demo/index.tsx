@@ -14,6 +14,7 @@ import {
   type Subject,
 } from "./data";
 import { GlmMark, PalantirMark, SourceLogo } from "./logos";
+import { Report } from "./report";
 
 type Phase = "search" | "profile" | "run";
 
@@ -381,9 +382,12 @@ function RunSession({ subject, onReset }: { subject: Subject; onReset: () => voi
         {shown >= compositeStage && <Composite reduce={reduce} />}
 
         {shown >= closingStage && (
-          <GlmMsg tone="cold">
-            <Stream text="Done. Home, income, children, device, live location, and the identity behind the VPN — from one email. None of this required hacking. Every row was already public, somewhere." />
-          </GlmMsg>
+          <>
+            <GlmMsg tone="cold">
+              <Stream text="Done — from one email. Here's the whole person. None of this required hacking; every row was already public, somewhere." />
+            </GlmMsg>
+            <Report />
+          </>
         )}
       </div>
 

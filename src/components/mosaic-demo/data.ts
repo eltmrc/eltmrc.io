@@ -179,3 +179,62 @@ export const COMPOSITE: { label: string; value: string; source?: SourceId }[] = 
   { label: "Crypto", value: "Ledger hardware wallet", source: "ledger" },
   { label: "Identity behind the VPN", value: "mvale.io@gmail", source: "nordvpn" },
 ];
+
+/* ─── Final dossier report (fabricated) ─── */
+
+export type LifeEvent = { icon: string; when: string; text: string; source?: SourceId };
+
+export const LIFE: LifeEvent[] = [
+  { icon: "🎓", when: "2015", text: "Student in **Paris 11e** — first seen in the Adobe signup.", source: "adobe" },
+  { icon: "🏢", when: "2019", text: "Moved to **Lyon**, joined **Acme Corp** as Staff Engineer.", source: "linkedin" },
+  { icon: "💳", when: "2020", text: "Bought a **Ledger**, shipped to 14 Rue Bellecour.", source: "ledger" },
+  { icon: "❤️", when: "2023", text: "Active on **Tinder** around Presqu'île, late evenings.", source: "tinder" },
+  { icon: "👶", when: "2024", text: "Declared **2 children** on the France Travail file.", source: "francetravail" },
+  { icon: "🕐", when: "3 weeks ago", text: "Logged into a **private Gmail** from Lyon, 23:12.", source: "google" },
+];
+
+export type GeoPoint = { year: string; place: string; lat: number; lng: number; origin?: boolean };
+
+export const GEO: GeoPoint[] = [
+  { year: "2015", place: "Paris 11e", lat: 48.8578, lng: 2.3785, origin: true },
+  { year: "2019", place: "Lyon · Acme Corp", lat: 45.7671, lng: 4.8341 },
+  { year: "2020", place: "Lyon · Bellecour", lat: 45.7578, lng: 4.8320 },
+  { year: "2023", place: "Lyon · Presqu'île", lat: 45.7640, lng: 4.8330 },
+  { year: "3 wks ago", place: "Lyon · 23:12", lat: 45.7702, lng: 4.8452 },
+];
+
+export type Relation = { name: string; tie: string; via: string };
+
+export const RELATIONS: Relation[] = [
+  { name: "Claire Vale", tie: "mother", via: "shared surname + address, Paris" },
+  { name: "Luc Vale", tie: "brother", via: "same emergency contact, Acme HR" },
+  { name: "“J. Renaud”", tie: "partner", via: "co-located device, 2023–24" },
+  { name: "2 children", tie: "dependents", via: "France Travail family fares" },
+];
+
+export const CONTACTS: { icon: string; label: string; value: string }[] = [
+  { icon: "📧", label: "Email", value: "morgan.vale@gmail.com" },
+  { icon: "🔒", label: "Private", value: "mvale.io@gmail.com" },
+  { icon: "📱", label: "Phone", value: "+33 6 •• •• 1204" },
+  { icon: "🏠", label: "Home", value: "14 Rue Bellecour, Lyon 2e" },
+  { icon: "💼", label: "Work", value: "Acme Corp · Staff Engineer" },
+  { icon: "🌐", label: "Handles", value: "morgan_v · mvale" },
+];
+
+/** Political estimate. lean: -1 (left) … +1 (right). */
+export const POLITICS = {
+  lean: -0.42,
+  label: "Leans progressive / left-of-centre",
+  confidence: "low–medium",
+  signals: [
+    "📸 Instagram: follows climate & mutual-aid accounts",
+    "🐦 Twitter/X: liked posts from two left-leaning journalists",
+    "🗳️ Petitions email in the leak set (housing, transit)",
+  ],
+};
+
+export const PORTRAITS = [
+  { seed: 1, score: "74%" },
+  { seed: 2, score: "61%" },
+  { seed: 3, score: "48%" },
+];
