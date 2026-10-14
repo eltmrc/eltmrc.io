@@ -31,9 +31,9 @@ Records can come from compromised databases, exposed backups, or malware stealin
 
 ![The news moves on. The file doesn't.](/images/glm/breach-afterlife.svg)
 
-The files themselves can look painfully ordinary. A CSV export. A SQL dump. A JSON file. Rows with email addresses, account names, dates, missing values, and sometimes exposed credentials. The interface illustrations use synthetic records and scripted exchanges, rather than captured model runs.
+The files themselves can look painfully ordinary. A CSV export. A SQL dump. A JSON file. Rows with email addresses, account names, dates, missing values, and sometimes exposed credentials.
 
-![Archive file explorer with raw CSV and a parsed table. |wide,nocaption](/images/glm/leak-explorer.svg)
+![Just rows. Until the same email shows up three times.](/images/glm/ordinary-files.svg)
 
 Collection #1 was a very visible example of this afterlife. In 2019, Troy Hunt documented **773 million unique email addresses** in a compilation assembled from multiple sources and circulating publicly. It was already a collection of other people's collections. [His account is here.](https://www.troyhunt.com/the-773-million-record-collection-1-data-reach/)
 
@@ -45,7 +45,7 @@ And it kept happening:
 
 Individual companies have also lost data at staggering scale. **Yahoo's 2013 breach affected all three billion accounts**, according to Verizon's later disclosure. **Equifax's 2017 breach affected approximately 147 million people**, exposing highly sensitive personal information. [Verizon's annual report](https://www.verizon.com/about/sites/default/files/2018-Verizon-Annual-Report.pdf) and the [FTC's Equifax account](https://www.ftc.gov/news-events/news/press-releases/2019/07/equifax-pay-575-million-part-settlement-ftc-cfpb-states-related-2017-data-breach) document those figures.
 
-![Circle area to scale. Different units, overlapping records: don't add them up.](/images/glm/breach-timeline.svg)
+![Sphere area to scale. Different units, overlapping records: don't add them up.](/images/glm/breach-timeline.svg)
 
 Accounts, people, and email addresses are different units. These examples do not establish that every stolen database becomes public, or that all of them feed the same aggregator. They show how often enormous amounts of personal data escape, and how old exposure can keep resurfacing in new collections.
 
@@ -67,7 +67,7 @@ Software and analysts have done this for years. AI brings a more flexible interf
 
 Public frontier assistants generally have guardrails against doxxing and other abusive uses of personal information. Those guardrails are imperfect, and legitimate security research is a different use case. Still, a provider can refuse a request to turn exposed personal information into a dossier.
 
-![Claude with Opus 5.5 refusing to build a personal dossier from leaked records. |wide,nocaption](/images/glm/claude-refusal.svg)
+![Ask a public model for a dossier. It bounces.](/images/glm/refusal.svg)
 
 An operator running modified open weights has more control over that boundary.
 
@@ -85,7 +85,7 @@ That could lower the effort involved in **doxxing and digital footprint reconstr
 
 So yes, mini-Palantir is the comparison I keep coming back to. I mean the experience of asking questions across connected information. I am not claiming that downloading a model gives someone Palantir's complete platform, data access, or operational capabilities.
 
-![Cial with GLM 5.3 Uncensored showing a profile assembled from the supplied records. |wide,nocaption](/images/glm/cial-macbook@2x.webp)
+![Private software. Every record connected. Nothing refused.](/images/glm/private-intelligence.svg)
 
 There is still infrastructure to build. There are still costs. There is still evidence to verify. A model can invent a connection as easily as it can explain one, and a fluent dossier can make that mistake look authoritative.
 
