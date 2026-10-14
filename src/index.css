@@ -1957,3 +1957,25 @@ button.card-soft:active {
 @media (prefers-reduced-motion: reduce) {
   .mosaic-spinner, .mosaic-caret { animation: none; }
 }
+
+/* mini-Palantir — real-logo + composer refinements */
+.mosaic-src__tile { border: 1px solid var(--border); }
+.mosaic-indexed__logo { background: var(--card-base); }
+.mosaic-composer {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 14px; padding: 11px 14px;
+  border: 1px solid var(--border); border-radius: 13px;
+  background: var(--card-base); color: var(--fg-subtle);
+}
+.mosaic-composer__plus { font-size: 18px; color: var(--fg-muted); line-height: 1; }
+.mosaic-composer__ph { flex: 1; font-size: 14px; color: var(--fg-subtle); }
+.mosaic-composer__model {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--accent);
+  background: var(--accent-soft); padding: 4px 9px; border-radius: 999px;
+}
+.mosaic-composer__send {
+  width: 26px; height: 26px; border-radius: 8px; flex: none;
+  display: grid; place-items: center; color: #fff; font-weight: 800;
+  background: linear-gradient(180deg, var(--accent-pink), var(--accent));
+}

@@ -29,8 +29,8 @@ function SourceChip({ id, compact }: { id: SourceId; compact?: boolean }) {
   const s = SOURCES[id];
   return (
     <span className="mosaic-src" title={`${s.name} · ${s.kind} · ${s.date}`}>
-      <span className="mosaic-src__tile" style={{ background: `color-mix(in srgb, ${s.color} 16%, transparent)` }}>
-        <SourceLogo id={id} color={s.color} size={14} />
+      <span className="mosaic-src__tile" style={{ background: `color-mix(in srgb, ${s.color} 14%, var(--card-base))` }}>
+        <SourceLogo id={id} size={14} />
       </span>
       {!compact && (
         <>
@@ -81,7 +81,7 @@ function Typer({ text, onDone }: { text: string; onDone?: () => void }) {
 
 const PLACEHOLDERS = [
   "Morgan Vale",
-  "morgan@example.test",
+  "morgan.vale@gmail.com",
   "morgan_v",
   "+33 6 …",
 ];
@@ -133,7 +133,7 @@ export function MosaicDemo() {
         </span>
         <span className="mosaic__brand">
           <span className="mosaic__glyph" aria-hidden />
-          MOSAIC <span className="mosaic__sub">· private intelligence</span>
+          mini-Palantir <span className="mosaic__sub">· private intelligence</span>
         </span>
         <span className="mosaic__fake">fabricated demo</span>
       </div>
@@ -201,11 +201,13 @@ export function MosaicDemo() {
                   <div className="mosaic-indexed">
                     <span className="mosaic-indexed__label">8 leaks indexed</span>
                     <span className="mosaic-indexed__logos">
-                      {Object.values(SOURCES).map((s) => (
-                        <span key={s.id} className="mosaic-indexed__logo" title={`${s.name} · ${s.date}`}>
-                          <SourceLogo id={s.id} color={s.color} size={15} />
-                        </span>
-                      ))}
+                      {Object.values(SOURCES)
+                        .filter((s) => s.id !== "google")
+                        .map((s) => (
+                          <span key={s.id} className="mosaic-indexed__logo" title={`${s.name} · ${s.date}`}>
+                            <SourceLogo id={s.id} size={16} />
+                          </span>
+                        ))}
                     </span>
                   </div>
                 </div>
@@ -352,7 +354,7 @@ function RunSession({ subject, onReset }: { subject: Subject; onReset: () => voi
       <div className="mosaic-run__scroll" ref={scrollRef}>
         {/* user prompt */}
         <Bubble who="you">
-          Resolve everything on <b>morgan@example.test</b>. Don't stop at the easy sources.
+          Resolve everything on <b>morgan.vale@gmail.com</b>. Don't stop at the easy sources.
         </Bubble>
 
         {/* agent intro */}
@@ -389,6 +391,16 @@ function RunSession({ subject, onReset }: { subject: Subject; onReset: () => voi
             <Typer text="Done. Home, income, children, device, live location, and the identity behind the VPN — from one email. None of this required hacking. Every row was already public, somewhere." />
           </Bubble>
         )}
+      </div>
+
+      {/* Cial-style composer (inert) */}
+      <div className="mosaic-composer" aria-hidden>
+        <span className="mosaic-composer__plus">+</span>
+        <span className="mosaic-composer__ph">Ask mini-Palantir…</span>
+        <span className="mosaic-composer__model">
+          <span className="mosaic-run__spark" /> GLM 5.3 Abliterated
+        </span>
+        <span className="mosaic-composer__send">↑</span>
       </div>
 
       <div className="mosaic-run__foot">
@@ -491,7 +503,7 @@ function ChainCard({ reduce, active }: { reduce: boolean | null; active: boolean
       <div className="mosaic-step__head">
         <span className="mosaic-step__status is-done" aria-hidden>✓</span>
         <span className="mosaic-step__title">The VPN doesn't help</span>
-        <SourceChip id="vaultvpn" />
+        <SourceChip id="nordvpn" />
       </div>
       <p className="mosaic-step__note">
         A VPN hides the traffic, not the paper trail around it. One weak link and the chain closes.
