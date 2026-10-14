@@ -1979,3 +1979,84 @@ button.card-soft:active {
   display: grid; place-items: center; color: #fff; font-weight: 800;
   background: linear-gradient(180deg, var(--accent-pink), var(--accent));
 }
+
+/* ── mini-Palantir v2: Palantir mark, GLM pill, Cial chat, search animation ── */
+.mosaic__glyph {
+  width: 21px; height: 21px; border-radius: 6px;
+  display: grid; place-items: center;
+  background: var(--surface); color: var(--fg);
+  box-shadow: none;
+}
+
+/* run header: avatar + title + live status */
+.mosaic-run__head { align-items: center; }
+.mosaic-run__title { display: inline-flex; align-items: center; gap: 10px; }
+.mosaic-run__title .mosaic-avatar { width: 30px; height: 30px; border-radius: 9px; }
+.mosaic-run__titletext { display: flex; flex-direction: column; line-height: 1.25; }
+.mosaic-run__name { font-weight: 650; color: var(--fg); font-size: 13.5px; }
+.mosaic-run__status { font-size: 11.5px; color: var(--fg-muted); }
+.mosaic-model {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; font-weight: 600; color: var(--fg);
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 4px 9px 4px 5px; border-radius: 999px;
+}
+.mosaic-model svg { border-radius: 5px; flex: none; }
+.mosaic-model__effort { color: var(--fg-muted); font-weight: 500; }
+
+/* ── Cial-style messages ── */
+.mosaic-msg { display: flex; }
+.mosaic-msg--you { justify-content: flex-end; }
+.mosaic-msg__bubble {
+  max-width: 82%; padding: 11px 15px;
+  border-radius: 15px 15px 5px 15px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 17%, var(--card-base)), color-mix(in srgb, var(--accent) 11%, var(--card-base)));
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  color: var(--fg); font-size: 14px; line-height: 1.6;
+}
+.mosaic-msg--glm { gap: 11px; align-items: flex-start; }
+.mosaic-msg__ava { flex: none; width: 28px; height: 28px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-soft); }
+.mosaic-msg__ava svg { display: block; width: 28px; height: 28px; }
+.mosaic-msg__col { flex: 1; min-width: 0; padding-top: 1px; }
+.mosaic-msg__meta { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 650; color: var(--fg); margin-bottom: 4px; }
+.mosaic-msg__gen { font-weight: 500; color: var(--accent); font-size: 11.5px; }
+.mosaic-msg__gen::after { content: ""; display: inline-block; width: 3px; height: 3px; border-radius: 50%; margin-left: 4px; background: var(--accent); animation: mosaic-pulse 1s ease-in-out infinite; }
+@keyframes mosaic-pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+.mosaic-msg__text { font-size: 14px; line-height: 1.68; color: var(--fg-body); }
+.mosaic-msg--glm.is-cold .mosaic-msg__text {
+  color: var(--fg); padding: 11px 14px; border-radius: 12px;
+  background: color-mix(in srgb, #c0485e 9%, var(--card-base));
+  border: 1px solid color-mix(in srgb, #c0485e 22%, var(--border));
+}
+.mosaic-caret { display: inline-block; width: 7px; height: 1.02em; border-radius: 1px; background: var(--accent); margin-left: 2px; vertical-align: -2px; animation: mosaic-blink 1s steps(2) infinite; }
+
+/* ── search / loading animation inside step cards ── */
+.mosaic-scan { margin-top: 12px; }
+.mosaic-scan__bar {
+  height: 3px; border-radius: 2px; margin-bottom: 14px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background-size: 38% 100%; background-repeat: no-repeat;
+  animation: mosaic-scanmove 1.05s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes mosaic-scanmove { 0% { background-position: -40% 0; } 100% { background-position: 140% 0; } }
+.mosaic-skel { display: flex; align-items: center; justify-content: space-between; padding: 9px 11px; }
+.mosaic-skel__label, .mosaic-skel__value { height: 11px; border-radius: 5px; background: linear-gradient(90deg, var(--surface) 25%, var(--surface-elevated) 50%, var(--surface) 75%); background-size: 200% 100%; animation: mosaic-shimmer 1.3s ease-in-out infinite; }
+@keyframes mosaic-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* step title shows the live query string while running */
+.mosaic-step:not(.is-done) .mosaic-step__title { color: var(--fg-muted); font-weight: 550; font-family: var(--font-mono); font-size: 13px; }
+.mosaic-step.is-done { border-color: color-mix(in srgb, var(--accent) 14%, var(--border)); }
+
+/* ── more readable result rows ── */
+.mosaic-rows { gap: 2px; }
+.mosaic-row { padding: 9px 11px; font-size: 13.5px; align-items: center; }
+.mosaic-row__label { color: var(--fg-muted); font-size: 13px; }
+.mosaic-row__value { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); font-weight: 600; font-family: var(--font-mono); font-size: 13px; }
+.mosaic-row.is-hot { background: color-mix(in srgb, var(--accent-pink) 13%, transparent); }
+.mosaic-row.is-hot .mosaic-row__value { color: color-mix(in srgb, var(--accent) 78%, var(--fg)); }
+.mosaic-row__flag {
+  font-family: var(--font-sans); font-size: 9.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; color: #fff;
+  background: linear-gradient(180deg, var(--accent-pink), var(--accent));
+  padding: 2px 6px; border-radius: 999px;
+}

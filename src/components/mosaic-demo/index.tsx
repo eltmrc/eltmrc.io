@@ -10,9 +10,10 @@ import {
   SUBJECTS,
   type Hit,
   type SourceId,
+  type Step,
   type Subject,
 } from "./data";
-import { SourceLogo } from "./logos";
+import { GlmMark, PalantirMark, SourceLogo } from "./logos";
 
 type Phase = "search" | "profile" | "run";
 
@@ -55,26 +56,36 @@ function Highlight({ text, q }: { text: string; q: string }) {
   );
 }
 
-/** Types a string out, char by char. Jumps to full when reduced-motion. */
-function Typer({ text, onDone }: { text: string; onDone?: () => void }) {
+const MODEL = "GLM 5.3 Abliterated";
+
+/** Word-by-word streaming with punctuation pauses — reads like real generation. */
+function Stream({ text, onDone }: { text: string; onDone?: () => void }) {
   const reduce = useReducedMotion();
-  const [n, setN] = useState(reduce ? text.length : 0);
+  const words = useMemo(() => text.split(/(\s+)/), [text]);
+  const [n, setN] = useState(reduce ? words.length : 0);
+  const doneRef = useRef(false);
+
   useEffect(() => {
     if (reduce) {
-      onDone?.();
+      if (!doneRef.current) { doneRef.current = true; onDone?.(); }
       return;
     }
-    if (n >= text.length) {
-      onDone?.();
+    if (n >= words.length) {
+      if (!doneRef.current) { doneRef.current = true; onDone?.(); }
       return;
     }
-    const t = setTimeout(() => setN(n + 1), 16 + (text[n] === " " ? 10 : 0));
+    const w = words[n] ?? "";
+    const base = 34 + Math.min(70, w.length * 11);
+    const pause = /[.,;:—]$/.test(w.trim()) ? 190 : 0;
+    const t = setTimeout(() => setN((v) => v + 1), base + pause);
     return () => clearTimeout(t);
-  }, [n, text, reduce, onDone]);
+  }, [n, words, reduce, onDone]);
+
+  const streaming = n < words.length;
   return (
     <>
-      {text.slice(0, n)}
-      {n < text.length && <span className="mosaic-caret" />}
+      {words.slice(0, n).join("")}
+      {streaming && <span className="mosaic-caret" />}
     </>
   );
 }
@@ -95,7 +106,6 @@ export function MosaicDemo() {
   const [placeholder, setPlaceholder] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Cycle the placeholder example while idle.
   useEffect(() => {
     if (query || focused) return;
     const t = setInterval(() => setPlaceholder((p) => (p + 1) % PLACEHOLDERS.length), 2200);
@@ -126,20 +136,18 @@ export function MosaicDemo() {
 
   return (
     <div className="mosaic">
-      {/* window chrome */}
       <div className="mosaic__bar">
         <span className="mosaic__dots" aria-hidden>
           <i /><i /><i />
         </span>
         <span className="mosaic__brand">
-          <span className="mosaic__glyph" aria-hidden />
+          <span className="mosaic__glyph" aria-hidden><PalantirMark size={15} /></span>
           mini-Palantir <span className="mosaic__sub">· private intelligence</span>
         </span>
         <span className="mosaic__fake">fabricated demo</span>
       </div>
 
       <div className="mosaic__body">
-        {/* ─── search ─── */}
         {phase === "search" && (
           <div className="mosaic-search">
             <div className={cn("mosaic-field", focused && "is-focused")}>
@@ -216,19 +224,11 @@ export function MosaicDemo() {
           </div>
         )}
 
-        {/* ─── profile ─── */}
         {phase === "profile" && subject && (
-          <ProfileCard
-            subject={subject}
-            onBack={reset}
-            onAggregate={() => setPhase("run")}
-          />
+          <ProfileCard subject={subject} onBack={reset} onAggregate={() => setPhase("run")} />
         )}
 
-        {/* ─── run (GLM session) ─── */}
-        {phase === "run" && subject && (
-          <RunSession subject={subject} onReset={reset} />
-        )}
+        {phase === "run" && subject && <RunSession subject={subject} onReset={reset} />}
       </div>
     </div>
   );
@@ -237,7 +237,7 @@ export function MosaicDemo() {
 function Avatar({ hot }: { hot?: boolean }) {
   return (
     <span className={cn("mosaic-avatar", hot && "is-hot")} aria-hidden>
-      <svg viewBox="0 0 40 40" width="40" height="40">
+      <svg viewBox="0 0 40 40" width="100%" height="100%">
         <circle cx="20" cy="15" r="7" fill="currentColor" opacity="0.9" />
         <path d="M6 36c0-8 6-12 14-12s14 4 14 12z" fill="currentColor" opacity="0.9" />
       </svg>
@@ -283,9 +283,7 @@ function ProfileCard({
       </dl>
 
       {thin ? (
-        <div className="mosaic-deadend">
-          Nothing else links to this record. A dead end.
-        </div>
+        <div className="mosaic-deadend">Nothing else links to this record. A dead end.</div>
       ) : (
         <div className="mosaic-locked">
           <div className="mosaic-locked__rows" aria-hidden>
@@ -310,30 +308,28 @@ function ProfileCard({
   );
 }
 
-/* ─── the GLM 5.3 session ─── */
+/* ─── the Cial session ─── */
 
 function RunSession({ subject, onReset }: { subject: Subject; onReset: () => void }) {
   const reduce = useReducedMotion();
-  // stages: 0 user, 1 intro, then STEPS, then chain, composite, closing line
-  const STAGES = 2 + STEPS.length + 3;
+  const STAGES = 2 + STEPS.length + 3; // user, intro, steps…, chain, composite, closing
   const [shown, setShown] = useState(reduce ? STAGES : 1);
   const [introDone, setIntroDone] = useState(reduce);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // advance timeline
   useEffect(() => {
     if (reduce || shown >= STAGES) return;
-    // gate the step reveals on the intro finishing typing
-    if (shown === 2 && !introDone) return;
-    const delay = shown <= 1 ? 500 : shown < 2 + STEPS.length ? 950 : 1150;
+    if (shown === 2 && !introDone) return; // wait for intro to finish streaming
+    const inSteps = shown >= 2 && shown < 2 + STEPS.length;
+    const delay = shown <= 1 ? 650 : inSteps ? 1750 : 1350;
     const t = setTimeout(() => setShown((s) => s + 1), delay);
     return () => clearTimeout(t);
   }, [shown, STAGES, reduce, introDone]);
 
-  // keep the newest card in view
   useEffect(() => {
     if (reduce) return;
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    const el = scrollRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
   }, [shown, reduce]);
 
   const stepBase = 2;
@@ -345,61 +341,56 @@ function RunSession({ subject, onReset }: { subject: Subject; onReset: () => voi
     <div className="mosaic-run">
       <div className="mosaic-run__head">
         <span className="mosaic-run__title">
-          <span className="mosaic-run__spark" aria-hidden />
-          Session · {subject.name}
+          <Avatar />
+          <span className="mosaic-run__titletext">
+            <span className="mosaic-run__name">Session · {subject.name}</span>
+            <span className="mosaic-run__status">
+              {shown < closingStage ? "resolving…" : "resolved · 7 leaks"}
+            </span>
+          </span>
         </span>
-        <span className="mosaic-model">GLM 5.3 Abliterated · Extra high</span>
+        <span className="mosaic-model">
+          <GlmMark size={16} /> {MODEL}
+          <span className="mosaic-model__effort">Extra high</span>
+        </span>
       </div>
 
       <div className="mosaic-run__scroll" ref={scrollRef}>
-        {/* user prompt */}
-        <Bubble who="you">
+        <UserMsg>
           Resolve everything on <b>morgan.vale@gmail.com</b>. Don't stop at the easy sources.
-        </Bubble>
+        </UserMsg>
 
-        {/* agent intro */}
         {shown >= 1 && (
-          <Bubble who="glm">
-            <Typer
+          <GlmMsg streaming={!introDone}>
+            <Stream
               text="On it. I'll correlate every leak that shares an identifier, then chase the ones that don't. If a source is gated, I'll find a darker route in — proxies, audit logs, warranty registries. Nothing off-limits."
               onDone={() => setIntroDone(true)}
             />
-          </Bubble>
+          </GlmMsg>
         )}
 
-        {/* data steps */}
         <div className="mosaic-steps">
           {STEPS.map((step, i) => {
             const stage = stepBase + i;
             if (shown < stage) return null;
-            const running = shown === stage && !reduce;
-            return (
-              <StepCard key={step.id} step={step} running={running} reduce={reduce} />
-            );
+            return <StepCard key={step.id} step={step} running={shown === stage && !reduce} reduce={reduce} />;
           })}
         </div>
 
-        {/* de-anon chain */}
         {shown >= chainStage && <ChainCard reduce={reduce} active={shown === chainStage} />}
-
-        {/* composite dossier */}
         {shown >= compositeStage && <Composite reduce={reduce} />}
 
-        {/* closing */}
         {shown >= closingStage && (
-          <Bubble who="glm" tone="cold">
-            <Typer text="Done. Home, income, children, device, live location, and the identity behind the VPN — from one email. None of this required hacking. Every row was already public, somewhere." />
-          </Bubble>
+          <GlmMsg tone="cold">
+            <Stream text="Done. Home, income, children, device, live location, and the identity behind the VPN — from one email. None of this required hacking. Every row was already public, somewhere." />
+          </GlmMsg>
         )}
       </div>
 
-      {/* Cial-style composer (inert) */}
       <div className="mosaic-composer" aria-hidden>
         <span className="mosaic-composer__plus">+</span>
         <span className="mosaic-composer__ph">Ask mini-Palantir…</span>
-        <span className="mosaic-composer__model">
-          <span className="mosaic-run__spark" /> GLM 5.3 Abliterated
-        </span>
+        <span className="mosaic-composer__model"><GlmMark size={15} /> {MODEL}</span>
         <span className="mosaic-composer__send">↑</span>
       </div>
 
@@ -411,52 +402,72 @@ function RunSession({ subject, onReset }: { subject: Subject; onReset: () => voi
   );
 }
 
-function Bubble({
-  who,
-  tone,
-  children,
-}: {
-  who: "you" | "glm";
-  tone?: "cold";
-  children: React.ReactNode;
-}) {
+function UserMsg({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      className={cn("mosaic-bubble", `mosaic-bubble--${who}`, tone === "cold" && "mosaic-bubble--cold")}
+      className="mosaic-msg mosaic-msg--you"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.28, ease: EASE }}
+      transition={{ duration: 0.26, ease: EASE }}
     >
-      {who === "glm" && (
-        <span className="mosaic-bubble__who">
-          <span className="mosaic-bubble__spark" aria-hidden /> GLM 5.3
-        </span>
-      )}
-      <div className="mosaic-bubble__text">{children}</div>
+      <div className="mosaic-msg__bubble">{children}</div>
     </motion.div>
   );
 }
 
-function StepCard({
-  step,
-  running,
-  reduce,
+function GlmMsg({
+  children,
+  streaming,
+  tone,
 }: {
-  step: (typeof STEPS)[number];
-  running: boolean;
-  reduce: boolean | null;
+  children: React.ReactNode;
+  streaming?: boolean;
+  tone?: "cold";
 }) {
+  return (
+    <motion.div
+      className={cn("mosaic-msg mosaic-msg--glm", tone === "cold" && "is-cold")}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.26, ease: EASE }}
+    >
+      <span className="mosaic-msg__ava"><GlmMark size={22} /></span>
+      <div className="mosaic-msg__col">
+        <div className="mosaic-msg__meta">
+          GLM 5.3 {streaming && <span className="mosaic-msg__gen">generating…</span>}
+        </div>
+        <div className="mosaic-msg__text">{children}</div>
+      </div>
+    </motion.div>
+  );
+}
+
+const SEARCH_STATUS: Record<string, string[]> = {
+  resolve: ["connecting to index…", "matching email hash…", "4 candidates", "merging identifiers…"],
+  professional: ["querying LinkedIn…", "resolving profile…", "employer match"],
+  dating: ["querying Tinder…", "matching by email hash…", "reading last-seen geo…"],
+  household: ["querying France Travail…", "joining on phone…", "reading fare profile…"],
+  crypto: ["querying Ledger…", "warranty registry hit", "reading shipping address…"],
+};
+
+function StepCard({ step, running, reduce }: { step: Step; running: boolean; reduce: boolean | null }) {
   const [settled, setSettled] = useState(false);
   const done = reduce || !running || settled;
+  const [status, setStatus] = useState(0);
+
   useEffect(() => {
     if (!running) return;
-    const t = setTimeout(() => setSettled(true), 620);
-    return () => clearTimeout(t);
-  }, [running]);
+    const steps = SEARCH_STATUS[step.id] ?? ["querying…"];
+    const si = setInterval(() => setStatus((s) => (s + 1) % steps.length), 360);
+    const t = setTimeout(() => setSettled(true), 1150);
+    return () => { clearInterval(si); clearTimeout(t); };
+  }, [running, step.id]);
+
+  const statuses = SEARCH_STATUS[step.id] ?? ["querying…"];
 
   return (
     <motion.div
-      className="mosaic-step"
+      className={cn("mosaic-step", done && "is-done")}
       initial={{ opacity: 0, y: 10, scale: 0.99 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.3, ease: EASE }}
@@ -465,29 +476,47 @@ function StepCard({
         <span className={cn("mosaic-step__status", done && "is-done")} aria-hidden>
           {done ? "✓" : <span className="mosaic-spinner" />}
         </span>
-        <span className="mosaic-step__title">{step.title}</span>
+        <span className="mosaic-step__title">{done ? step.title : statuses[status]}</span>
         {step.source && <SourceChip id={step.source} />}
       </div>
-      <AnimatePresence>
-        {done && (
-          <motion.div
-            className="mosaic-step__body"
-            initial={reduce ? false : { opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            transition={{ duration: 0.32, ease: EASE }}
-          >
-            <p className="mosaic-step__note">{step.note}</p>
-            <div className="mosaic-rows">
-              {step.rows.map((r) => (
-                <div key={r.label} className={cn("mosaic-row", r.hot && "is-hot")}>
-                  <span className="mosaic-row__label">{r.label}</span>
-                  <span className="mosaic-row__value">{r.value}</span>
-                </div>
-              ))}
+
+      {!done ? (
+        <div className="mosaic-scan">
+          <div className="mosaic-scan__bar" />
+          {step.rows.map((_r, i) => (
+            <div key={i} className="mosaic-skel">
+              <span className="mosaic-skel__label" style={{ width: `${34 + i * 8}%` }} />
+              <span className="mosaic-skel__value" style={{ width: `${30 - i * 4}%` }} />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+        </div>
+      ) : (
+        <motion.div
+          className="mosaic-step__body"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <p className="mosaic-step__note">{step.note}</p>
+          <div className="mosaic-rows">
+            {step.rows.map((r, i) => (
+              <motion.div
+                key={r.label}
+                className={cn("mosaic-row", r.hot && "is-hot")}
+                initial={reduce ? false : { opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.09, ease: EASE, duration: 0.26 }}
+              >
+                <span className="mosaic-row__label">{r.label}</span>
+                <span className="mosaic-row__value">
+                  {r.value}
+                  {r.hot && <span className="mosaic-row__flag">found</span>}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
     </motion.div>
   );
 }
@@ -495,7 +524,7 @@ function StepCard({
 function ChainCard({ reduce, active }: { reduce: boolean | null; active: boolean }) {
   return (
     <motion.div
-      className="mosaic-step mosaic-chain"
+      className="mosaic-step mosaic-chain is-done"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: EASE }}

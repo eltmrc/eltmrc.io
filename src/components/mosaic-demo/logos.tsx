@@ -93,3 +93,26 @@ export function SourceLogo({
   const Custom = id === "ledger" ? Ledger : id === "collection1" ? Collection : FranceTravail;
   return <span className="mosaic-logo" style={{ width: size, height: size }}><Custom size={size} /></span>;
 }
+
+/** Palantir — real mark (simple-icons): orb + eyelid chevron. */
+export function PalantirMark({ size = 20 }: { size?: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden>
+      <path d="M20.147 18L12 21.178 3.853 18 2.5 20.343 12 24l9.5-3.657L20.147 18zM12 0a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19zm0 16.078a6.568 6.568 0 1 1 0-13.136 6.568 6.568 0 0 1 0 13.136z" />
+    </svg>
+  );
+}
+
+/** GLM / Z.ai — the "Z" mark on a dark tile. */
+export function GlmMark({ size = 18 }: { size?: number }) {
+  return (
+    <svg viewBox="0 0 30 30" width={size} height={size} aria-hidden>
+      <rect width="30" height="30" rx="7" fill="#0f0e1a" />
+      <g fill="#fff">
+        <path d="M15.47,7.1l-1.3,1.85c-0.2,0.29-0.54,0.47-0.9,0.47h-7.1V7.09C6.16,7.1,15.47,7.1,15.47,7.1z" />
+        <path d="M14.53,22.91l1.31-1.86c0.2-0.29,0.54-0.47,0.9-0.47h7.09v2.33H14.53z" />
+        <polygon points="24.3,7.1 13.14,22.91 5.7,22.91 16.86,7.1" />
+      </g>
+    </svg>
+  );
+}
