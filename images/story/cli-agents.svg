@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" fill="none" role="img" aria-label="Falling into agent CLIs — Claude Code">
+  <rect width="720" height="300" rx="16" fill="#faf8fc"/>
+  <rect x="48" y="28" width="624" height="244" rx="14" fill="#141018" stroke="rgba(80,50,100,0.12)" stroke-width="1.2"/>
+  <path d="M62 28h596a14 14 0 0 1 14 14v18H48V42a14 14 0 0 1 14-14z" fill="#1c1822"/>
+  <circle cx="70" cy="48" r="5" fill="#f2a4b4"/>
+  <circle cx="88" cy="48" r="5" fill="#e8c27a"/>
+  <circle cx="106" cy="48" r="5" fill="#8fd4a8"/>
+  <text x="130" y="52" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#9a93a8">zsh — agent CLIs</text>
+
+  <text x="72" y="96" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="#8fd4a8">$</text>
+  <text x="92" y="96" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="#f4f0f8">claude</text>
+
+  <text x="72" y="124" font-family="ui-monospace,Menlo,monospace" font-size="12.5" fill="#9a93a8">╭─ Claude Code ──────────────────────────────────────╮</text>
+  <text x="72" y="148" font-family="ui-monospace,Menlo,monospace" font-size="12.5" fill="#e8d5f5">│  Reading ClinicPilot…     14 files</text>
+  <text x="72" y="170" font-family="ui-monospace,Menlo,monospace" font-size="12.5" fill="#e8d5f5">│  Running typecheck…       ok</text>
+  <text x="72" y="192" font-family="ui-monospace,Menlo,monospace" font-size="12.5" fill="#e8d5f5">│  Applying patch…          src/api/appointments.ts</text>
+  <text x="72" y="214" font-family="ui-monospace,Menlo,monospace" font-size="12.5" fill="#9a93a8">╰─────────────────────────────────────────────────────╯</text>
+
+  <text x="72" y="244" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="#8fd4a8">›</text>
+  <text x="92" y="244" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="#f4f0f8">ship the booking fix</text>
+  <rect x="258" y="232" width="7" height="15" fill="#e879b8">
+    <animate attributeName="opacity" values="1;0;1" dur="1.1s" repeatCount="indefinite"/>
+  </rect>
+</svg>
