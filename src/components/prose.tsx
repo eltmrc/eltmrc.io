@@ -6,19 +6,24 @@ import {
   parseEvolutionBlock,
 } from "@/components/evolution-strip";
 import { markdownComponents } from "@/components/mdx-components";
+import { MosaicDemo } from "@/components/mosaic-demo";
 import { remarkBrands } from "@/lib/remark-brands";
 
 const remarkPlugins = [remarkGfm, remarkBrands];
 
-/** :::evolution … ::: blocks become an EvolutionStrip between markdown chunks. */
-const EVOLUTION_BLOCK =
-  /(?:^|\n):::evolution(?:[ \t]+([^\n]*))?\n([\s\S]*?)\n:::(?=\n|$)/g;
+/**
+ * Fenced blocks rendered as React between markdown chunks:
+ *   :::evolution … :::   → archive strip
+ *   :::mosaic            → the interactive MOSAIC demonstration (self-closing line)
+ */
+const BLOCK =
+  /(?:^|\n):::evolution(?:[ \t]+([^\n]*))?\n([\s\S]*?)\n:::(?=\n|$)|(?:^|\n):::mosaic(?=\n|$)/g;
 
-function splitWithEvolution(source: string): ReactNode[] {
+function splitBlocks(source: string): ReactNode[] {
   const nodes: ReactNode[] = [];
   let last = 0;
   let match: RegExpExecArray | null;
-  const re = new RegExp(EVOLUTION_BLOCK.source, "g");
+  const re = new RegExp(BLOCK.source, "g");
   let key = 0;
 
   while ((match = re.exec(source)) !== null) {
@@ -35,19 +40,23 @@ function splitWithEvolution(source: string): ReactNode[] {
       );
     }
 
-    const headerCaption = match[1]?.trim();
-    const body = match[2] ?? "";
-    const parsed = parseEvolutionBlock(
-      headerCaption ? `${headerCaption}\n${body}` : body,
-    );
-    if (parsed) {
-      nodes.push(
-        <EvolutionStrip
-          key={`evo-${key++}`}
-          frames={parsed.frames}
-          caption={parsed.caption}
-        />,
+    if (match[0].includes(":::mosaic")) {
+      nodes.push(<MosaicDemo key={`mosaic-${key++}`} />);
+    } else {
+      const headerCaption = match[1]?.trim();
+      const body = match[2] ?? "";
+      const parsed = parseEvolutionBlock(
+        headerCaption ? `${headerCaption}\n${body}` : body,
       );
+      if (parsed) {
+        nodes.push(
+          <EvolutionStrip
+            key={`evo-${key++}`}
+            frames={parsed.frames}
+            caption={parsed.caption}
+          />,
+        );
+      }
     }
 
     last = match.index + match[0].length;
@@ -70,9 +79,9 @@ function splitWithEvolution(source: string): ReactNode[] {
 }
 
 export function Prose({ source }: { source: string }) {
-  const hasEvolution = source.includes(":::evolution");
-  const children = hasEvolution ? (
-    splitWithEvolution(source)
+  const hasBlocks = source.includes(":::evolution") || source.includes(":::mosaic");
+  const children = hasBlocks ? (
+    splitBlocks(source)
   ) : (
     <ReactMarkdown remarkPlugins={remarkPlugins} components={markdownComponents}>
       {source}
@@ -81,7 +90,7 @@ export function Prose({ source }: { source: string }) {
 
   return (
     <article className="prose-shell">
-      {hasEvolution ? <Fragment>{children}</Fragment> : children}
+      {hasBlocks ? <Fragment>{children}</Fragment> : children}
     </article>
   );
 }
