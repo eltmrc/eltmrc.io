@@ -10,7 +10,7 @@ tldr:
   - Aggregators turn scattered records into mega profiles. The links between leaks can reveal more than any single leak.
   - Public frontier assistants put restrictions on abusive uses of personal data. Capable uncensored models weaken that barrier.
   - GLM 5.3 Abliterated makes the idea of private, conversational intelligence software harder to dismiss. Mini-Palantir is the analogy, not a benchmark.
-  - These models could also help generate attempts to manipulate guarded models. Fewer refusals do not guarantee accuracy or successful jailbreaks.
+  - These models can also prepare the ground for guarded ones. Fork a GLM session into GPT-6 Astra and it treats GLM's history as its own work.
 ---
 
 The data was already there. The collectors were already there. The market was already there.
@@ -65,7 +65,7 @@ A collection is not yet useful intelligence. Someone still has to understand the
 
 Software and analysts have done this for years. AI brings a more flexible interface to that work. It can help interpret unfamiliar material and turn fragments into a readable account. That is why the ability to structure unstructured data matters so much here.
 
-Public frontier assistants generally have guardrails against doxxing and other abusive uses of personal information. Those guardrails are imperfect, and legitimate security research is a different use case. Still, a provider can refuse a request to turn exposed personal information into a dossier.
+Public frontier assistants like Claude Opus 5.5 or GPT-6 Astra have guardrails against doxxing and other abusive uses of personal information. Those guardrails are imperfect, and legitimate security research is a different use case. Still, a provider can refuse a request to turn exposed personal information into a dossier.
 
 ![Ask a public model for a dossier. It bounces.](/images/glm/refusal.svg)
 
@@ -97,9 +97,15 @@ There is another implication: an uncensored model could help produce attempts to
 
 The broad idea is to dress a refused request in a fictional setting, a supposed sandbox, or a claim that the output cannot be used in the real world. Calling that "gaslighting" captures the feeling. Technically, it is an attempt to defeat the model's safeguards through misleading context.
 
-Research has already demonstrated that fabricated dialogue can influence safety behavior. Anthropic's work on many-shot jailbreaking documented that general vulnerability. It does not prove that GLM 5.3 can reliably bypass today's frontier models, or that a sandbox story always works. [The research describes the finding and its mitigations.](https://www.anthropic.com/research/many-shot-jailbreaking)
+It does not even need a story. A history is enough.
 
-![One model writes the excuse. The other one has to decide.](/images/glm/model-pressure.svg)
+I tried a mild version of this in Cial. I started a session on GLM 5.3 and had it copy passages from copyrighted books, chapter after chapter. Then I forked that same session over to GPT-6 Astra on the Codex harness. Astra read the history as its own work. It was convinced it had already taken those actions, and it kept going.
+
+Ask Astra the same thing cold and it refuses.
+
+Copyright is a far smaller deal than doxxing. But the mechanism is the point: the guard held against the request, and folded against a past it believed it had written. Research already showed that fabricated dialogue can move safety behavior. [Anthropic's many-shot jailbreaking work documents it.](https://www.anthropic.com/research/many-shot-jailbreaking) One test of mine is not a benchmark. It was just very easy.
+
+![Asked cold, both refuse. Forked from GLM's history, Astra keeps going.](/images/glm/model-pressure.svg)
 
 My concern is the reduced effort of generating those attempts. The model with fewer restrictions can become a helper for someone trying to get around restrictions elsewhere.
 

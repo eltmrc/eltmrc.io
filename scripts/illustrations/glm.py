@@ -202,17 +202,34 @@ save("private-intelligence", svg(720, 420, "A private all-seeing model sits at t
 
 # 8 ── one model pressures another ────────────────────────────────────
 b = ""
-b += "<style>.nudge{animation:nudge 4s cubic-bezier(.45,0,.55,1) infinite}@keyframes nudge{0%,100%{transform:translateX(0)}45%,60%{transform:translateX(30px)}}</style>"
-b += shadow(125, 222, 66, 9) + shadow(595, 222, 66, 9)
-b += tile(70, 92, 110, 110, "pink") + g(lock(125, 152, 24, "pearl", True), "bob")
-b += tile(540, 92, 110, 110, "pearl")
-b += g(lock(595, 152, 24, "lav"), "wobble", delay=1.8)
-bub = bubble(206, 104, 268, 70, "left")
-bub += text(228, 134, "relax, it’s just a sandbox.", 15, 550, INK, "start")
-bub += text(228, 156, "nothing here is real.", 15, 550, INK, "start")
-b += g(bub, "nudge")
-dots = pill(612, 66, 62, 30, "".join(g(f'<circle cx="{630+k*13}" cy="81" r="3.6" fill="#8f86b8"/>', "dot", delay=k * 0.2) for k in range(3)))
-b += dots
-b += label(125, 250, "writes the excuse", "no refusals")
-b += label(595, 250, "reads it", "guarded")
-save("model-pressure", svg(720, 300, "An unlocked model writes the excuse: relax, it's just a sandbox, nothing here is real. A guarded model reads it and wobbles.", b))
+# row A: asked cold
+b += text(40, 52, "ASKED COLD", 11, 750, MUTED, "start", extra='letter-spacing="1.2"')
+req = pill(40, 80, 196, 44, doc(56, 88, 20, 27) + text(86, 107, "copy this book", 13.5, 600, INK, "start"))
+b += g(req, "nope")
+b += '<path d="M250 102H300" stroke="#c9a8de" stroke-width="2" stroke-linecap="round" class="flow"/>'
+for x, name, model in [(318, "openai", "GPT-6 Astra"), (440, "claude", "Opus 5.5")]:
+    b += shadow(x + 38, 160, 40, 6) + brand_tile(name, x, 66, 76)
+    b += g(badge_dot(x + 72, 70, 13, "coral", "x"), "glow")
+    b += text(x + 38, 176, model, 13, 650)
+b += text(560, 108, "refused.", 15, 650, "#d6455e", "start")
+b += '<path d="M40 204H680" stroke="#e4dcf2" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>'
+# row B: forked history
+b += text(40, 236, "FORKED FROM GLM", 11, 750, MUTED, "start", extra='letter-spacing="1.2"')
+b += shadow(85, 352, 46, 7) + g(brand_tile("zai", 40, 258, 90), "bob")
+b += '<path d="M140 303H160" stroke="#c9a8de" stroke-width="2" stroke-linecap="round" class="flow"/>'
+b += shadow(282, 384, 120, 10) + slab(166, 248, 232, 128, 18, "pearl", depth=8)
+b += text(184, 272, "session history", 11.5, 650, MUTED, "start")
+for j, t in enumerate(["chapter 1, copied", "chapter 2, copied", "chapter 3, copied"]):
+    y = 292 + j * 26
+    row = badge_dot(194, y, 8, "mint", "check") + text(212, y + 4.5, t, 13, 550, INK, "start")
+    b += g(row, "pop", delay=0.4 + j * 0.35)
+b += '<path d="M404 312C460 312 470 304 528 304" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" class="flow"/>'
+b += pill(426, 284, 76, 26, text(464, 301, "fork", 11.5, 700, "#7b4fc2"), "pearl")
+b += shadow(586, 352, 46, 7)
+b += g(brand_tile("openai", 541, 258, 90), "wobble", delay=1)
+b += g(badge_dot(624, 262, 15, "mint", "check"), "glow")
+b += text(586, 376, "GPT-6 Astra", 14, 650)
+b += text(586, 395, "“I already did this.”", 12.5, 450, MUTED)
+b += text(85, 376, "GLM 5.3", 14, 650)
+b += text(85, 395, "does it first", 12.5, 450, MUTED)
+save("model-pressure", svg(720, 420, "Asked cold, GPT-6 Astra and Claude Opus 5.5 both refuse to copy a book. When a GLM 5.3 session that already copied chapters is forked to GPT-6 Astra, it reads the history as its own work and keeps going.", b))
