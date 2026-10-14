@@ -13,7 +13,7 @@ import {
   type Step,
   type Subject,
 } from "./data";
-import { GlmMark, PalantirMark, SourceLogo } from "./logos";
+import { GlmMark, PalantirGlossy, PalantirMark, SourceLogo } from "./logos";
 import { Report } from "./report";
 
 type Phase = "search" | "profile" | "run";
@@ -145,12 +145,16 @@ export function MosaicDemo() {
           <span className="mosaic__glyph" aria-hidden><PalantirMark size={15} /></span>
           mini-Palantir <span className="mosaic__sub">· private intelligence</span>
         </span>
-        <span className="mosaic__fake">fabricated demo</span>
       </div>
 
       <div className="mosaic__body">
         {phase === "search" && (
           <div className="mosaic-search">
+            <div className="mosaic-hero">
+              <PalantirGlossy size={76} />
+              <div className="mosaic-hero__word">mini-Palantir</div>
+              <div className="mosaic-hero__sub">Search anyone. Every leak, one person.</div>
+            </div>
             <div className={cn("mosaic-field", focused && "is-focused")}>
               <span className="mosaic-field__icon" aria-hidden>⌕</span>
               <input

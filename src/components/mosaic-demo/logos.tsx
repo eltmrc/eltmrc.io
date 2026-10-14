@@ -116,3 +116,40 @@ export function GlmMark({ size = 18 }: { size?: number }) {
     </svg>
   );
 }
+
+const PALANTIR_D =
+  "M20.147 18L12 21.178 3.853 18 2.5 20.343 12 24l9.5-3.657L20.147 18zM12 0a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19zm0 16.078a6.568 6.568 0 1 1 0-13.136 6.568 6.568 0 0 1 0 13.136z";
+
+/** Palantir mark rendered in Cial's glossy style: candy gradient, rim light, specular. */
+export function PalantirGlossy({ size = 72 }: { size?: number }) {
+  return (
+    <svg viewBox="-3 -3 30 30" width={size} height={size} aria-hidden>
+      <defs>
+        <radialGradient id="pg-body" cx="34%" cy="24%" r="85%">
+          <stop offset="0" stopColor="#ffe3f6" />
+          <stop offset=".45" stopColor="#ff8fd0" />
+          <stop offset="1" stopColor="#8b46e8" />
+        </radialGradient>
+        <radialGradient id="pg-aura" cx="50%" cy="45%" r="50%">
+          <stop offset=".45" stopColor="#ff5fa8" stopOpacity=".32" />
+          <stop offset="1" stopColor="#ff5fa8" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="pg-shine" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity=".85" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <clipPath id="pg-clip">
+          <path d={PALANTIR_D} />
+        </clipPath>
+      </defs>
+      <circle cx="12" cy="11" r="15" fill="url(#pg-aura)" />
+      <path d={PALANTIR_D} fill="#5b2a9e" opacity=".28" transform="translate(0 .7)" />
+      <path d={PALANTIR_D} fill="url(#pg-body)" />
+      <g clipPath="url(#pg-clip)">
+        <ellipse cx="9" cy="3.6" rx="7" ry="3.4" fill="url(#pg-shine)" />
+        <path d="M3.6 6.5A9 9 0 0 1 9 1.3" stroke="#fff" strokeOpacity=".8" strokeWidth=".9" strokeLinecap="round" fill="none" />
+      </g>
+      <ellipse cx="7.4" cy="4.6" rx="1.3" ry=".8" fill="#fff" opacity=".85" transform="rotate(-35 7.4 4.6)" />
+    </svg>
+  );
+}

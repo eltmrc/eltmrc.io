@@ -66,9 +66,21 @@ function H2(props: ComponentPropsWithoutRef<"h2">) {
 
 function A(props: ComponentPropsWithoutRef<"a">) {
   const external = props.href?.startsWith("http");
+  const hash = props.href?.startsWith("#");
   return (
     <a
       {...props}
+      onClick={
+        hash
+          ? (e) => {
+              const el = document.getElementById(props.href!.slice(1));
+              if (!el) return;
+              e.preventDefault();
+              el.scrollIntoView({ behavior: "smooth", block: "start" });
+              history.replaceState(null, "", props.href);
+            }
+          : props.onClick
+      }
       className="link"
       {...(external
         ? { target: "_blank", rel: "noopener noreferrer" }
