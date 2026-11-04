@@ -1,0 +1,578 @@
+/* Lyriks interactive demo — all classes namespaced with `lyriks-`. */
+
+.lyriks {
+  --lyriks-accent: #a855c8;
+  --lyriks-pink: #e879b8;
+  --lyriks-mint: #8fd4a8;
+  --lyriks-panel: #141018;
+  --lyriks-bg: #faf8fc;
+  --lyriks-ink: #2a2233;
+  --lyriks-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --lyriks-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+
+  font-family: var(--lyriks-sans);
+  color: var(--lyriks-ink);
+  margin: 2rem 0;
+}
+
+.lyriks * {
+  box-sizing: border-box;
+}
+
+.lyriks__frame {
+  position: relative;
+  background: var(--lyriks-bg);
+  border: 1px solid color-mix(in srgb, var(--lyriks-accent) 24%, #fff);
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow:
+    0 1px 0 #fff inset,
+    0 24px 60px -30px color-mix(in srgb, var(--lyriks-accent) 60%, transparent);
+  overflow: hidden;
+}
+
+/* ------------------------------ topbar ---------------------------- */
+
+.lyriks__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.lyriks__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lyriks__brand-mark {
+  color: var(--lyriks-accent);
+  font-weight: 700;
+  letter-spacing: -2px;
+}
+
+.lyriks__brand-name {
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, var(--lyriks-accent), var(--lyriks-pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lyriks__brand-track {
+  font-family: var(--lyriks-mono);
+  font-size: 0.72rem;
+  color: color-mix(in srgb, var(--lyriks-ink) 55%, transparent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lyriks-seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  background: color-mix(in srgb, var(--lyriks-accent) 10%, #fff);
+  border: 1px solid color-mix(in srgb, var(--lyriks-accent) 18%, #fff);
+  border-radius: 999px;
+}
+
+.lyriks-seg__btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 6px 16px;
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--lyriks-ink) 65%, transparent);
+  background: transparent;
+  transition:
+    background 0.22s ease,
+    color 0.22s ease;
+}
+
+.lyriks-seg__btn.is-on {
+  background: linear-gradient(135deg, var(--lyriks-accent), var(--lyriks-pink));
+  color: #fff;
+  box-shadow: 0 6px 16px -8px var(--lyriks-accent);
+}
+
+/* ------------------------------ stage ----------------------------- */
+
+.lyriks-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border-radius: 14px;
+  background:
+    radial-gradient(
+      120% 90% at 20% 0%,
+      color-mix(in srgb, var(--lyriks-accent) 30%, var(--lyriks-panel)),
+      transparent 60%
+    ),
+    radial-gradient(
+      120% 100% at 100% 100%,
+      color-mix(in srgb, var(--lyriks-pink) 24%, var(--lyriks-panel)),
+      transparent 55%
+    ),
+    var(--lyriks-panel);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.lyriks-stage__grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in srgb, #fff 6%, transparent) 0.5px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.lyriks-syl {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.lyriks-syl__word {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: center;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.4rem, 4.4vw, 3rem);
+  line-height: 1;
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+.lyriks-syl__ring,
+.lyriks-syl__burst {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(44px, 9vw, 74px);
+  height: clamp(44px, 9vw, 74px);
+  margin: 0;
+  border-radius: 999px;
+  border: 2px solid;
+  transform-origin: center;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.lyriks-syl__burst {
+  border-width: 3px;
+}
+
+/* ------------------------------ beats ----------------------------- */
+
+.lyriks-beats {
+  margin-top: 12px;
+}
+
+.lyriks-beats__track {
+  position: relative;
+  height: 40px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--lyriks-accent) 8%, #fff);
+  border: 1px solid color-mix(in srgb, var(--lyriks-accent) 16%, #fff);
+}
+
+.lyriks-beats__section {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 1px dashed color-mix(in srgb, var(--lyriks-mint) 70%, transparent);
+}
+
+.lyriks-beats__section-label {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-family: var(--lyriks-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--lyriks-ink) 60%, transparent);
+  text-transform: uppercase;
+}
+
+.lyriks-beats__mark {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.7rem;
+  line-height: 1;
+  transition:
+    transform 0.08s ease,
+    text-shadow 0.08s ease;
+}
+
+.lyriks-beats__mark--kick {
+  color: var(--lyriks-accent);
+}
+
+.lyriks-beats__mark--snare {
+  color: var(--lyriks-pink);
+}
+
+.lyriks-beats__mark.is-hit {
+  transform: translate(-50%, -50%) scale(1.9);
+  text-shadow: 0 0 10px currentColor;
+}
+
+.lyriks-beats__head {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 10px var(--lyriks-pink);
+  border-radius: 2px;
+}
+
+.lyriks-beats__legend {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 7px;
+  font-family: var(--lyriks-mono);
+  font-size: 0.68rem;
+  color: color-mix(in srgb, var(--lyriks-ink) 60%, transparent);
+}
+
+.lyriks-dot--kick {
+  color: var(--lyriks-accent);
+}
+
+.lyriks-dot--snare {
+  color: var(--lyriks-pink);
+}
+
+.lyriks-beats__legend-note {
+  margin-left: auto;
+  letter-spacing: 0.02em;
+}
+
+/* ----------------------------- controls --------------------------- */
+
+.lyriks__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.lyriks__play,
+.lyriks__restart {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  flex: none;
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.lyriks__play {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--lyriks-accent), var(--lyriks-pink));
+  box-shadow: 0 10px 24px -10px var(--lyriks-accent);
+  padding-left: 2px;
+}
+
+.lyriks__play:hover:not(:disabled),
+.lyriks__restart:hover {
+  transform: translateY(-1px) scale(1.04);
+}
+
+.lyriks__play:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.lyriks__restart {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  color: var(--lyriks-accent);
+  background: color-mix(in srgb, var(--lyriks-accent) 12%, #fff);
+}
+
+.lyriks__progress {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lyriks-accent) 14%, #fff);
+  overflow: visible;
+}
+
+.lyriks__progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--lyriks-accent), var(--lyriks-pink));
+}
+
+.lyriks__progress-head {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--lyriks-pink);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 8px -2px var(--lyriks-pink);
+}
+
+.lyriks__clock {
+  font-family: var(--lyriks-mono);
+  font-size: 0.74rem;
+  color: color-mix(in srgb, var(--lyriks-ink) 60%, transparent);
+  flex: none;
+  min-width: 78px;
+  text-align: right;
+}
+
+.lyriks__reduced-note {
+  margin: 10px 2px 0;
+  font-size: 0.76rem;
+  color: color-mix(in srgb, var(--lyriks-ink) 62%, transparent);
+}
+
+/* ------------------------------ studio ---------------------------- */
+
+.lyriks-studio {
+  border-radius: 14px;
+  background: var(--lyriks-panel);
+  color: #e9e2f0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--lyriks-accent) 30%, #000);
+}
+
+.lyriks-studio__head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  background: color-mix(in srgb, #fff 4%, var(--lyriks-panel));
+  border-bottom: 1px solid color-mix(in srgb, #fff 8%, transparent);
+}
+
+.lyriks-studio__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, #fff 20%, transparent);
+}
+
+.lyriks-studio__dot:nth-child(1) {
+  background: var(--lyriks-pink);
+}
+.lyriks-studio__dot:nth-child(2) {
+  background: #e8c35a;
+}
+.lyriks-studio__dot:nth-child(3) {
+  background: var(--lyriks-mint);
+}
+
+.lyriks-studio__title {
+  font-family: var(--lyriks-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, #fff 70%, transparent);
+  margin-left: 6px;
+}
+
+.lyriks-studio__rate {
+  margin-left: auto;
+  font-family: var(--lyriks-mono);
+  font-size: 0.66rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: var(--lyriks-mint);
+  background: color-mix(in srgb, var(--lyriks-mint) 16%, transparent);
+}
+
+.lyriks-studio__lyrics {
+  padding: 12px 16px 6px;
+}
+
+.lyriks-studio__lyrics-label {
+  display: block;
+  font-family: var(--lyriks-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: color-mix(in srgb, #fff 45%, transparent);
+  margin-bottom: 6px;
+}
+
+.lyriks-studio__lyrics p {
+  margin: 0 0 2px;
+  font-size: clamp(0.95rem, 2.4vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #f3ecf8;
+}
+
+.lyriks-studio__timeline {
+  position: relative;
+  margin: 10px 14px 16px;
+  padding-top: 20px;
+  border-radius: 10px;
+  background: color-mix(in srgb, #000 24%, var(--lyriks-panel));
+  border: 1px solid color-mix(in srgb, #fff 8%, transparent);
+  overflow: hidden;
+}
+
+.lyriks-studio__ruler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+}
+
+.lyriks-studio__tick {
+  position: absolute;
+  top: 0;
+  font-family: var(--lyriks-mono);
+  font-size: 0.58rem;
+  color: color-mix(in srgb, #fff 40%, transparent);
+  transform: translateX(-1px);
+  padding-left: 4px;
+}
+
+.lyriks-studio__tick i {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  width: 1px;
+  height: 999px;
+  background: color-mix(in srgb, #fff 7%, transparent);
+}
+
+.lyriks-studio__wave {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  height: 46px;
+  padding: 0 1px;
+  opacity: 0.5;
+}
+
+.lyriks-studio__wave span {
+  flex: 1;
+  min-width: 0;
+  border-radius: 1px;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--lyriks-accent) 70%, transparent),
+    color-mix(in srgb, var(--lyriks-pink) 70%, transparent)
+  );
+}
+
+.lyriks-studio__lanes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0 14px;
+}
+
+.lyriks-studio__lane {
+  position: relative;
+  height: 30px;
+}
+
+.lyriks-chip {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--lyriks-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 7px;
+  border: 1px solid;
+  white-space: nowrap;
+  background: color-mix(in srgb, #000 40%, transparent);
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background 0.12s ease;
+}
+
+.lyriks-chip.is-active {
+  transform: translate(-50%, -50%) scale(1.14);
+  background: color-mix(in srgb, currentColor 22%, var(--lyriks-panel));
+  box-shadow: 0 0 0 1px currentColor, 0 6px 16px -6px currentColor;
+  color: #fff !important;
+}
+
+.lyriks-studio__head-line {
+  position: absolute;
+  top: 16px;
+  bottom: 0;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 10px var(--lyriks-pink);
+}
+
+.lyriks-studio__hint {
+  position: absolute;
+  top: 0;
+  left: 6px;
+  white-space: nowrap;
+  font-family: var(--lyriks-mono);
+  font-size: 0.58rem;
+  color: var(--lyriks-pink);
+  background: color-mix(in srgb, var(--lyriks-pink) 16%, var(--lyriks-panel));
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+
+.lyriks-studio__note {
+  margin: 0;
+  padding: 0 16px 16px;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, #fff 65%, transparent);
+}
+
+/* --------------------------- reduced motion ----------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .lyriks *,
+  .lyriks *::before,
+  .lyriks *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

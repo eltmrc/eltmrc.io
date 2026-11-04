@@ -1,0 +1,129 @@
+.spectrum-root {
+  --spectrum-panel: #141018;
+  --spectrum-purple: #a855c8;
+  --spectrum-pink: #e879b8;
+  --spectrum-mint: #8fd4a8;
+  --spectrum-bg: #faf8fc;
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.spectrum-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.spectrum-seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--spectrum-purple) 10%, var(--spectrum-bg));
+  border: 1px solid color-mix(in srgb, var(--spectrum-purple) 22%, transparent);
+}
+
+.spectrum-seg-btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  color: color-mix(in srgb, var(--spectrum-panel) 68%, transparent);
+  background: transparent;
+  transition:
+    color 160ms ease,
+    background 200ms ease,
+    box-shadow 200ms ease,
+    transform 120ms ease;
+}
+
+.spectrum-seg-btn:hover {
+  color: var(--spectrum-panel);
+}
+
+.spectrum-seg-btn:active {
+  transform: translateY(1px);
+}
+
+.spectrum-seg-btn[aria-pressed="true"] {
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    var(--spectrum-purple),
+    var(--spectrum-pink)
+  );
+  box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--spectrum-purple) 70%, transparent);
+}
+
+.spectrum-play {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--spectrum-panel);
+  background: var(--spectrum-bg);
+  border: 1px solid color-mix(in srgb, var(--spectrum-purple) 30%, transparent);
+  transition:
+    background 200ms ease,
+    box-shadow 200ms ease,
+    transform 120ms ease;
+}
+
+.spectrum-play:hover {
+  box-shadow: 0 4px 14px -6px color-mix(in srgb, var(--spectrum-pink) 80%, transparent);
+}
+
+.spectrum-play:active {
+  transform: translateY(1px);
+}
+
+.spectrum-play-ico {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--spectrum-pink);
+}
+
+.spectrum-seg-btn:focus-visible,
+.spectrum-play:focus-visible {
+  outline: 2px solid var(--spectrum-purple);
+  outline-offset: 2px;
+}
+
+.spectrum-stage {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--spectrum-panel);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--spectrum-pink) 18%, transparent) inset,
+    0 18px 50px -24px color-mix(in srgb, var(--spectrum-purple) 90%, transparent);
+}
+
+.spectrum-canvas {
+  display: block;
+  width: 100%;
+}
+
+.spectrum-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--spectrum-panel) 60%, transparent);
+}
