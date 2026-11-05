@@ -513,6 +513,10 @@ export function SpectrumShowcase() {
   const reduced = usePrefersReducedMotion();
   const [mode, setMode] = useState<VisMode>("radial");
   const [playing, setPlaying] = useState(!reduced);
+  // Only render while the canvas is actually on screen and the tab is visible.
+  // Keeps the rAF loop (and its glow/shadow cost) off the main thread while
+  // the reader is anywhere else on the page.
+  const [onScreen, setOnScreen] = useState(true);
   const [dims, setDims] = useState({ w: MAX_W, h: Math.round(MAX_W / ASPECT) });
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -539,6 +543,30 @@ export function SpectrumShowcase() {
     return () => ro.disconnect();
   }, []);
 
+  // Pause the loop when the canvas scrolls off screen or the tab is hidden.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries[0]?.isIntersecting ?? true;
+        setOnScreen(visible && !document.hidden);
+      },
+      { rootMargin: "120px" },
+    );
+    io.observe(el);
+    const onVis = () => {
+      const rect = el.getBoundingClientRect();
+      const inView = rect.bottom > -120 && rect.top < window.innerHeight + 120;
+      setOnScreen(inView && !document.hidden);
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
+
   // Main render effect: sizes the canvas, then either animates or
   // paints a single static frame.
   useEffect(() => {
@@ -547,7 +575,10 @@ export function SpectrumShowcase() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Cap pixel density lower on phones: the glow/shadowBlur cost scales with
+    // the pixel count, so this keeps the visualizer smooth on mobile GPUs.
+    const dprCap = dims.w < 560 ? 1.5 : 2;
+    const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
     canvas.width = Math.round(dims.w * dpr);
     canvas.height = Math.round(dims.h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -573,7 +604,7 @@ export function SpectrumShowcase() {
       drawHud(ctx, dims.w, trans);
     };
 
-    if (!playing) {
+    if (!playing || !onScreen) {
       // Settle the smoothing so the frozen frame looks full, not sparse.
       for (let i = 0; i < 24; i++) draw(2.1, 0.016, true);
       return;
@@ -593,7 +624,7 @@ export function SpectrumShowcase() {
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, [dims, playing, mode]);
+  }, [dims, playing, mode, onScreen]);
 
   const togglePlay = useCallback(() => setPlaying((p) => !p), []);
 
