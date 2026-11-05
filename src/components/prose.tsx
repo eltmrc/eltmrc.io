@@ -6,6 +6,7 @@ import {
   parseEvolutionBlock,
 } from "@/components/evolution-strip";
 import { LyriksDemo } from "@/components/lyriks-demo";
+import { LyriksGame } from "@/components/lyriks-game";
 import { markdownComponents } from "@/components/mdx-components";
 import { MosaicDemo } from "@/components/mosaic-demo";
 import { SpectrumShowcase } from "@/components/spectrum-showcase";
@@ -19,9 +20,10 @@ const remarkPlugins = [remarkGfm, remarkBrands];
  *   :::mosaic            → the interactive MOSAIC demonstration (self-closing line)
  *   :::spectrum          → the interactive audio spectrum showcase (self-closing line)
  *   :::lyriks            → the interactive Lyriks demo (self-closing line)
+ *   :::lyriks-game       → the full playable Lyriks rhythm game (self-closing line)
  */
 const BLOCK =
-  /(?:^|\n):::evolution(?:[ \t]+([^\n]*))?\n([\s\S]*?)\n:::(?=\n|$)|(?:^|\n):::mosaic(?=\n|$)|(?:^|\n):::spectrum(?=\n|$)|(?:^|\n):::lyriks(?=\n|$)/g;
+  /(?:^|\n):::evolution(?:[ \t]+([^\n]*))?\n([\s\S]*?)\n:::(?=\n|$)|(?:^|\n):::mosaic(?=\n|$)|(?:^|\n):::spectrum(?=\n|$)|(?:^|\n):::lyriks-game(?=\n|$)|(?:^|\n):::lyriks(?=\n|$)/g;
 
 function splitBlocks(source: string): ReactNode[] {
   const nodes: ReactNode[] = [];
@@ -48,6 +50,8 @@ function splitBlocks(source: string): ReactNode[] {
       nodes.push(<MosaicDemo key={`mosaic-${key++}`} />);
     } else if (match[0].includes(":::spectrum")) {
       nodes.push(<SpectrumShowcase key={`spectrum-${key++}`} />);
+    } else if (match[0].includes(":::lyriks-game")) {
+      nodes.push(<LyriksGame key={`lyriks-game-${key++}`} />);
     } else if (match[0].includes(":::lyriks")) {
       nodes.push(<LyriksDemo key={`lyriks-${key++}`} />);
     } else {
@@ -92,6 +96,7 @@ export function Prose({ source }: { source: string }) {
     source.includes(":::mosaic") ||
     source.includes(":::spectrum") ||
     source.includes(":::lyriks");
+  // note: ":::lyriks-game" also contains ":::lyriks", so the check above covers it
   const children = hasBlocks ? (
     splitBlocks(source)
   ) : (
