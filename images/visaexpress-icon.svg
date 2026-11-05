@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="VisaExpress — French flag and passport">
+  <!-- French tricolor fills the plate -->
+  <defs>
+    <clipPath id="ve-plate">
+      <rect width="64" height="64" rx="14"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#ve-plate)">
+    <rect width="64" height="64" rx="14" fill="#fff"/>
+    <rect width="21.5" height="64" fill="#002395"/>
+    <rect x="21.5" width="21" height="64" fill="#FFFFFF"/>
+    <rect x="42.5" width="21.5" height="64" fill="#ED2939"/>
+  </g>
+
+  <!-- Soft outer edge so the white stripe reads against light UI -->
+  <rect
+    x="0.6"
+    y="0.6"
+    width="62.8"
+    height="62.8"
+    rx="13.4"
+    stroke="#0A0A0A"
+    stroke-opacity="0.12"
+    stroke-width="1.2"
+    fill="none"
+  />
+
+  <!-- Passport overlaid on the flag (secondary) -->
+  <g transform="translate(34 28) rotate(-14)">
+    <!-- Shadow -->
+    <rect x="1.5" y="2" width="22" height="28" rx="2.5" fill="#000" opacity="0.18"/>
+    <!-- Cover -->
+    <rect x="0" y="0" width="22" height="28" rx="2.5" fill="#5C1520"/>
+    <rect x="0" y="0" width="22" height="28" rx="2.5" stroke="#3A0C13" stroke-width="0.9" opacity="0.5"/>
+    <!-- Spine -->
+    <rect x="0" y="0" width="3" height="28" rx="1.2" fill="#3A0C13" opacity="0.4"/>
+    <!-- Gold crest -->
+    <circle cx="12.5" cy="11" r="4.2" stroke="#E2C37A" stroke-width="1.1" fill="none"/>
+    <path
+      d="M12.5 8.2v5.6M10.4 10h4.2"
+      stroke="#E2C37A"
+      stroke-width="1"
+      stroke-linecap="round"
+    />
+    <!-- Title lines -->
+    <rect x="5.5" y="18.5" width="13" height="1.5" rx="0.75" fill="#E2C37A" opacity="0.95"/>
+    <rect x="7" y="21.5" width="10" height="1.2" rx="0.6" fill="#E2C37A" opacity="0.55"/>
+  </g>
+</svg>

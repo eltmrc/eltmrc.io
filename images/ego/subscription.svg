@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" fill="none" role="img" aria-label="Intelligence, now sold as a subscription">
+  <rect width="720" height="300" rx="16" fill="#faf8fc"/>
+  <rect x="210" y="40" width="300" height="220" rx="18" fill="#fff" stroke="rgba(80,50,100,0.14)" stroke-width="1.2"/>
+  <text x="240" y="76" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" font-weight="600" letter-spacing="1" fill="#9a93a8">PLAN</text>
+  <text x="240" y="110" font-family="ui-sans-serif,system-ui,sans-serif" font-size="24" font-weight="700" fill="#17141f">Smartest person</text>
+  <text x="240" y="138" font-family="ui-sans-serif,system-ui,sans-serif" font-size="24" font-weight="700" fill="#17141f">in the room</text>
+  <text x="240" y="180" font-family="ui-sans-serif,system-ui,sans-serif" font-size="30" font-weight="700" fill="#a855c8">€20<tspan font-size="14" font-weight="500" fill="#9a93a8"> / month</tspan></text>
+  <rect x="240" y="204" width="240" height="38" rx="10" fill="#a855c8"/>
+  <text x="360" y="228" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13.5" font-weight="600" fill="#fff">Subscribe</text>
+  <rect x="408" y="58" width="78" height="24" rx="12" fill="#8fd4a8" fill-opacity="0.25"/>
+  <text x="447" y="74" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="11" font-weight="600" fill="#2f7a4f">never tired</text>
+  <circle cx="120" cy="150" r="34" fill="#f4f0f8"/>
+  <circle cx="120" cy="140" r="12" fill="#c9a8de"/>
+  <path d="M98 172q22-22 44 0" fill="#c9a8de"/>
+  <text x="120" y="208" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#9a93a8">you, before</text>
+  <path d="M164 150h30" stroke="#d8d0e2" stroke-width="2" stroke-dasharray="4 5"/>
+</svg>

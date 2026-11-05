@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="260" viewBox="0 0 720 260" fill="none">
+  <rect width="720" height="260" rx="16" fill="#faf8fc"/>
+  <rect x="120" y="40" width="480" height="48" rx="10" fill="#fff" stroke="rgba(80,50,100,0.12)"/>
+  <text x="360" y="69" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="14" fill="#17141f">Interface</text>
+  <rect x="150" y="100" width="420" height="48" rx="10" fill="#f3e8ff" stroke="#a855c8" stroke-width="1.2"/>
+  <text x="360" y="129" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="14" fill="#17141f">Product logic</text>
+  <rect x="180" y="160" width="360" height="48" rx="10" fill="#fff" stroke="rgba(80,50,100,0.12)"/>
+  <text x="360" y="189" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="14" fill="#17141f">Infrastructure</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="220" viewBox="0 0 720 220" fill="none">
+  <rect width="720" height="220" rx="16" fill="#faf8fc"/>
+  <rect x="50" y="50" width="160" height="120" rx="12" fill="#fff" stroke="rgba(80,50,100,0.12)"/>
+  <text x="130" y="105" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="14" fill="#17141f">MDX files</text>
+  <text x="130" y="128" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="12" fill="#6b6478">content/</text>
+  <path d="M220 110h50" stroke="#9a93a8" stroke-width="1.5"/>
+  <rect x="280" y="50" width="160" height="120" rx="12" fill="#f3e8ff" stroke="#a855c8"/>
+  <text x="360" y="105" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="14" fill="#17141f">Build</text>
+  <text x="360" y="128" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="12" fill="#6b6478">next export</text>
+  <path d="M450 110h50" stroke="#9a93a8" stroke-width="1.5"/>
+  <rect x="510" y="50" width="160" height="120" rx="12" fill="#fff" stroke="rgba(80,50,100,0.12)"/>
+  <text x="590" y="105" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="14" fill="#17141f">Pages</text>
+  <text x="590" y="128" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="12" fill="#6b6478">static HTML</text>
+</svg>

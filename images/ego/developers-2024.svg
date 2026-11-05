@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" fill="none" role="img" aria-label="2024: asking for a whole feature, not a line">
+  <rect width="720" height="300" rx="16" fill="#faf8fc"/>
+  <rect x="40" y="32" width="410" height="236" rx="14" fill="#fff" stroke="rgba(80,50,100,0.12)" stroke-width="1.2"/>
+  <path d="M54 32h382a14 14 0 0 1 14 14v20H40V46a14 14 0 0 1 14-14z" fill="#f4f0f8"/>
+  <circle cx="62" cy="50" r="5" fill="#f2a4b4"/><circle cx="80" cy="50" r="5" fill="#e8c27a"/><circle cx="98" cy="50" r="5" fill="#8fd4a8"/>
+  <text x="120" y="54" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#6b6478">checkout.ts</text>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="12.5">
+    <text x="60" y="98" fill="#17141f">export async function <tspan fill="#a855c8">checkout</tspan>(cart) {</text>
+    <rect x="60" y="108" width="350" height="132" rx="6" fill="#8fd4a8" fill-opacity="0.14"/>
+    <text x="72" y="126" fill="#2f7a4f">+ const total = sum(cart.items);</text>
+    <text x="72" y="148" fill="#2f7a4f">+ const intent = await stripe.pay(total);</text>
+    <text x="72" y="170" fill="#2f7a4f">+ await db.orders.insert({ cart, intent });</text>
+    <text x="72" y="192" fill="#2f7a4f">+ await mail.sendReceipt(cart.user);</text>
+    <text x="72" y="214" fill="#2f7a4f">+ return { ok: true, id: intent.id };</text>
+    <text x="72" y="234" fill="#9a93a8">  … +214 lines across 9 files</text>
+  </g>
+  <rect x="466" y="40" width="222" height="64" rx="14" fill="#fff" stroke="#a855c8" stroke-opacity="0.4"/>
+  <text x="484" y="66" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#9a93a8">You</text>
+  <text x="484" y="88" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" font-weight="600" fill="#17141f">add checkout with Stripe</text>
+  <g font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" fill="#6b6478" font-style="italic">
+    <rect x="470" y="134" width="190" height="34" rx="17" fill="#f4f0f8"/><text x="488" y="156">"it writes bugs"</text>
+    <rect x="490" y="180" width="190" height="34" rx="17" fill="#f4f0f8"/><text x="508" y="202">"fancy autocomplete"</text>
+    <rect x="470" y="226" width="200" height="34" rx="17" fill="#f4f0f8"/><text x="488" y="248">"real devs don't need it"</text>
+  </g>
+</svg>
